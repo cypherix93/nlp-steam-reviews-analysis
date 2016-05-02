@@ -1,11 +1,12 @@
 {
-  "name": "mean-blog",
+  "name": "nlp-steam-reviews-analysis",
   "version": "0.0.0",
-  "authors": "Luis Felipe Hernandez",
-  "description": "MEAN stack Blog",
+  "authors": "cypherix93, benjaminstrumeyer",
+  "description": "NLP Steam Reviews Sentiment Analysis Project",
   "license": "",
   "private": true,
   "copyright": "Copyright © 2016",
+  "main": "./app/ElectronApp.js",
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "~1.13.2",
@@ -28,6 +29,7 @@
   "devDependencies": {
     "bower": "^1.7.2",
     "del": "^2.2.0",
+    "electron-prebuilt": "^0.37.8",
     "gulp": "^3.9.0",
     "gulp-angular-templatecache": "^1.8.0",
     "gulp-batch": "^1.0.5",
