@@ -5,7 +5,7 @@ module.exports = function (gulp, plugins, paths)
     // Compile SASS files
     gulp.task("preprocess-sass", function ()
     {
-        var cssDir = paths.public + "css/";
+        var cssDir = paths.ui + "css/";
 
         return gulp.src(paths.sass + "main.scss")
             .pipe(plugins.debug({title: "compiling sass:"}))

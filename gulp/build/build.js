@@ -10,7 +10,14 @@ module.exports = function (gulp, plugins, paths)
         runSequence(
             "clean",
             "compile",
+            "copy-package-json",
             callback
         );
+    });
+
+    gulp.task("copy-package-json", function()
+    {
+        return gulp.src("./package.json")
+            .pipe(gulp.dest(paths.build));
     });
 };
