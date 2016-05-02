@@ -2,16 +2,10 @@
 
 var request = require("request");
 var jsdom = require("jsdom");
-var jsonfile = require("jsonfile");
 var q = require("q");
 
-const steamReviewLink = "http://steamcommunity.com/app/437220/reviews/?browsefilter=toprated";
-
-// Generate steam api link
-function generateSteamApiLink(n)
-{
-    return `http://steamcommunity.com/app/437220/homecontent/?userreviewsoffset=${(n - 1) * 10}&p=${n}&itemspage=${n}&screenshotspage=${n}&videospage=${n}&artpage=${n}&allguidepage=${n}&webguidepage=${n}&integratedguidepage=${n}&discussionspage=${n}&l=english&appid=437220&appHubSubSection=10&browsefilter=toprated&filterLanguage=default&searchText=`;
-}
+var appIds = require("./appIds.json");
+var helpers = require("./helpers");
 
 // Init to setup jquery
 function init()
@@ -41,38 +35,50 @@ var $;
 init().then(function (jquery)
 {
     $ = jquery;
-
-    makeRequest(2);
+    
+    for (let appId of appIds)
+    {    
+        getReviews(appId);
+    }
 });
 
-function makeRequest(page)
+function getReviews(appId)
 {
-    request(generateSteamApiLink(page), function (error, response, body)
+    var makeRequest = function(page)
     {
-        if (error)
+        console.log(`Scraping reviews for AppID:${appId} on Page ${page}`);
+
+        var url = helpers.generateSteamApiLink(appId, page);
+
+        request(url, function (error, response, body)
         {
-            console.error(error);
-            return;
-        }
-
-        if (!body)
-        {
-            return;
-        }
-
-        scrape(body)
-            .then(function(reviews)
+            if (error)
             {
-                // Write scraped data to file
-                writeReviewsToFile(`./data/scraper/scraped-${page}.json`, reviews);
+                console.error(error);
+                return;
+            }
 
-                makeRequest(page + 1);
-            })
-            .catch(function(err)
+            if (!body)
             {
-                console.log(err);
-            });
-    });
+                return;
+            }
+
+            scrape(body)
+                .then(function (reviews)
+                {
+                    // Write scraped data to file
+                    helpers.writeReviewsToFile(`./data/scraper/${appId}/scraped-${page}.json`, reviews);
+
+                    makeRequest(page + 1);
+                })
+                .catch(function (err)
+                {
+                    console.log(err);
+                });
+        });
+    };
+
+    makeRequest(2);
 }
 
 // Scrape function for the entire review page
@@ -130,14 +136,5 @@ function parseReviewContent(reviewHtml)
     reviewData.reviewerName = authorBlock.find(".apphub_CardContentAuthorName a").text();
 
     return reviewData;
-}
-
-// File write
-function writeReviewsToFile(filename, reviews)
-{
-    var dir = require("path").parse(filename).dir;
-    require("mkdirp").sync(dir);
-
-    jsonfile.writeFileSync(filename, reviews);
 }
 
