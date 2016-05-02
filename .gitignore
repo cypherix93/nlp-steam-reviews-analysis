@@ -29,3 +29,6 @@ bin
 
 # Jetbrains project files
 .idea
+
+# Scraper data
+/data
