@@ -5,11 +5,11 @@ var typescript = require("typescript");
 module.exports = function (gulp, plugins, paths)
 {
     // Compile Server files
-    gulp.task("compile-server", function ()
+    gulp.task("compile-app", function ()
     {
         var tsFilter = plugins.filter("**/*.ts", {restore: true});
 
-        return gulp.src(paths.project + "server/**")
+        return gulp.src(paths.app + "**")
             .pipe(tsFilter)
             .pipe(plugins.typescript({
                 typescript: typescript,
@@ -19,8 +19,8 @@ module.exports = function (gulp, plugins, paths)
                 experimentalDecorators: true,
                 removeComments: true
             }))
-            .pipe(plugins.debug({title: "[server] compiled:"}))
+            .pipe(plugins.debug({title: "[app] compiled:"}))
             .pipe(tsFilter.restore)
-            .pipe(gulp.dest(paths.build + "server/"));
+            .pipe(gulp.dest(paths.build + "app/"));
     });
 };

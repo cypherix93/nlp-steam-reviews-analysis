@@ -19,9 +19,9 @@ paths.build = "./build/";
 paths.deploy = "./deploy/";
 paths.project = "./src/";
 
-paths.public = paths.project + "public/";
 paths.private = paths.project + "private/";
-paths.server = paths.project + "server/";
+paths.ui = paths.project + "ui/";
+paths.app = paths.project + "app/";
 
 paths.angular = paths.private + "angular/";
 paths.sass = paths.private + "sass/";
