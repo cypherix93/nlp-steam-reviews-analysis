@@ -11,9 +11,10 @@ pids
 # node-waf configuration
 .lock-wscript
 
-# Compiled binary addons
+# Compiled / Distributed files
 /build
 /deploy
+/dist
 
 # Dependency directory
 node_modules
@@ -31,4 +32,4 @@ bin
 .idea
 
 # Scraper data
-/data
+/data/scraper
