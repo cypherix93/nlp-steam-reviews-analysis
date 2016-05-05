@@ -56,7 +56,95 @@ function parseFile(fileData)
 
 function parseReview(reviewData)
 {
-    // Gotta actually parse the review here
+    var reviewParsed = {
+        reviewer: null,
+        reviewBody: null,
+        reviewerHoursPlayed: null,
+        datePosted: null,
+        recommended: null,
+        reviewVotes: {
+            foundHelpful: null,
+            totalVotes: null,
+            foundHelpfulPercentage: null,
+            foundFunny: null
+        }
+    };
 
-    return reviewData;
+    // Reviewer Name
+    reviewParsed.reviewer = reviewData.reviewerName;
+
+    // Review body
+    reviewParsed.reviewBody = parseReviewBody(reviewData.reviewBody);
+
+    // Reviewer Hours Played
+    reviewParsed.reviewerHoursPlayed = parseHoursPlayed(reviewData.hours);
+
+    // Review Date Posted
+    reviewParsed.datePosted = parseReviewDate(reviewData.date_posted);
+
+    // Review Recommended or not
+    reviewParsed.recommended = (reviewData.title === "Recommended");
+
+    // Parse the review votes
+    reviewParsed.reviewVotes = parseReviewVotes(reviewData.found_helpful);
+
+    return reviewParsed;
+}
+
+/* Helper Functions */
+function parseReviewBody(reviewBodyLine)
+{
+    var result = reviewBodyLine.replace(/(\n+|\t+)/g, "");
+    result = result.replace(/<br>/g, "\n");
+
+    // Remove the first newline
+    result = result.substring(1);
+
+    return result;
+}
+
+function parseHoursPlayed(hoursPlayedLine)
+{
+    var pattern = /(\d+\.\d+) hrs on record/g;
+    var matches = pattern.exec(hoursPlayedLine);
+
+    return parseFloat(matches[1]);
+}
+
+function parseReviewDate(reviewDateLine)
+{
+    var result = reviewDateLine.replace(/Posted: /g, "");
+
+    var pattern = /(January|February|March|April|May|June|July|August|September|October|November|December) (\d+)(, (\d+))?/g;
+    var matches = pattern.exec(result);
+
+    if (!matches)
+        return null;
+
+    var month = matches[1];
+    var day = matches[2];
+    var year = matches[4] || new Date().getFullYear();
+
+    return new Date(`${year}-${month}-${day}`);
+}
+
+function parseReviewVotes(foundHelpfulLine)
+{
+    var pattern = /(\d+) of (\d+) people \((\d+)%\) found this review helpful(<br>(\d+) people found this review funny)?/g;
+    var matches = pattern.exec(foundHelpfulLine);
+    
+    if (!matches)
+        return {};
+
+    var foundHelpful = matches[1] | 0;
+    var totalVotes = matches[2] | 0;
+    var foundHelpfulPercentage = foundHelpful / totalVotes;
+    var foundFunny = matches[5] | 0;
+
+    return {
+        foundHelpful,
+        totalVotes,
+        foundHelpfulPercentage,
+        foundFunny
+    };
 }

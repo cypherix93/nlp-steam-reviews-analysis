@@ -1,84 +1,134 @@
 {
   "reviews": [
     {
-      "found_helpful": "\n\t\t\t\t20 of 27 people (74%) found this review helpful<br>4 people found this review funny\t\t\t",
-      "title": "Recommended",
-      "hours": "49.7 hrs on record",
-      "date_posted": "Posted: March 9",
-      "reviewBody": "\n\t\t\t\t\n\t\t\t\t\t\t\t\t\t<br>\n\t\t\t\t\t\t\t\tThis game was released 5 days ago, and it's already better then most of the popular survival games (you know which ones i mean). It will be much more popular and better, i guarantee it.\t\t\t",
-      "reviewerName": "decade dance."
+      "reviewer": "decade dance.",
+      "reviewBody": "This game was released 5 days ago, and it's already better then most of the popular survival games (you know which ones i mean). It will be much more popular and better, i guarantee it.",
+      "reviewerHoursPlayed": 49.7,
+      "datePosted": "2016-03-09T05:00:00.000Z",
+      "recommended": true,
+      "reviewVotes": {
+        "foundHelpful": 20,
+        "totalVotes": 27,
+        "foundHelpfulPercentage": 0.7407407407407407,
+        "foundFunny": 4
+      }
     },
     {
-      "found_helpful": "\n\t\t\t\t20 of 27 people (74%) found this review helpful<br>17 people found this review funny\t\t\t",
-      "title": "Recommended",
-      "hours": "23.7 hrs on record",
-      "date_posted": "Posted: April 3",
-      "reviewBody": "\n\t\t\t\t\n\t\t\t\t\t\t\t\t\t<br>\n\t\t\t\t\t\t\t\tThis game can be incredibly fun if you know how to play it correctly.  Unfortunately, I do not.  I apparently possess the uncanny ability to choose the most worthless perks that do absolutely nothing to help me during any particular game.  It doesn't matter what weapons I may find, as I am evitably beaten to death by somebody holding a rock or stapler or egg.  I think I've played this game for around three hours, and in that time frame, I only managed to kill one person (myself, when I suicided from breathing poison gas).  I'm convinced there are award-winning strategies and tips and tricks that everybody in the world knows except me.  I will probably continue playing this game, but I do not foresee myself improving in any conceivable way, and I hope some day the developer addresses this issue and releases a patch that makes me not be so amazingly incompetent.  Maybe they'll add a perk that causes me to instantly die when the game begins, thus saving me the time of having to wander around and find somebody that will club me to death with sticks.\t\t\t",
-      "reviewerName": "Lowtax"
+      "reviewer": "Lowtax",
+      "reviewBody": "This game can be incredibly fun if you know how to play it correctly.  Unfortunately, I do not.  I apparently possess the uncanny ability to choose the most worthless perks that do absolutely nothing to help me during any particular game.  It doesn't matter what weapons I may find, as I am evitably beaten to death by somebody holding a rock or stapler or egg.  I think I've played this game for around three hours, and in that time frame, I only managed to kill one person (myself, when I suicided from breathing poison gas).  I'm convinced there are award-winning strategies and tips and tricks that everybody in the world knows except me.  I will probably continue playing this game, but I do not foresee myself improving in any conceivable way, and I hope some day the developer addresses this issue and releases a patch that makes me not be so amazingly incompetent.  Maybe they'll add a perk that causes me to instantly die when the game begins, thus saving me the time of having to wander around and find somebody that will club me to death with sticks.",
+      "reviewerHoursPlayed": 23.7,
+      "datePosted": "2016-04-03T04:00:00.000Z",
+      "recommended": true,
+      "reviewVotes": {
+        "foundHelpful": 20,
+        "totalVotes": 27,
+        "foundHelpfulPercentage": 0.7407407407407407,
+        "foundFunny": 17
+      }
     },
     {
-      "found_helpful": "\n\t\t\t\t15 of 18 people (83%) found this review helpful\t\t\t",
-      "title": "Recommended",
-      "hours": "2.9 hrs on record",
-      "date_posted": "Posted: March 16",
-      "reviewBody": "\n\t\t\t\t\n\t\t\t\t\t\t\t\t\t<br>\n\t\t\t\t\t\t\t\tThis game gave me a huge adrenaline rush. When I won my first game I was shaking for 2 mins after. Great Weapons, No hackers seen yet, very fun. Guns are very rare and have limited ammo which coming over from other multiplayer survival games I appericate this. Only problem is that the combat can feel a little weird, gives you no indication that you have hit someone you can only tells by the enemys health bar. <br><br>A solid 8/10\t\t\t",
-      "reviewerName": "Maine Coon #FreeBrady"
+      "reviewer": "Maine Coon #FreeBrady",
+      "reviewBody": "This game gave me a huge adrenaline rush. When I won my first game I was shaking for 2 mins after. Great Weapons, No hackers seen yet, very fun. Guns are very rare and have limited ammo which coming over from other multiplayer survival games I appericate this. Only problem is that the combat can feel a little weird, gives you no indication that you have hit someone you can only tells by the enemys health bar. \n\nA solid 8/10",
+      "reviewerHoursPlayed": 2.9,
+      "datePosted": "2016-03-16T04:00:00.000Z",
+      "recommended": true,
+      "reviewVotes": {
+        "foundHelpful": 15,
+        "totalVotes": 18,
+        "foundHelpfulPercentage": 0.8333333333333334,
+        "foundFunny": 0
+      }
     },
     {
-      "found_helpful": "\n\t\t\t\t26 of 38 people (68%) found this review helpful<br>3 people found this review funny\t\t\t",
-      "title": "Not Recommended",
-      "hours": "77.3 hrs on record",
-      "date_posted": "Posted: April 15",
-      "reviewBody": "\n\t\t\t\t\n\t\t\t\t\t\t\t\t\t<br>\n\t\t\t\t\t\t\t\tThis game will not be good until they actually treat their west coast users like actual consumers. 130 Ping is outrageous, seriously regret buying this game.<br>\t\t\t",
-      "reviewerName": "crab"
+      "reviewer": "crab",
+      "reviewBody": "This game will not be good until they actually treat their west coast users like actual consumers. 130 Ping is outrageous, seriously regret buying this game.\n",
+      "reviewerHoursPlayed": 77.3,
+      "datePosted": "2016-04-15T04:00:00.000Z",
+      "recommended": false,
+      "reviewVotes": {
+        "foundHelpful": 26,
+        "totalVotes": 38,
+        "foundHelpfulPercentage": 0.6842105263157895,
+        "foundFunny": 3
+      }
     },
     {
-      "found_helpful": "\n\t\t\t\t22 of 31 people (71%) found this review helpful<br>1 person found this review funny\t\t\t",
-      "title": "Not Recommended",
-      "hours": "352.9 hrs on record",
-      "date_posted": "Posted: April 20",
-      "reviewBody": "\n\t\t\t\t\n\t\t\t\t\t\t\t\t\t<br>\n\t\t\t\t\t\t\t\tWas a great game, ruined in part to terrible servers as well as poor balance decisions and failed optimization. If you're West Coast NA, you're at the mercy of your ping, which will be 100 AT BEST. Official response of Devs months after being asked a million times if they were going to add West Coast servers: \"Getting the right solution for both East and West is important to us and we have our eyes on it. No plans to split the US player base yet but if that is the best solution we will do that.\".<br><br>Translation: Lololol got your money don't wanna spend it on servers, enjoy the terrible ping, nerds.<br><br>In short, unless you're a masochist, don't buy this game. At least not until they realize that yes, the best solution is in fact to split the NA player base WHILE IT STILL EXISTS in order to improve performance.<br><br><b>That was my old review, edited to be applicable to current state of the game. Additional comments below.</b><br><br>Post April 27th Patch: The game is even worse off now, and the latency issues are now extremely apparent. Low ping or not, expect your hits to not register, your blocks to not work, getting stunlocked with the games shove mechanic, which is only supposed to stagger a blocking player but currently staggers attacking and blocking, rubberbanding, extremely delayed item spawning from containers (This plays a HUGE part in early game combat, and impacts it negatively quite a bit).<br><br>Failed Optimization. With the April 27th patch shadows were forced, which in essence was supposed to keep the playing field even with players that did play with shadows (movements stuck out more, traps also stuck out). However, any advantage gained by playing without shadows was minimal at best (coming from someone who played with shadows on before they were forced), and the additional lighting changes made the game UNPLAYABLE for people who otherwise ran the game just fine before the patch. Before the patch I was running the game on high settings without vertical sync and shadows turned on, hardly ever had issues with dropped frames. Now after the update my game stutters randomly for 3-5 seconds. I don't need to tell you why that's bad in a game that is strictly online PvP.<br><br>Understandably, this is a game in development, and there's going to be points during the development process where things are going to be less than optimal. However, when the community provides feedback via Subreddit and Steam forums the Devs actively Lock and/or Delete threads that bring valid concerns, complaints as well as issues (Such as \"I can't run the game anymore due to -xyz-, please help\"); this type of behavior is not a characteristic of a reputable and trustworthy developer. When they DO respond, which is rare, it's with blanket statements and usually ignores the overall issues brought up by the community.<br><br>In short, a game that had so much potential, and in the past had been quite a fun game to play (despite the awful servers), is now nothing but a buggy, unoptimized and uncared for mess. If these devs don't change their ways, and fast, expect this game to die out within the next couple months (playerbase has already decreased dramatically due to people literally unable to play the game since the latest patch). I'd suggest not buying this game as it is in this current state, and if it sounds like a game that you'd genuinely be interested in be patient, watch the feedback from the community, and maybe pick it up after things have improved. If they do improve the game, I'll change my review when they do, however they've got their work cut out for them.<br><br>tl;dr<br><br>Not optimized, bad development practices, awful/limited servers. Not worth it in it's current state.\t\t\t",
-      "reviewerName": "Please call me Dad"
+      "reviewer": "Please call me Dad",
+      "reviewBody": "Was a great game, ruined in part to terrible servers as well as poor balance decisions and failed optimization. If you're West Coast NA, you're at the mercy of your ping, which will be 100 AT BEST. Official response of Devs months after being asked a million times if they were going to add West Coast servers: \"Getting the right solution for both East and West is important to us and we have our eyes on it. No plans to split the US player base yet but if that is the best solution we will do that.\".\n\nTranslation: Lololol got your money don't wanna spend it on servers, enjoy the terrible ping, nerds.\n\nIn short, unless you're a masochist, don't buy this game. At least not until they realize that yes, the best solution is in fact to split the NA player base WHILE IT STILL EXISTS in order to improve performance.\n\n<b>That was my old review, edited to be applicable to current state of the game. Additional comments below.</b>\n\nPost April 27th Patch: The game is even worse off now, and the latency issues are now extremely apparent. Low ping or not, expect your hits to not register, your blocks to not work, getting stunlocked with the games shove mechanic, which is only supposed to stagger a blocking player but currently staggers attacking and blocking, rubberbanding, extremely delayed item spawning from containers (This plays a HUGE part in early game combat, and impacts it negatively quite a bit).\n\nFailed Optimization. With the April 27th patch shadows were forced, which in essence was supposed to keep the playing field even with players that did play with shadows (movements stuck out more, traps also stuck out). However, any advantage gained by playing without shadows was minimal at best (coming from someone who played with shadows on before they were forced), and the additional lighting changes made the game UNPLAYABLE for people who otherwise ran the game just fine before the patch. Before the patch I was running the game on high settings without vertical sync and shadows turned on, hardly ever had issues with dropped frames. Now after the update my game stutters randomly for 3-5 seconds. I don't need to tell you why that's bad in a game that is strictly online PvP.\n\nUnderstandably, this is a game in development, and there's going to be points during the development process where things are going to be less than optimal. However, when the community provides feedback via Subreddit and Steam forums the Devs actively Lock and/or Delete threads that bring valid concerns, complaints as well as issues (Such as \"I can't run the game anymore due to -xyz-, please help\"); this type of behavior is not a characteristic of a reputable and trustworthy developer. When they DO respond, which is rare, it's with blanket statements and usually ignores the overall issues brought up by the community.\n\nIn short, a game that had so much potential, and in the past had been quite a fun game to play (despite the awful servers), is now nothing but a buggy, unoptimized and uncared for mess. If these devs don't change their ways, and fast, expect this game to die out within the next couple months (playerbase has already decreased dramatically due to people literally unable to play the game since the latest patch). I'd suggest not buying this game as it is in this current state, and if it sounds like a game that you'd genuinely be interested in be patient, watch the feedback from the community, and maybe pick it up after things have improved. If they do improve the game, I'll change my review when they do, however they've got their work cut out for them.\n\ntl;dr\n\nNot optimized, bad development practices, awful/limited servers. Not worth it in it's current state.",
+      "reviewerHoursPlayed": 352.9,
+      "datePosted": "2016-04-20T04:00:00.000Z",
+      "recommended": false,
+      "reviewVotes": {
+        "foundHelpful": 22,
+        "totalVotes": 31,
+        "foundHelpfulPercentage": 0.7096774193548387,
+        "foundFunny": 0
+      }
     },
     {
-      "found_helpful": "\n\t\t\t\t63 of 106 people (59%) found this review helpful<br>57 people found this review funny\t\t\t",
-      "title": "Recommended",
-      "hours": "20.0 hrs on record",
-      "date_posted": "Posted: April 1",
-      "reviewBody": "\n\t\t\t\t\n\t\t\t\t\t\t\t\t\t<br>\n\t\t\t\t\t\t\t\tMe &amp; my mate got brutally murdered by Ethan &amp; Moe Bradberry.<br><br>10/10 I'M ETHAN BRADBERRRRYYY\t\t\t",
-      "reviewerName": "Alf Stewart"
+      "reviewer": "Alf Stewart",
+      "reviewBody": "Me &amp; my mate got brutally murdered by Ethan &amp; Moe Bradberry.\n\n10/10 I'M ETHAN BRADBERRRRYYY",
+      "reviewerHoursPlayed": 20,
+      "datePosted": "2016-04-01T04:00:00.000Z",
+      "recommended": true,
+      "reviewVotes": {
+        "foundHelpful": 63,
+        "totalVotes": 106,
+        "foundHelpfulPercentage": 0.5943396226415094,
+        "foundFunny": 57
+      }
     },
     {
-      "found_helpful": "\n\t\t\t\t18 of 24 people (75%) found this review helpful<br>25 people found this review funny\t\t\t",
-      "title": "Recommended",
-      "hours": "48.4 hrs on record",
-      "date_posted": "Posted: March 6",
-      "reviewBody": "\n\t\t\t\t\n\t\t\t\t\t\t\t\t\t<br>\n\t\t\t\t\t\t\t\tThis game taught me that if you rub something hard enough against something else something cooler pops out. Tried it in real life works 100%<br><br>Doesn't seem to work on dogs though\t\t\t",
-      "reviewerName": "Marcosgmunoz"
+      "reviewer": "Marcosgmunoz",
+      "reviewBody": "This game taught me that if you rub something hard enough against something else something cooler pops out. Tried it in real life works 100%\n\nDoesn't seem to work on dogs though",
+      "reviewerHoursPlayed": 48.4,
+      "datePosted": "2016-03-06T05:00:00.000Z",
+      "recommended": true,
+      "reviewVotes": {
+        "foundHelpful": 18,
+        "totalVotes": 24,
+        "foundHelpfulPercentage": 0.75,
+        "foundFunny": 25
+      }
     },
     {
-      "found_helpful": "\n\t\t\t\t19 of 26 people (73%) found this review helpful<br>23 people found this review funny\t\t\t",
-      "title": "Recommended",
-      "hours": "15.7 hrs on record",
-      "date_posted": "Posted: March 24",
-      "reviewBody": "\n\t\t\t\t\n\t\t\t\t\t\t\t\t\t<br>\n\t\t\t\t\t\t\t\tDont eat anything with alot of sodium before playing, you'll get enough salt with this game.\t\t\t",
-      "reviewerName": "LurkDurkem"
+      "reviewer": "LurkDurkem",
+      "reviewBody": "Dont eat anything with alot of sodium before playing, you'll get enough salt with this game.",
+      "reviewerHoursPlayed": 15.7,
+      "datePosted": "2016-03-24T04:00:00.000Z",
+      "recommended": true,
+      "reviewVotes": {
+        "foundHelpful": 19,
+        "totalVotes": 26,
+        "foundHelpfulPercentage": 0.7307692307692307,
+        "foundFunny": 23
+      }
     },
     {
-      "found_helpful": "\n\t\t\t\t14 of 17 people (82%) found this review helpful<br>16 people found this review funny\t\t\t",
-      "title": "Recommended",
-      "hours": "208.8 hrs on record",
-      "date_posted": "Posted: April 28",
-      "reviewBody": "\n\t\t\t\t\n\t\t\t\t\t\t\t\t\t<br>\n\t\t\t\t\t\t\t\tI was walking by when I all of a sudden hear footsteps. I got my machete out i then proceeded to stab the guy to death 20 times. I then continued to walk by when all of a sudden two teams were walknig around. I killed them both to. I then found an smg and proceeded to kill three more people... then I walked home to play The Culling 10/10 good game\t\t\t",
-      "reviewerName": "MemeStarz"
+      "reviewer": "MemeStarz",
+      "reviewBody": "I was walking by when I all of a sudden hear footsteps. I got my machete out i then proceeded to stab the guy to death 20 times. I then continued to walk by when all of a sudden two teams were walknig around. I killed them both to. I then found an smg and proceeded to kill three more people... then I walked home to play The Culling 10/10 good game",
+      "reviewerHoursPlayed": 208.8,
+      "datePosted": "2016-04-28T04:00:00.000Z",
+      "recommended": true,
+      "reviewVotes": {
+        "foundHelpful": 14,
+        "totalVotes": 17,
+        "foundHelpfulPercentage": 0.8235294117647058,
+        "foundFunny": 16
+      }
     },
     {
-      "found_helpful": "\n\t\t\t\t23 of 34 people (68%) found this review helpful<br>16 people found this review funny\t\t\t",
-      "title": "Recommended",
-      "hours": "21.9 hrs on record",
-      "date_posted": "Posted: March 21",
-      "reviewBody": "\n\t\t\t\t\n\t\t\t\t\t\t\t\t\t<br>\n\t\t\t\t\t\t\t\t1.Spawn<br><br>2.Find no loot<br><br>3.Craft an bandage and a knife<br><br>4.Throw the knife at a guy<br><br>5.Kill him<br><br>6.Get his gun<br><br>7.Win the game<br><br>10/10 would win again.\t\t\t",
-      "reviewerName": "John783 csgostakes.com"
+      "reviewer": "John783 csgostakes.com",
+      "reviewBody": "1.Spawn\n\n2.Find no loot\n\n3.Craft an bandage and a knife\n\n4.Throw the knife at a guy\n\n5.Kill him\n\n6.Get his gun\n\n7.Win the game\n\n10/10 would win again.",
+      "reviewerHoursPlayed": 21.9,
+      "datePosted": "2016-03-21T04:00:00.000Z",
+      "recommended": true,
+      "reviewVotes": {
+        "foundHelpful": 23,
+        "totalVotes": 34,
+        "foundHelpfulPercentage": 0.6764705882352942,
+        "foundFunny": 16
+      }
     }
   ]
 }
