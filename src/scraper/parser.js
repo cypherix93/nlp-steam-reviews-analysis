@@ -30,24 +30,29 @@ const dbGames = db("games");
 var gameDirs = fs.readdirSync(scraperDir);
 for (let gameDir of gameDirs)
 {
-    var gamePath = path.join(scraperDir, gameDir);
-    var dataFiles = fs.readdirSync(gamePath);
+    let gamePath = path.join(scraperDir, gameDir);
+    let dataFiles = fs.readdirSync(gamePath);
 
     // Save the game in its collection
-    dbGames.push({
+    let game = {
         title: apps.filter(x => x.id === (gameDir | 0)).map(x => x.game)[0],
         appId: gameDir
-    });
-    db.write();
+    };
+
+    dbGames.push(game);
 
     // Then save all the reviews for the game
     for (let file of dataFiles)
     {
-        var filePath = path.join(gamePath, file);
+        console.log(`Parsing file '${file}' of ${game.title} (${game.appId})...`);
+
+        let filePath = path.join(gamePath, file);
 
         // Get the file's data
-        var fileData = jsonfile.readFileSync(filePath);
-        var parsedReviews = parseFile(fileData);
+        let fileData = jsonfile.readFileSync(filePath);
+
+        // Parse the file's data and add to DB
+        let parsedReviews = parseFile(fileData);
 
         // Write to DB
         parsedReviews.forEach(r =>
@@ -55,10 +60,10 @@ for (let gameDir of gameDirs)
             r.gameId = gameDir;
             dbReviews.push(r);
         });
-        db.write();
-
-        break;
     }
+
+    // Write all the changes made to the DB
+    db.write();
 }
 
 function parseFile(fileData)
@@ -117,7 +122,8 @@ function parseReviewBody(reviewBodyLine)
     result = result.replace(/<br>/g, "\n");
 
     // Remove the first newline
-    result = result.substring(1);
+    if(result[0] === "\n")
+        result = result.substring(1);
 
     return result;
 }
@@ -126,6 +132,9 @@ function parseHoursPlayed(hoursPlayedLine)
 {
     var pattern = /(\d+\.\d+) hrs on record/g;
     var matches = pattern.exec(hoursPlayedLine);
+
+    if (!matches)
+        return 0;
 
     return parseFloat(matches[1]);
 }
