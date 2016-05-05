@@ -11,7 +11,8 @@
         "totalVotes": 27,
         "foundHelpfulPercentage": 0.7407407407407407,
         "foundFunny": 4
-      }
+      },
+      "gameId": "437220"
     },
     {
       "reviewer": "Lowtax",
@@ -24,7 +25,8 @@
         "totalVotes": 27,
         "foundHelpfulPercentage": 0.7407407407407407,
         "foundFunny": 17
-      }
+      },
+      "gameId": "437220"
     },
     {
       "reviewer": "Maine Coon #FreeBrady",
@@ -37,7 +39,8 @@
         "totalVotes": 18,
         "foundHelpfulPercentage": 0.8333333333333334,
         "foundFunny": 0
-      }
+      },
+      "gameId": "437220"
     },
     {
       "reviewer": "crab",
@@ -50,7 +53,8 @@
         "totalVotes": 38,
         "foundHelpfulPercentage": 0.6842105263157895,
         "foundFunny": 3
-      }
+      },
+      "gameId": "437220"
     },
     {
       "reviewer": "Please call me Dad",
@@ -63,7 +67,8 @@
         "totalVotes": 31,
         "foundHelpfulPercentage": 0.7096774193548387,
         "foundFunny": 0
-      }
+      },
+      "gameId": "437220"
     },
     {
       "reviewer": "Alf Stewart",
@@ -76,7 +81,8 @@
         "totalVotes": 106,
         "foundHelpfulPercentage": 0.5943396226415094,
         "foundFunny": 57
-      }
+      },
+      "gameId": "437220"
     },
     {
       "reviewer": "Marcosgmunoz",
@@ -89,7 +95,8 @@
         "totalVotes": 24,
         "foundHelpfulPercentage": 0.75,
         "foundFunny": 25
-      }
+      },
+      "gameId": "437220"
     },
     {
       "reviewer": "LurkDurkem",
@@ -102,7 +109,8 @@
         "totalVotes": 26,
         "foundHelpfulPercentage": 0.7307692307692307,
         "foundFunny": 23
-      }
+      },
+      "gameId": "437220"
     },
     {
       "reviewer": "MemeStarz",
@@ -115,7 +123,8 @@
         "totalVotes": 17,
         "foundHelpfulPercentage": 0.8235294117647058,
         "foundFunny": 16
-      }
+      },
+      "gameId": "437220"
     },
     {
       "reviewer": "John783 csgostakes.com",
@@ -128,7 +137,14 @@
         "totalVotes": 34,
         "foundHelpfulPercentage": 0.6764705882352942,
         "foundFunny": 16
-      }
+      },
+      "gameId": "437220"
+    }
+  ],
+  "games": [
+    {
+      "title": "The Culling",
+      "appId": "437220"
     }
   ]
 }

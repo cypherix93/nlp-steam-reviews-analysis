@@ -17,9 +17,14 @@ const scraperDir = path.join(dataDir, "scraper");
 const dbLocation = path.join(dataDir, "db.json");
 const db = lowdb(dbLocation, {storage}, false);
 
-// Recreate Reviews table
+// Apps file
+const apps = require("./apps.json");
+
+// Drop create all the tables
+db.object.games = [];
 db.object.reviews = [];
 const dbReviews = db("reviews");
+const dbGames = db("games");
 
 // Loop through all games in scraped dir
 var gameDirs = fs.readdirSync(scraperDir);
@@ -27,18 +32,32 @@ for (let gameDir of gameDirs)
 {
     var gamePath = path.join(scraperDir, gameDir);
     var dataFiles = fs.readdirSync(gamePath);
-    
+
+    // Save the game in its collection
+    dbGames.push({
+        title: apps.filter(x => x.id === (gameDir | 0)).map(x => x.game)[0],
+        appId: gameDir
+    });
+    db.write();
+
+    // Then save all the reviews for the game
     for (let file of dataFiles)
     {
         var filePath = path.join(gamePath, file);
 
         // Get the file's data
         var fileData = jsonfile.readFileSync(filePath);
-        var reviews = parseFile(fileData);
+        var parsedReviews = parseFile(fileData);
 
         // Write to DB
-        reviews.forEach(r => dbReviews.push(r));
+        parsedReviews.forEach(r =>
+        {
+            r.gameId = gameDir;
+            dbReviews.push(r);
+        });
         db.write();
+
+        break;
     }
 }
 
