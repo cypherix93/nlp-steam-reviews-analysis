@@ -4,7 +4,7 @@ var request = require("request");
 var jsdom = require("jsdom");
 var q = require("q");
 
-var appIds = require("./appIds.json");
+var apps = require("./apps.json");
 var helpers = require("./helpers");
 
 // Init to setup jquery
@@ -36,19 +36,19 @@ init().then(function (jquery)
 {
     $ = jquery;
     
-    for (let appId of appIds)
-    {    
-        getReviews(appId);
+    for (let app of apps)
+    {
+        getReviews(app);
     }
 });
 
-function getReviews(appId)
+function getReviews(app)
 {
-    var makeRequest = function(page)
+    var makeRequest = function (page)
     {
-        console.log(`Scraping reviews for AppID:${appId} on Page ${page}`);
+        console.log(`Scraping reviews for AppID:${app.game} (${app.id}) on Page ${page}`);
 
-        var url = helpers.generateSteamApiLink(appId, page);
+        var url = helpers.generateSteamApiLink(app.id, page);
 
         request(url, function (error, response, body)
         {
@@ -67,7 +67,7 @@ function getReviews(appId)
                 .then(function (reviews)
                 {
                     // Write scraped data to file
-                    helpers.writeReviewsToFile(`./data/scraper/${appId}/scraped-${page}.json`, reviews);
+                    helpers.writeReviewsToFile(`./data/scraper/${app.id}/scraped-${page}.json`, reviews);
 
                     makeRequest(page + 1);
                 })
