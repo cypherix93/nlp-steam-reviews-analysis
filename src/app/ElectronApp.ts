@@ -40,7 +40,7 @@ export class ElectronApp
         mainWindow = new BrowserWindow({width: 800, height: 600});
 
         // and load the index.html of the app.
-        mainWindow.loadURL(Config.current.rootPath + "/ui/index.html");
+        mainWindow.loadURL("file://" + Config.current.rootPath + "/ui/index.html");
 
         console.log(Config.current.rootPath + "/ui/index.html");
 

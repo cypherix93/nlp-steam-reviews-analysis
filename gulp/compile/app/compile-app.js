@@ -15,7 +15,6 @@ module.exports = function (gulp, plugins, paths)
                 typescript: typescript,
                 target: "ES6",
                 module: "commonjs",
-                experimentalAsyncFunctions: true,
                 experimentalDecorators: true,
                 removeComments: true
             }))
