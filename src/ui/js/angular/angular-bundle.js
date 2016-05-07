@@ -46,8 +46,19 @@ angular.module("AngularApp")
         const dbGames = db("games");
 
         self.getGames = function()
-        {
-            return dbGames.cloneDeep();
+        { 
+            var games = dbGames.cloneDeep();
+
+            for (let game of games)
+            {
+                game.reviewsCount = dbReviews
+                    .chain()
+                    .filter(r => r.gameId === game.appId)
+                    .size()
+                    .value();
+            }
+
+            return games;
         }
     });
 angular.module("AngularApp")
@@ -68,4 +79,4 @@ angular.module("AngularApp")
         
         self.games = GameDataService.getGames();
     }]);
-angular.module("AngularApp").run(["$templateCache", function($templateCache) {$templateCache.put("templates/home/game-info-widget-template.html","<div class=\"panel panel-default\">\r\n    <div class=\"panel-body row\">\r\n        <div class=\"col-xs-3\">\r\n            <img src=\"\" alt=\"Some Image\" class=\"img-thumbnail img-responsive\">\r\n        </div>\r\n        <div class=\"col-xs-9\">\r\n            <h3>{{game.title}} ({{game.id}})</h3>\r\n            <uib-progress>\r\n                <uib-bar value=\"69\" type=\"success\">\r\n                    <span>Positive: 69%</span>\r\n                </uib-bar>\r\n                <uib-bar value=\"31\" type=\"danger\">\r\n                    <span>Negative: 31%</span>\r\n                </uib-bar>\r\n            </uib-progress>\r\n            <hr>\r\n\r\n            <div class=\"pull-right\">\r\n                4,462 reviews\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>");}]);
+angular.module("AngularApp").run(["$templateCache", function($templateCache) {$templateCache.put("templates/home/game-info-widget-template.html","<div class=\"panel panel-default\">\r\n    <div class=\"panel-body row\">\r\n        <div class=\"col-xs-3\">\r\n            <img src=\"\" alt=\"Some Image\" class=\"img-thumbnail img-responsive\">\r\n        </div>\r\n        <div class=\"col-xs-9\">\r\n            <h4>\r\n                {{game.title}}\r\n            </h4>\r\n            <uib-progress>\r\n                <uib-bar value=\"69\" type=\"success\">\r\n                    <span>Positive: 69%</span>\r\n                </uib-bar>\r\n                <uib-bar value=\"31\" type=\"danger\">\r\n                    <span>Negative: 31%</span>\r\n                </uib-bar>\r\n            </uib-progress>\r\n            <hr>\r\n\r\n            <div class=\"pull-left\">\r\n                App ID: {{game.appId}}\r\n            </div>\r\n            <div class=\"pull-right\">\r\n                {{game.reviewsCount | number:0}} reviews\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>");}]);

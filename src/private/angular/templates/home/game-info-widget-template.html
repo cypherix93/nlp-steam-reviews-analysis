@@ -4,7 +4,9 @@
             <img src="" alt="Some Image" class="img-thumbnail img-responsive">
         </div>
         <div class="col-xs-9">
-            <h3>{{game.title}} ({{game.id}})</h3>
+            <h4>
+                {{game.title}}
+            </h4>
             <uib-progress>
                 <uib-bar value="69" type="success">
                     <span>Positive: 69%</span>
@@ -15,8 +17,11 @@
             </uib-progress>
             <hr>
 
+            <div class="pull-left">
+                App ID: {{game.appId}}
+            </div>
             <div class="pull-right">
-                4,462 reviews
+                {{game.reviewsCount | number:0}} reviews
             </div>
         </div>
     </div>

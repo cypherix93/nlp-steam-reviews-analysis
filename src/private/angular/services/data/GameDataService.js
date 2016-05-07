@@ -22,7 +22,18 @@ angular.module("AngularApp")
         const dbGames = db("games");
 
         self.getGames = function()
-        {
-            return dbGames.cloneDeep();
+        { 
+            var games = dbGames.cloneDeep();
+
+            for (let game of games)
+            {
+                game.reviewsCount = dbReviews
+                    .chain()
+                    .filter(r => r.gameId === game.appId)
+                    .size()
+                    .value();
+            }
+
+            return games;
         }
     });
