@@ -30,9 +30,9 @@ module.exports = function (gulp, plugins, paths)
             .pipe(plugins.htmlmin())
             .pipe(plugins.angularTemplatecache("angular-templates.js",
                 {
-                    module: "MainApp",
+                    module: "AngularApp",
                     root: "templates/",
-                    templateHeader: "<%= module %>.run([\"$templateCache\", function($templateCache) {"
+                    templateHeader: "angular.module(\"<%= module %>\").run([\"$templateCache\", function($templateCache) {"
                 }));
         
         var bundle = new streamqueue({objectMode: true})
@@ -40,11 +40,6 @@ module.exports = function (gulp, plugins, paths)
             .queue(templates)
             .done()
             .pipe(plugins.concat("angular-bundle.js"))
-            .pipe(gulp.dest(angularDest))
-            .pipe(plugins.uglify())
-            .pipe(plugins.rename({
-                suffix: ".min"
-            }))
             .pipe(gulp.dest(angularDest));
         
         return bundle;
