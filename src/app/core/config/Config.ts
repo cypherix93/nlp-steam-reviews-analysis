@@ -10,10 +10,5 @@ export class Config
         }
     };
 
-    public static current;
-
-    public static init(env)
-    {
-        Config.current = Config.appConfig[env];
-    }
+    public static current = Config.appConfig.development;
 }
