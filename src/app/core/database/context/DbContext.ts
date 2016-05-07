@@ -15,11 +15,11 @@ export class DbContext
 
     public static get games()
     {
-        return DbContext.context("games") as Game[];
+        return DbContext.context("games");
     }
 
     public static get reviews()
     {
-        return DbContext.context("reviews") as Review[];
+        return DbContext.context("reviews");
     }
 }
