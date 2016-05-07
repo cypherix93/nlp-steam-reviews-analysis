@@ -1,1 +1,9 @@
 <h1>Home Page</h1>
+
+<hr>
+
+<div class="row" ng-controller="HomeController as home">
+    <div class="col-md-6" ng-repeat="game in home.games">
+        <game-info-widget game="game"></game-info-widget>
+    </div>
+</div>

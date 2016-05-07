@@ -22,3 +22,50 @@ angular.module("AngularApp")
                 templateUrl: "views/home/index.html"
             });
     }]);
+angular.module("AngularApp")
+    .service("GameDataService", function GameDataService()
+    {
+        const self = this;
+
+        // Node stuff
+        const path = require("path");
+        const fs = require("fs");
+
+        // LowDB stuff
+        const lowdb = require("lowdb");
+        const storage = require("lowdb/file-sync");
+
+        // Directories
+        const dataDir = path.join(__dirname, "../../data");
+
+        // Init db
+        const dbLocation = path.join(dataDir, "db.json");
+        const db = lowdb(dbLocation, {storage}, false);
+
+        const dbReviews = db("reviews");
+        const dbGames = db("games");
+
+        self.getGames = function()
+        {
+            return dbGames.cloneDeep();
+        }
+    });
+angular.module("AngularApp")
+    .directive("gameInfoWidget", function()
+    {
+        return {
+            restrict: "EA",
+            scope: {
+                game: "="
+            },
+            templateUrl: "templates/home/game-info-widget-template.html"
+        }
+    });
+angular.module("AngularApp")
+    .controller("HomeController", ["GameDataService", function HomeController(GameDataService)
+    {
+        const self = this;
+        
+        self.games = GameDataService.getGames();
+    }]);
+angular.module("AngularApp").run(["$templateCache", function($templateCache) {$templateCache.put("templates/home/game-info-widget-template.html","<div class=\"panel panel-default\">\r\n    <div class=\"panel-body row\">\r\n        <div class=\"col-xs-3\">\r\n            <img src=\"\" alt=\"Some Image\" class=\"img-thumbnail img-responsive\">\r\n        </div>\r\n        <div class=\"col-xs-9\">\r\n            <h3>{{game.title}} ({{game.id}})</h3>\r\n            <uib-progress>\r\n                <uib-bar value=\"69\" type=\"success\">\r\n                    <span>Positive: 69%</span>\r\n                </uib-bar>\r\n                <uib-bar value=\"31\" type=\"danger\">\r\n                    <span>Negative: 31%</span>\r\n                </uib-bar>\r\n            </uib-progress>\r\n            <hr>\r\n\r\n            <div class=\"pull-right\">\r\n                4,462 reviews\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>");}]);
