@@ -15,10 +15,7 @@ angular.module("AngularApp")
             .state("gameInfo",
             {
                 url: "/gameInfo/:appID",
-                templateUrl: "views/home/gameInfo.html",
-                controller: function ($stateParams) {
-                    console.log($stateParams.appID);
-                }
+                templateUrl: "views/home/gameInfo.html"
             });
 
     });

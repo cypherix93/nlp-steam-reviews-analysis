@@ -25,10 +25,7 @@ angular.module("AngularApp")
             .state("gameInfo",
             {
                 url: "/gameInfo/:appID",
-                templateUrl: "views/home/gameInfo.html",
-                controller: ["$stateParams", function ($stateParams) {
-                    console.log($stateParams.appID);
-                }]
+                templateUrl: "views/home/gameInfo.html"
             });
 
     }]);
@@ -88,6 +85,18 @@ angular.module("AngularApp")
             templateUrl: "templates/home/game-info-widget-template.html"
         }
     });
+angular.module("AngularApp")
+    .controller("GameInfoController", ["GameDataService", "$stateParams", function GameInfoController(GameDataService, $stateParams)
+    {
+        const self = this;
+
+        self.games = GameDataService.getGames();
+
+        self.appID = $stateParams.appID;
+        console.log("App id: " + self.appID);
+
+
+    }]);
 angular.module("AngularApp")
     .controller("HomeController", ["GameDataService", function HomeController(GameDataService)
     {
