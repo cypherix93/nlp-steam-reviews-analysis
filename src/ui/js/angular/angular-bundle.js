@@ -45,8 +45,9 @@ angular.module("AngularApp")
         const dbReviews = db("reviews");
         const dbGames = db("games");
 
+        // Get games
         self.getGames = function()
-        { 
+        {
             var games = dbGames.cloneDeep();
 
             for (let game of games)
