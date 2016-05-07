@@ -35,45 +35,32 @@ angular.module("AngularApp")
         $state.go("home");
     }]);
 angular.module("AngularApp")
-    .service("GameDataService", function GameDataService()
+    .service("AppComponentService", function()
     {
         const self = this;
 
-        // Node stuff
         const path = require("path");
-        const fs = require("fs");
+        const appDir = "../app";
 
-        // LowDB stuff
-        const lowdb = require("lowdb");
-        const storage = require("lowdb/file-sync");
+        self.getModule = function(pathToModule)
+        {
+            return require(path.join(appDir, pathToModule));
+        }
+    });
+angular.module("AngularApp")
+    .service("GameDataService", ["AppComponentService", function GameDataService(AppComponentService)
+    {
+        const self = this;
 
-        // Directories
-        const dataDir = path.join(__dirname, "../../data");
-
-        // Init db
-        const dbLocation = path.join(dataDir, "db.json");
-        const db = lowdb(dbLocation, {storage}, false);
-
-        const dbReviews = db("reviews");
-        const dbGames = db("games");
+        // Get the db context
+        const gameRepository = AppComponentService.getModule("app/repositories/GameRepository").GameRepository;
 
         // Get games
         self.getGames = function()
         {
-            var games = dbGames.cloneDeep();
-
-            for (let game of games)
-            {
-                game.reviewsCount = dbReviews
-                    .chain()
-                    .filter(r => r.gameId === game.appId)
-                    .size()
-                    .value();
-            }
-
-            return games;
+            return gameRepository.getGamesForWidgets();
         }
-    });
+    }]);
 angular.module("AngularApp")
     .directive("gameInfoWidget", function()
     {

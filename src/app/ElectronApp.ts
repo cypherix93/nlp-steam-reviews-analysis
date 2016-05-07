@@ -4,9 +4,6 @@ import express = require("express");
 
 import {Config} from "./core/config/Config";
 
-// Initialize Config for the current environment
-Config.init(process.env.NODE_ENV = process.env.NODE_ENV || "development");
-
 export class ElectronApp
 {
     public static electron = require("electron");
