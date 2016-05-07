@@ -1,23 +1,27 @@
 import {Model} from "../../base/Model";
 
-export class Comment extends Model
+export class Review extends Model
 {
-    public author:string;
-    public content:string;
-    
-    public children:Comment[];
+    public reviewer:string;
+    public reviewBody:string;
+    public reviewerHoursPlayed:number;
 
-    public dateCrated:Date;
+    public datePosted:Date;
+    public recommended:boolean;
 
-    constructor(author?:string, content?:string)
+    public reviewVotes:{
+        foundHelpful: number,
+        totalVotes: number,
+        foundHelpfulPercentage: number,
+        foundFunny: number
+    };
+
+    public gameId:number;
+
+    constructor(gameId:number)
     {
         super();
         
-        this.author = author;
-        this.content = content;
-
-        this.children = [];
-
-        this.dateCrated = new Date();
+        this.gameId = gameId;
     }
 }

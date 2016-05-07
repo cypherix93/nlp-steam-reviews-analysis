@@ -1,26 +1,15 @@
-import {Comment} from "./Comment";
 import {Model} from "../../base/Model";
 
-export class Article extends Model
+export class Game extends Model
 {
     public title:string;
-    public author:string;
-    public content:string;
-    
-    public comments:Comment[];
+    public appId:number;
 
-    public dateCrated:Date;
-    
-    constructor(title?:string, author?:string, content?:string)
+    constructor(title?:string, appId?:number)
     {
         super();
 
         this.title = title;
-        this.author = author;
-        this.content = content;
-
-        this.comments = [];
-
-        this.dateCrated = new Date();
+        this.appId = appId;
     }
 }
