@@ -18,4 +18,12 @@ export class GameRepository
 
         return games;
     }
+
+    public static getById(id:number)
+    {
+        return DbContext.games
+            .chain()
+            .filter(g => g.appId === id)
+            .value();
+    }
 }
