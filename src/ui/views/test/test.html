@@ -1,0 +1,34 @@
+<div class="form-group">
+    <label for="comment">Enter Review Body Here: </label>
+    <textarea class="form-control" rows="5" id="comment"></textarea>
+</div>
+<button class="btn-success pull-right">Process Text</button>
+<div>
+    <h1 class="text-center">Result = Positive</h1>
+    <hr>
+    <div>
+        <uib-progress>
+            <uib-bar value="69" type="success">
+                <span>Positive: 69%</span>
+            </uib-bar>
+            <uib-bar value="31" type="danger">
+                <span>Negative: 31%</span>
+            </uib-bar>
+        </uib-progress>
+    </div>
+</div>
+<hr>
+<div class="row">
+    <div class="col-md-6">
+        <h2 class="text-center">Positive Reasoning</h2>
+        <div class="col-md-12 text-center" ng-repeat="n in [1, 2, 3, 4, 5] track by $index">
+            <li>o ya its rly gud</li>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <h2 class="text-center">Negative Reasoning</h2>
+        <div class="col-md-12 text-center" ng-repeat="n in [1, 2, 3, 4, 5] track by $index">
+            <p>league is better than dota</p>
+        </div>
+    </div>
+</div>

@@ -24,6 +24,6 @@ export class GameRepository
         return DbContext.games
             .chain()
             .filter(g => g.appId === id)
-            .value();
+            .value()[0];
     }
 }

@@ -11,4 +11,9 @@ angular.module("AngularApp")
         {
             return gameRepository.getGamesForWidgets();
         }
+
+        self.getGameById = function(appId)
+        {
+            return gameRepository.getById(appId);
+        }
     });

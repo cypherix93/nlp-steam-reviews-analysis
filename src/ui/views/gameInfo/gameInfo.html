@@ -1,0 +1,49 @@
+<div ng-controller="GameInfoController as gameInfo"  class="col-md-12">
+        <div class="panel-body row">
+            <div class="col-xs-2">
+                <img src="" alt="Some Image" class="img-thumbnail img-responsive">
+            </div>
+            <div class="col-xs-10">
+                <h4>
+                    {{gameInfo.game.title}}
+                </h4>
+                <uib-progress>
+                    <uib-bar value="69" type="success">
+                        <span>Positive: 69%</span>
+                    </uib-bar>
+                    <uib-bar value="31" type="danger">
+                        <span>Negative: 31%</span>
+                    </uib-bar>
+                </uib-progress>
+                <hr>
+
+                <div class="pull-left">
+                    App ID: {{gameInfo.game.appId}}
+                </div>
+                <div class="pull-right">
+                    {{game.reviewsCount | number:0}} reviews
+                </div>
+            </div>
+        </div>
+    <hr>
+    <div>
+        <h3 class="text-center">Top 5 Good Things</h3>
+        <div class="col-md-12 text-center" ng-repeat="n in [1, 2, 3, 4, 5] track by $index">
+            <p>{{n}}. The uninstall button</p>
+        </div>
+    </div>
+    <hr>
+    <div>
+        <h3 class="text-center">Top 5 Bad Things</h3>
+        <div class="col-md-12 text-center" ng-repeat="n in [1, 2, 3, 4, 5] track by $index">
+            <p>{{n}}. everything else</p>
+        </div>
+    </div>
+    <hr>
+    <div>
+        <h3 class="text-center">Top Reviews</h3>
+        <div class="col-md-12 text-center" ng-repeat="n in [1, 2, 3, 4, 5] track by $index">
+            <p>{{n}}. everything else</p>
+        </div>
+    </div>
+</div>

@@ -5,6 +5,5 @@ angular.module("AngularApp")
 
         self.games = GameDataService.getGames();
 
-        self.appID = $stateParams.appID;
-        console.log("App id: " + self.appID);
+        self.game = GameDataService.getGameById($stateParams.appId);
     });
