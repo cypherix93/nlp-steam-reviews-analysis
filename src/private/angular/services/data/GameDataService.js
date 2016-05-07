@@ -1,34 +1,21 @@
 angular.module("AngularApp")
-    .service("GameDataService", function GameDataService()
+    .service("GameDataService", function GameDataService(AppComponentService)
     {
         const self = this;
 
-        // Node stuff
-        const path = require("path");
-        const fs = require("fs");
+        console.log(__dirname);
 
-        // LowDB stuff
-        const lowdb = require("lowdb");
-        const storage = require("lowdb/file-sync");
-
-        // Directories
-        const dataDir = path.join(__dirname, "../../data");
-
-        // Init db
-        const dbLocation = path.join(dataDir, "db.json");
-        const db = lowdb(dbLocation, {storage}, false);
-
-        const dbReviews = db("reviews");
-        const dbGames = db("games");
+        // Get the db context
+        const context = AppComponentService.getModule("core/database/context/DbContext").DbContext;
 
         // Get games
         self.getGames = function()
         {
-            var games = dbGames.cloneDeep();
+            var games = context.games.cloneDeep();
 
             for (let game of games)
             {
-                game.reviewsCount = dbReviews
+                game.reviewsCount = context.reviews
                     .chain()
                     .filter(r => r.gameId === game.appId)
                     .size()

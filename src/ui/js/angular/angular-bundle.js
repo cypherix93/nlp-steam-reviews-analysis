@@ -23,36 +23,36 @@ angular.module("AngularApp")
             });
     }]);
 angular.module("AngularApp")
-    .service("GameDataService", function GameDataService()
+    .service("AppComponentService", function()
     {
         const self = this;
 
-        // Node stuff
         const path = require("path");
-        const fs = require("fs");
+        const appDir = "../app";
 
-        // LowDB stuff
-        const lowdb = require("lowdb");
-        const storage = require("lowdb/file-sync");
+        self.getModule = function(pathToModule)
+        {
+            return require(path.join(appDir, pathToModule));
+        }
+    });
+angular.module("AngularApp")
+    .service("GameDataService", ["AppComponentService", function GameDataService(AppComponentService)
+    {
+        const self = this;
 
-        // Directories
-        const dataDir = path.join(__dirname, "../../data");
+        console.log(__dirname);
 
-        // Init db
-        const dbLocation = path.join(dataDir, "db.json");
-        const db = lowdb(dbLocation, {storage}, false);
-
-        const dbReviews = db("reviews");
-        const dbGames = db("games");
+        // Get the db context
+        const context = AppComponentService.getModule("core/database/context/DbContext").DbContext;
 
         // Get games
         self.getGames = function()
         {
-            var games = dbGames.cloneDeep();
+            var games = context.games.cloneDeep();
 
             for (let game of games)
             {
-                game.reviewsCount = dbReviews
+                game.reviewsCount = context.reviews
                     .chain()
                     .filter(r => r.gameId === game.appId)
                     .size()
@@ -61,7 +61,7 @@ angular.module("AngularApp")
 
             return games;
         }
-    });
+    }]);
 angular.module("AngularApp")
     .directive("gameInfoWidget", function()
     {
