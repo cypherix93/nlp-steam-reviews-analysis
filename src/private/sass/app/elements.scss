@@ -5,8 +5,6 @@ html, body
 {
     height: 100%;
     @include text-antialias();
-
-    background: $gray-lighter;
 }
 a
 {

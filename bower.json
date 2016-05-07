@@ -4,7 +4,6 @@
   "dependencies": {
     "angular": "1.x.x",
     "angular-sanitize": "1.x.x",
-    "angular-route": "1.x.x",
     "angular-animate": "1.x.x",
     "angular-messages": "1.x.x",
     "angular-bootstrap": "1.x.x",

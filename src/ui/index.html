@@ -23,6 +23,7 @@
         <script src="lib/angular/js/angular-messages.min.js"></script>
         <script src="lib/angular/js/angular-ui-router.min.js"></script>
         <script src="lib/angular/js/ui-bootstrap-tpls.min.js"></script>
+        <script src="lib/angular/js/angular-toastr.tpls.min.js"></script>
 
         <!-- App Angular Bundle -->
         <script src="js/angular/angular-bundle.min.js"></script>
@@ -32,6 +33,9 @@
         <div ng-include="'./views/_shared/navigation.html'"></div>
 
         <!-- Dynamic view -->
-        <div ui-view></div>
+        <div class="container">
+            <div ui-view></div>
+        </div>
+
     </body>
 </html>
