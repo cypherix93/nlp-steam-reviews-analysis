@@ -3,25 +3,12 @@ angular.module("AngularApp")
     {
         const self = this;
 
-        console.log(__dirname);
-
         // Get the db context
-        const context = AppComponentService.getModule("core/database/context/DbContext").DbContext;
+        const gameRepository = AppComponentService.getModule("app/repositories/GameRepository").GameRepository;
 
         // Get games
         self.getGames = function()
         {
-            var games = context.games.cloneDeep();
-
-            for (let game of games)
-            {
-                game.reviewsCount = context.reviews
-                    .chain()
-                    .filter(r => r.gameId === game.appId)
-                    .size()
-                    .value();
-            }
-
-            return games;
+            return gameRepository.getGamesForWidgets();
         }
     });
