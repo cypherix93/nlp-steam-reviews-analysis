@@ -7,7 +7,7 @@ angular.module("AngularApp")
         const gameRepository = AppComponentService.getModule("app/repositories/GameRepository").GameRepository;
 
         // Get games
-        self.getGames = function()
+        self.getGamesForWidgets = function()
         {
             return gameRepository.getGamesForWidgets();
         }

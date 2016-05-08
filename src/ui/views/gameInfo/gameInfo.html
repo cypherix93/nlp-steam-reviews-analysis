@@ -7,43 +7,35 @@
                 <h4>
                     {{gameInfo.game.title}}
                 </h4>
-                <uib-progress>
-                    <uib-bar value="69" type="success">
-                        <span>Positive: 69%</span>
-                    </uib-bar>
-                    <uib-bar value="31" type="danger">
-                        <span>Negative: 31%</span>
-                    </uib-bar>
-                </uib-progress>
+                <pos-neg-bar pos="gameInfo.positive" neg="gameInfo.negative"></pos-neg-bar>
                 <hr>
-
-                <div class="pull-left">
+                   <div class="pull-left">
                     App ID: {{gameInfo.game.appId}}
                 </div>
                 <div class="pull-right">
-                    {{game.reviewsCount | number:0}} reviews
+                    {{gameInfo.reviewsCount | number: 0}} Reviews
                 </div>
             </div>
         </div>
     <hr>
     <div>
         <h3 class="text-center">Top 5 Good Things</h3>
-        <div class="col-md-12 text-center" ng-repeat="n in [1, 2, 3, 4, 5] track by $index">
-            <p>{{n}}. The uninstall button</p>
+        <div class="col-md-12 text-center" ng-repeat="n in gameInfo.goodFeatures track by $index">
+            <p>{{n}}</p>
         </div>
     </div>
     <hr>
     <div>
         <h3 class="text-center">Top 5 Bad Things</h3>
-        <div class="col-md-12 text-center" ng-repeat="n in [1, 2, 3, 4, 5] track by $index">
-            <p>{{n}}. everything else</p>
+        <div class="col-md-12 text-center" ng-repeat="n in gameInfo.badFeatures track by $index">
+            <p>{{n}}</p>
         </div>
     </div>
     <hr>
     <div>
         <h3 class="text-center">Top Reviews</h3>
-        <div class="col-md-12 text-center" ng-repeat="n in [1, 2, 3, 4, 5] track by $index">
-            <p>{{n}}. everything else</p>
+        <div class="scol-md-12 text-center" ng-repeat="n in gameInfo.topReviews track by $index">
+            <p>{{n}}</p>
         </div>
     </div>
 </div>
