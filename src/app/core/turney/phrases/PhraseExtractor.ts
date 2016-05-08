@@ -25,7 +25,13 @@ export class PhraseExtractor extends PhraseExtractorBase
             let phrase = new Phrase(taggedWords[i], taggedWords[i+1], taggedWords[i+2]);
             
             if(this.isMatchingPhrase(phrase))
+            {
+                // Drop the third word of the phrase
+                phrase.words.splice(2, 1);
+
+                // Extract the phrase
                 extractedPhrases.push(phrase);
+            }
         }
         
         return extractedPhrases;
@@ -36,11 +42,11 @@ export class PhraseExtractor extends PhraseExtractorBase
         // Loop over all the features testing this phrase against them
         for (let feature of this.features)
         {
-            if(!feature.testPhrase(phrase))
-                return false;
+            if(feature.testPhrase(phrase))
+                return true;
         }
 
-        // If it gets here then the phrase matched
-        return true;
+        // If it gets here then the phrase didn't match
+        return false;
     }
 }

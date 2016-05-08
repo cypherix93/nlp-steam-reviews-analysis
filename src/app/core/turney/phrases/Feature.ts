@@ -18,6 +18,8 @@ export class Feature
         if(phrase.words.length !== 3)
             return false;
 
+        console.log(phrase.words[0], phrase.words[1], phrase.words[2]);
+
         var firstMatch = this.testTag(phrase.words[0].tag, this.firstExpression);
         var secondMatch = this.testTag(phrase.words[1].tag, this.secondExpression);
         var thirdMatch = this.testTag(phrase.words[2].tag, this.thirdExpression);
@@ -27,11 +29,20 @@ export class Feature
 
     private testTag(tag:string, expression:string):boolean
     {
-        return eval(`${this.expressionize(tag)} === ${this.expressionize(expression)}`);
+        // If trying to match any tag, then return true
+        if(expression === "ANY")
+            return true;
+
+        var exprToEval = `${this.expressionize(tag)} === (${this.expressionize(expression)})`;
+
+        console.log(exprToEval);
+
+        // Otherwise evaluate the expression
+        return eval(exprToEval);
     }
 
     private expressionize(word:string):string
     {
-        return word.replace(/([A-Z]+)/g, "'$1'");
+        return word.replace(/([A-Z,\."]+)/g, "'$1'");
     }
 }

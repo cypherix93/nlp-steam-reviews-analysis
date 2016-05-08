@@ -6,6 +6,8 @@ export class PhraseExtractorBase
 
     constructor()
     {
+        this.features = [];
+
         this.initWithTurneyFeatures();
     }
 
@@ -14,7 +16,7 @@ export class PhraseExtractorBase
         this.addFeature(
             "JJ",
             "NN || NNS",
-            "*"
+            "ANY"
         );
         this.addFeature(
             "RB || RBR || RBS",
@@ -34,7 +36,7 @@ export class PhraseExtractorBase
         this.addFeature(
             "RB || RBR || RBS",
             "VB || VBD || VBN || VBG",
-            "*"
+            "ANY"
         );
     }
 
