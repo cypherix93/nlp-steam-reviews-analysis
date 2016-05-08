@@ -3,8 +3,6 @@ import fs = require("fs");
 import lowdb = require("lowdb");
 import storage = require("lowdb/file-sync");
 
-import {Game} from "../models/Game";
-import {Review} from "../models/Review";
 import {Config} from "../../config/Config";
 
 export class DbContext
