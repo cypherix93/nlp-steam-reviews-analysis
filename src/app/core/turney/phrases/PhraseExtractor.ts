@@ -23,6 +23,8 @@ export class PhraseExtractor extends PhraseExtractorBase
         for (let i = 0; i < taggedWords.length - 2; i++)
         {            
             let phrase = new Phrase(taggedWords[i], taggedWords[i+1], taggedWords[i+2]);
+
+            console.log(phrase);
             
             if(this.isMatchingPhrase(phrase))
             {
@@ -42,7 +44,7 @@ export class PhraseExtractor extends PhraseExtractorBase
         // Loop over all the features testing this phrase against them
         for (let feature of this.features)
         {
-            if(feature.testPhrase(phrase))
+            if(feature(phrase))
                 return true;
         }
 
