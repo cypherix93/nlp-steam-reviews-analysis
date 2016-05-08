@@ -24,8 +24,6 @@ export class PhraseExtractor extends PhraseExtractorBase
         {            
             let phrase = new Phrase(taggedWords[i], taggedWords[i+1], taggedWords[i+2]);
 
-            console.log(phrase);
-            
             if(this.isMatchingPhrase(phrase))
             {
                 // Drop the third word of the phrase
