@@ -2,15 +2,15 @@ import {Phrase} from "../../database/models/Phrase";
 
 export class Feature
 {
-    public firstExpression:string;
-    public secondExpression:string;
-    public thirdExpression:string;
+    public firstWordTest:(tag) => boolean;
+    public secondWordTest:(tag) => boolean;
+    public thirdWordTest:(tag) => boolean;
 
-    constructor(firstExpression:string, secondExpression:string, thirdExpression:string)
+    constructor(firstWordTest:(tag) => boolean, secondWordTest:(tag) => boolean, thirdWordTest:(tag) => boolean)
     {
-        this.firstExpression = firstExpression;
-        this.secondExpression = secondExpression;
-        this.thirdExpression = thirdExpression;
+        this.firstWordTest = firstWordTest;
+        this.secondWordTest = secondWordTest;
+        this.thirdWordTest = thirdWordTest;
     }
 
     public testPhrase(phrase:Phrase):boolean
@@ -18,31 +18,10 @@ export class Feature
         if(phrase.words.length !== 3)
             return false;
 
-        console.log(phrase.words[0], phrase.words[1], phrase.words[2]);
-
-        var firstMatch = this.testTag(phrase.words[0].tag, this.firstExpression);
-        var secondMatch = this.testTag(phrase.words[1].tag, this.secondExpression);
-        var thirdMatch = this.testTag(phrase.words[2].tag, this.thirdExpression);
+        var firstMatch = this.firstWordTest(phrase.words[0].tag);
+        var secondMatch = this.secondWordTest(phrase.words[1].tag);
+        var thirdMatch = this.thirdWordTest(phrase.words[2].tag);
 
         return firstMatch && secondMatch && thirdMatch;
-    }
-
-    private testTag(tag:string, expression:string):boolean
-    {
-        // If trying to match any tag, then return true
-        if(expression === "ANY")
-            return true;
-
-        var exprToEval = `${this.expressionize(tag)} === (${this.expressionize(expression)})`;
-
-        console.log(exprToEval);
-
-        // Otherwise evaluate the expression
-        return eval(exprToEval);
-    }
-
-    private expressionize(word:string):string
-    {
-        return word.replace(/([A-Z,\."]+)/g, "'$1'");
     }
 }

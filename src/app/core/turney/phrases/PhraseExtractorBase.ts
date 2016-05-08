@@ -14,33 +14,33 @@ export class PhraseExtractorBase
     private initWithTurneyFeatures()
     {
         this.addFeature(
-            "JJ",
-            "NN || NNS",
-            "ANY"
+            tag => tag === "JJ",
+            tag => tag === "NN" || tag === "NNS",
+            tag => true
         );
         this.addFeature(
-            "RB || RBR || RBS",
-            "JJ",
-            "!NN && !NNS"
+            tag => tag === "RB" || tag === "RBR" || tag === "RBS",
+            tag => tag === "JJ",
+            tag => tag !== "NN" && tag !== "NNS"
         );
         this.addFeature(
-            "JJ",
-            "JJ",
-            "!NN && !NNS"
+            tag => tag === "JJ",
+            tag => tag === "JJ",
+            tag => tag !== "NN" && tag !== "NNS"
         );
         this.addFeature(
-            "NN || NNS",
-            "JJ",
-            "!NN && !NNS"
+            tag => tag === "NN" || tag === "NNS",
+            tag => tag === "JJ",
+            tag => tag !== "NN" && tag !== "NNS"
         );
         this.addFeature(
-            "RB || RBR || RBS",
-            "VB || VBD || VBN || VBG",
-            "ANY"
+            tag => tag === "RB" || tag === "RBR" || tag === "RBS",
+            tag => tag === "VB" || tag === "VBD" || tag === "VBN" || tag === "VBG",
+            tag => true
         );
     }
 
-    public addFeature(firstWord:string, secondWord:string, thirdWord:string)
+    public addFeature(firstWord:(tag) => boolean, secondWord:(tag) => boolean, thirdWord:(tag) => boolean)
     {
         this.features.push(new Feature(firstWord, secondWord, thirdWord));
     }
