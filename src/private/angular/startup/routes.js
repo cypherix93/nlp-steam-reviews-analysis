@@ -6,9 +6,17 @@ angular.module("AngularApp")
         $locationProvider.html5Mode(false);
 
         // Home page routes
-        $stateProvider.state("home",
+        $stateProvider
+            .state("home",
             {
                 url: "/",
                 templateUrl: "views/home/index.html"
+            });
+
+        $stateProvider
+            .state("test",
+            {
+                url: "/test",
+                templateUrl: "views/test/index.html"
             });
     });
