@@ -1,6 +1,8 @@
+import {Feature} from "./Feature";
+
 export class PhraseExtractorBase
 {
-    private features:Feature[];
+    protected features:Feature[];
 
     constructor()
     {
@@ -39,19 +41,5 @@ export class PhraseExtractorBase
     public addFeature(firstWord:string, secondWord:string, thirdWord:string)
     {
         this.features.push(new Feature(firstWord, secondWord, thirdWord));
-    }
-}
-
-class Feature
-{
-    public firstWord:string;
-    public secondWord:string;
-    public thirdWord:string;
-
-    constructor(firstWord:string, secondWord:string, thirdWord:string)
-    {
-        this.firstWord = firstWord;
-        this.secondWord = secondWord;
-        this.thirdWord = thirdWord;
     }
 }

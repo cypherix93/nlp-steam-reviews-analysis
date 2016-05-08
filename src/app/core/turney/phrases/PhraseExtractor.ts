@@ -20,7 +20,7 @@ export class PhraseExtractor extends PhraseExtractorBase
     {
         var extractedPhrases:Phrase[] = [];
         
-        for (let i = 0; i < taggedWords.length; i++)
+        for (let i = 0; i < taggedWords.length - 2; i++)
         {            
             let phrase = new Phrase(taggedWords[i], taggedWords[i+1], taggedWords[i+2]);
             
@@ -33,8 +33,14 @@ export class PhraseExtractor extends PhraseExtractorBase
 
     private isMatchingPhrase(phrase:Phrase):boolean
     {
-        // Implement the matching phrase by looking at each feature in this extractor
+        // Loop over all the features testing this phrase against them
+        for (let feature of this.features)
+        {
+            if(!feature.testPhrase(phrase))
+                return false;
+        }
 
-        return false;
+        // If it gets here then the phrase matched
+        return true;
     }
 }
