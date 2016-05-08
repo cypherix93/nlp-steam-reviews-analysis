@@ -11,6 +11,11 @@ export class PhraseExtractorBase
         this.initWithTurneyFeatures();
     }
 
+    public addFeature(feature:(phrase:Phrase) => boolean)
+    {
+        this.features.push(feature);
+    }
+
     private initWithTurneyFeatures()
     {
         // 1. JJ | JJR | JJS
@@ -80,10 +85,5 @@ export class PhraseExtractorBase
 
             return match1 && match2;
         });
-    }
-
-    public addFeature(feature:(phrase:Phrase) => boolean)
-    {
-        this.features.push(feature);
     }
 }
