@@ -1,9 +1,8 @@
 import {Phrase} from "../../database/models/Phrase";
 import {DbContext} from "../../database/context/DbContext";
 import {Review} from "../../database/models/Review";
-import _ = require("lodash");
 
-const pos = require("pos");
+import _ = require("lodash");
 
 export class LookupHelper
 {
