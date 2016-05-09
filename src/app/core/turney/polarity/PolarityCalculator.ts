@@ -5,6 +5,8 @@ export class PolarityCalculator
 {
     public static computePolarity(phrase:Phrase, polarWordPair:PolarWordPair):number
     {
+        
+        
         return -1;
     }
 }
