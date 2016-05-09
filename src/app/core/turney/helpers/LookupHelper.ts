@@ -11,25 +11,25 @@ export class LookupHelper
 
     public static lookupAllOccurrences(phrase: Phrase):number
     {
-        return this.countOccurrences(phrase, null);
+        return this.countOccurrences(phrase);
     }
 
-    public static lookupAllNegativeOccurrences(phrase: Phrase):number
+    public static lookupNegativeOccurrences(phrase: Phrase):number
     {
         return this.countOccurrences(phrase, "neg");
     }
 
-    public static lookupAllPositiveOccurrences(phrase: Phrase):number
+    public static lookupPositiveOccurrences(phrase: Phrase):number
     {
         return this.countOccurrences(phrase, "pos");
     }
 
-    private static countOccurrences(phrase:Phrase, type:string):number
+    private static countOccurrences(phrase:Phrase, type?:string):number
     {
-
         var count = 0;
 
-        if (type === "pos") {
+        if (type === "pos")
+        {
             for (let review of LookupHelper.allReviews)
             {
                 let reviewBody = review.reviewBody;
@@ -39,7 +39,8 @@ export class LookupHelper
                 }
             }
         }
-        else if (type === "neg") {
+        else if (type === "neg")
+        {
             for (let review of LookupHelper.allReviews)
             {
                 let reviewBody = review.reviewBody;
@@ -49,21 +50,23 @@ export class LookupHelper
                 }
             }
         }
-        else {
-        for (let review of LookupHelper.allReviews)
+        else
         {
-            let reviewBody = review.reviewBody;
-            if (reviewBody.includes(phrase.phrase) && (review.recommended))
+            for (let review of LookupHelper.allReviews)
             {
-                count++;
+                let reviewBody = review.reviewBody;
+                if (reviewBody.includes(phrase.phrase))
+                {
+                    count++;
+                }
             }
-        }
 
         }
         return count;
     }
 
-    private static getVocabularySize():number {
+    private static getVocabularySize():number
+    {
         return DbContext.reviews.length;
     }
 
