@@ -2,7 +2,13 @@ angular.module("AngularApp")
     .controller("GameInfoController", function GameInfoController(GameDataService, $stateParams)
     {
         const self = this;
-        self.game = GameDataService.getGameById($stateParams.appId);
+
+        GameDataService.getGameById($stateParams.appId)
+            .then(game =>
+            {
+                self.game = game;
+            });
+
         self.badFeatures = ["Poop", "Makes", "the", "World", "Poopier"];
         self.goodFeatures = ["#Naranja", "#Nuhlupah", "#Fedora", "#SameJeans", "#Community"];
         self.topReviews = ["Such a disapointmet... Flatout 1/2/UC are one of my favourite racing games, but this game is just terrible. Graphics are worse than in Flatout 2, but it lags as hell, even though my pc runs Crysis 2 on high settings without any problem. Music is worse, physics and camera are much worse, interface feels very uncomfortable. The only good thing about it is that it doesn't have GFWL support, when the UC did. Overall it is a really, really bad game. It wouldn't be such a big deal for me, if it wasn't a sequel to flatout games, but, unfortunately, it is and it makes it the worst game i have played in a last few years.",

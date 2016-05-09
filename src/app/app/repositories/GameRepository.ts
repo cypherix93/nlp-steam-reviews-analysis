@@ -1,5 +1,6 @@
 import {DbContext} from "../../core/database/context/DbContext";
 import {GameInfoWidget} from "../viewmodels/GameInfoWidget";
+import {Game} from "../../core/database/models/Game";
 
 export class GameRepository
 {
@@ -22,7 +23,7 @@ export class GameRepository
         return games;
     }
 
-    public static getById(id:number)
+    public static getById(id:number):Game
     {
         return DbContext.games
             .chain()
