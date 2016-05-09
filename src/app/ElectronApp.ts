@@ -1,6 +1,7 @@
 /// <reference path="../../typings/main.d.ts" />
 
 import {Config} from "./core/config/Config";
+import {Bootstrapper} from "./core/config/Bootstrap";
 
 export class ElectronApp
 {
@@ -15,7 +16,7 @@ export class ElectronApp
         ElectronApp.init();
 
         // Bootstrap the main process and setup event handlers
-        
+        Bootstrapper.bootstrap();
 
         // Start up the app
         console.log("=> Starting Electron...");
