@@ -13,7 +13,7 @@ export class PolarityCalculator
         for (let phrase of distinctPhrases)
         {
             phrase.polarity = await PolarityCalculator.computePolarity(phrase, vocabularySize);
-            console.log(`${phrase.phrase} + ${phrase.polarity}`);
+            console.log(`${phrase.phrase} => ${phrase.polarity}`);
         }
 
         return distinctPhrases;
