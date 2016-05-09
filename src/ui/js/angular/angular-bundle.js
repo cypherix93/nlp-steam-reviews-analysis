@@ -17,21 +17,24 @@ angular.module("AngularApp")
         // Home page routes
         $stateProvider
             .state("home",
-                {
-                    url: "/",
-                    templateUrl: "views/home/index.html"
-                })
+            {
+                url: "/",
+                templateUrl: "views/home/index.html"
+            });
+
+        $stateProvider
+            .state("test",
+            {
+                url: "/test",
+                templateUrl: "views/test/index.html"
+            });
+
+        $stateProvider
             .state("gameInfo",
                 {
                     url: "/gameInfo/:appId",
                     templateUrl: "views/gameInfo/gameInfo.html"
-                })
-            .state("test",
-                {
-                    url: "/test",
-                    templateUrl: "views/test/test.html"
                 });
-
     }]);
 angular.module("AngularApp")
     .run(["$state", function($state)
@@ -124,5 +127,24 @@ angular.module("AngularApp")
         
         self.games = GameDataService.getGamesForWidgets();
     }]);
-angular.module("AngularApp").run(["$templateCache", function($templateCache) {$templateCache.put("templates/home/game-info-widget-template.html","<div class=\"panel panel-default\" ui-sref=\"gameInfo({appId: game.appId })\">\n    <div class=\"panel-body row\">\n        <div class=\"col-xs-3\">\n            <img src=\"\" alt=\"Some Image\" class=\"img-thumbnail img-responsive\">\n        </div>\n        <div class=\"col-xs-9\">\n            <h4>\n                {{game.title}}\n            </h4>\n            <pos-neg-bar pos=\"game.positiveReviewsPercentage\" neg=\"game.negativeReviewsPercentage\"></pos-neg-bar>\n            <hr>\n\n            <div class=\"pull-left\">\n                App ID: {{game.appId}}\n            </div>\n            <div class=\"pull-right\">\n                {{game.reviewsCount | number:0}} reviews\n            </div>\n        </div>\n    </div>\n</div>");
-$templateCache.put("templates/shared/pos-neg-bar-template.html","<uib-progress>\n    <uib-bar value=\"pos\" type=\"success\">\n        <span>Positive: {{pos}}</span>\n    </uib-bar>\n    <uib-bar value=\"neg\" type=\"danger\">\n        <span>Negative: {{neg}}</span>\n    </uib-bar>\n</uib-progress>");}]);
+angular.module("AngularApp")
+    .controller("TestController", ["AppComponentService", function (AppComponentService)
+    {
+        const self = this;
+
+        self.phrases = [];
+
+        self.sequence = null;
+
+        self.analyze = function ()
+        {
+            if(!self.sequence)
+                return;
+
+            var analyzer = AppComponentService.getModule("app/analyzers/SentimentAnalyzer").SentimentAnalyzer;
+
+            self.phrases = analyzer.analyzeSequence(self.sequence);
+        }
+    }]);
+angular.module("AngularApp").run(["$templateCache", function($templateCache) {$templateCache.put("templates/home/game-info-widget-template.html","<div class=\"panel panel-default\" ui-sref=\"gameInfo({appId: game.appId })\">\r\n    <div class=\"panel-body row\">\r\n        <div class=\"col-xs-3\">\r\n            <img src=\"\" alt=\"Some Image\" class=\"img-thumbnail img-responsive\">\r\n        </div>\r\n        <div class=\"col-xs-9\">\r\n            <h4>\r\n                {{game.title}}\r\n            </h4>\r\n            <pos-neg-bar pos=\"game.positiveReviewsPercentage\" neg=\"game.negativeReviewsPercentage\"></pos-neg-bar>\r\n            <hr>\r\n\r\n            <div class=\"pull-left\">\r\n                App ID: {{game.appId}}\r\n            </div>\r\n            <div class=\"pull-right\">\r\n                {{game.reviewsCount | number:0}} reviews\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>");
+$templateCache.put("templates/shared/pos-neg-bar-template.html","<uib-progress>\r\n    <uib-bar value=\"pos\" type=\"success\">\r\n        <span>Positive: {{pos}}</span>\r\n    </uib-bar>\r\n    <uib-bar value=\"neg\" type=\"danger\">\r\n        <span>Negative: {{neg}}</span>\r\n    </uib-bar>\r\n</uib-progress>");}]);
