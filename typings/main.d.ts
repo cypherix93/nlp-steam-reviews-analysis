@@ -16,3 +16,4 @@
 /// <reference path="main/ambient/serve-static/index.d.ts" />
 /// <reference path="main/ambient/shortid/index.d.ts" />
 /// <reference path="main/ambient/validator/index.d.ts" />
+/// <reference path="main/definitions/lodash/index.d.ts" />

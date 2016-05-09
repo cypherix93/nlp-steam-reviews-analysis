@@ -16,3 +16,4 @@
 /// <reference path="browser/ambient/serve-static/index.d.ts" />
 /// <reference path="browser/ambient/shortid/index.d.ts" />
 /// <reference path="browser/ambient/validator/index.d.ts" />
+/// <reference path="browser/definitions/lodash/index.d.ts" />
