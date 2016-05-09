@@ -9,36 +9,63 @@ export class LookupHelper
 {
     private static allReviews = DbContext.reviews.filter(x => x.gameId !== "323470") as Review[];
 
-    private static lexer = new pos.Lexer();
-
-    public static async lookupHits(word:string):Promise<number>
+    public static lookupAllOccurrences(phrase: Phrase):number
     {
-        var count = 0;
-
-        for (let review of LookupHelper.allReviews)
-        {
-            let reviewBody = review.reviewBody;
-            let words = LookupHelper.lexer.lex(reviewBody);
-
-            count += words.filter(w => w === word).length;
-        }
-        return count;
+        return this.countOccurrences(phrase, null);
     }
 
-    public static async lookupHitsNear(phrase:Phrase, polarWord:string):Promise<number>
+    public static lookupAllNegativeOccurrences(phrase: Phrase):number
     {
+        return this.countOccurrences(phrase, "neg");
+    }
+
+    public static lookupAllPositiveOccurrences(phrase: Phrase):number
+    {
+        return this.countOccurrences(phrase, "pos");
+    }
+
+    private static countOccurrences(phrase:Phrase, type:string):number
+    {
+
         var count = 0;
 
+        if (type === "pos") {
+            for (let review of LookupHelper.allReviews)
+            {
+                let reviewBody = review.reviewBody;
+                if (reviewBody.includes(phrase.phrase) && (review.recommended))
+                {
+                    count++;
+                }
+            }
+        }
+        else if (type === "neg") {
+            for (let review of LookupHelper.allReviews)
+            {
+                let reviewBody = review.reviewBody;
+                if (reviewBody.includes(phrase.phrase) && (!review.recommended))
+                {
+                    count++;
+                }
+            }
+        }
+        else {
         for (let review of LookupHelper.allReviews)
         {
             let reviewBody = review.reviewBody;
-            if (reviewBody.includes(phrase.phrase) && reviewBody.includes(polarWord))
+            if (reviewBody.includes(phrase.phrase) && (review.recommended))
             {
                 count++;
             }
         }
 
+        }
         return count;
     }
+
+    private static getVocabularySize():number {
+        return DbContext.reviews.length;
+    }
+
 
 }
