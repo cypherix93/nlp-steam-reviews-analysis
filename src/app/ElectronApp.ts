@@ -1,7 +1,5 @@
 /// <reference path="../../typings/main.d.ts" />
 
-import express = require("express");
-
 import {Config} from "./core/config/Config";
 
 export class ElectronApp
