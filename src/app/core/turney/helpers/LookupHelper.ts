@@ -11,17 +11,17 @@ export class LookupHelper
 
     public static lookupAllOccurrences(phrase: Phrase):number
     {
-        return this.countOccurrences(phrase);
+        return LookupHelper.countOccurrences(phrase);
     }
 
     public static lookupNegativeOccurrences(phrase: Phrase):number
     {
-        return this.countOccurrences(phrase, "neg");
+        return LookupHelper.countOccurrences(phrase, "neg");
     }
 
     public static lookupPositiveOccurrences(phrase: Phrase):number
     {
-        return this.countOccurrences(phrase, "pos");
+        return LookupHelper.countOccurrences(phrase, "pos");
     }
 
     private static countOccurrences(phrase:Phrase, type?:string):number
@@ -64,11 +64,4 @@ export class LookupHelper
         }
         return count;
     }
-
-    private static getVocabularySize():number
-    {
-        return DbContext.reviews.length;
-    }
-
-
 }
