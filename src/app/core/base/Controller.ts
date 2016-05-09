@@ -1,6 +1,6 @@
 import {Message} from "./Message";
 
-const {ipcMain} = require("electron");
+const registerIpc = require("electron-ipc-tunnel/server").default;
 
 export class Controller
 {
@@ -40,11 +40,11 @@ export class Controller
         // Loop through all the messages and hook up the events
         for (let message of this.messages)
         {
-            console.log(message);
-
-            ipcMain.on(message.channel, (event:Event, ...args:any[]) =>
+            // Register the message to the IPC
+            registerIpc(message.channel, async function (reply, ...args)
             {
-                event.returnValue = message.listener.apply(this, args) || null;
+                // Return with whatever the message handler returns
+                return message.listener.apply(this, args);
             });
         }
     }
