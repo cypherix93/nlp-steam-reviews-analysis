@@ -44,7 +44,7 @@ export class Controller
 
             ipcMain.on(message.channel, (event:Event, ...args:any[]) =>
             {
-                event.returnValue = message.listener(args);
+                event.returnValue = message.listener.apply(this, args) || null;
             });
         }
     }

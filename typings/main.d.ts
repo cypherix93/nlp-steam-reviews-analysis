@@ -5,7 +5,6 @@
 /// <reference path="main/ambient/express-serve-static-core/index.d.ts" />
 /// <reference path="main/ambient/express/index.d.ts" />
 /// <reference path="main/ambient/jsonwebtoken/index.d.ts" />
-/// <reference path="main/ambient/lodash/index.d.ts" />
 /// <reference path="main/ambient/mime/index.d.ts" />
 /// <reference path="main/ambient/moment-node/index.d.ts" />
 /// <reference path="main/ambient/moment/index.d.ts" />
