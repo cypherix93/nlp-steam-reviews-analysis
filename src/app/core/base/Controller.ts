@@ -41,10 +41,10 @@ export class Controller
         for (let message of this.messages)
         {
             // Register the message to the IPC
-            registerIpc(message.channel, async function (reply, ...args)
+            registerIpc(message.channel, function (reply, request)
             {
                 // Return with whatever the message handler returns
-                return message.listener.apply(this, args);
+                return message.listener(request);
             });
         }
     }
