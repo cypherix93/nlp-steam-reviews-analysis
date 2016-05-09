@@ -8,7 +8,7 @@ export class SentimentAnalyzer
 {
     private static extractor = new PhraseExtractor();
 
-    public static analyzeSequence(sequence:string)
+    public static async analyzeSequence(sequence:string)
     {
         var dragonBallReviews = DbContext.reviews.filter(x => x.gameId === "323470") as Review[];
 
@@ -21,8 +21,6 @@ export class SentimentAnalyzer
             allPhrases = allPhrases.concat(phrases);
         }
 
-        console.log(allPhrases.length);
-
-        PolarityCalculator.computePolarityOfPhrases(allPhrases);
+        return PolarityCalculator.computePolarityOfPhrases(allPhrases);
     }
 }

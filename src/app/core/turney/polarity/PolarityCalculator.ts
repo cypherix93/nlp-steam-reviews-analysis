@@ -8,6 +8,9 @@ export class PolarityCalculator
     {
         var distinctPhrases = _.uniqBy(phrases, "phrase");
 
+        console.log(phrases.length);
+        console.log(distinctPhrases.length);
+
         var vocabularySize = distinctPhrases.length;
 
         for (let phrase of distinctPhrases)
@@ -16,7 +19,7 @@ export class PolarityCalculator
             console.log(`${phrase.phrase} => ${phrase.polarity}`);
         }
 
-        return distinctPhrases;
+        return distinctPhrases; 
     }
 
     private static async computePolarity(phrase:Phrase, vocabularySize:number):Promise<number>

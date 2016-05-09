@@ -14,6 +14,8 @@ angular.module("AngularApp")
 
             var analyzer = AppComponentService.getModule("app/analyzers/SentimentAnalyzer").SentimentAnalyzer;
 
-            self.phrases = analyzer.analyzeSequence(self.sequence);
+            analyzer.analyzeSequence(self.sequence);
+
+            console.log("Async Asserted");
         }
     });
