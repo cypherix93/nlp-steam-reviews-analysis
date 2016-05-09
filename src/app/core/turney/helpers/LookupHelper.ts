@@ -7,7 +7,7 @@ const pos = require("pos");
 
 export class LookupHelper
 {
-    private static allReviews = DbContext.reviews.cloneDeep() as Review[];
+    private static allReviews = DbContext.reviews.filter(x => x.gameId !== "323470") as Review[];
 
     private static lexer = new pos.Lexer();
 
@@ -27,8 +27,6 @@ export class LookupHelper
 
     public static async lookupHitsNear(phrase:Phrase, polarWord:string):Promise<number>
     {
-        // var filteredReviews = LookupHelper.allReviews.filter(x => x.gameId !== "323470");
-
         var count = 0;
 
         for (let review of LookupHelper.allReviews)

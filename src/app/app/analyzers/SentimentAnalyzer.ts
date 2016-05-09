@@ -1,6 +1,9 @@
 import {PhraseExtractor} from "../../core/turney/phrases/PhraseExtractor";
 import {PolarityCalculator} from "../../core/turney/polarity/PolarityCalculator";
 import {PolarWordPair} from "../../core/turney/polarity/PolarWordPair";
+import {DbContext} from "../../core/database/context/DbContext";
+import {Review} from "../../core/database/models/Review";
+import {Phrase} from "../../core/database/models/Phrase";
 
 export class SentimentAnalyzer
 {
@@ -8,10 +11,21 @@ export class SentimentAnalyzer
 
     public static analyzeSequence(sequence:string)
     {
-        var phrases = SentimentAnalyzer.extractor.extract(sequence);
+        var dragonBallReviews = DbContext.reviews.filter(x => x.gameId === "323470") as Review[];
 
-        var polarWordPair = new PolarWordPair("good", "bad");
+        let polarWordPair = new PolarWordPair("good", "bad");
 
-        PolarityCalculator.computePolarityOfPhrases(phrases, polarWordPair);
+        var allPhrases:Phrase[] = [];
+
+        for (let review of dragonBallReviews)
+        {
+            let phrases = SentimentAnalyzer.extractor.extract(review.reviewBody);
+
+            allPhrases = allPhrases.concat(phrases);
+        }
+
+        console.log(allPhrases.length);
+
+        PolarityCalculator.computePolarityOfPhrases(allPhrases, polarWordPair);
     }
 }
