@@ -4,14 +4,14 @@ import {LookupHelper} from "../helpers/LookupHelper";
 
 export class PolarityCalculator
 {
-    public static computePolarityOfPhrases(phrases:Phrase[], polarWordPair:PolarWordPair):Phrase[]
+    public static async computePolarityOfPhrases(phrases:Phrase[], polarWordPair:PolarWordPair):Promise<Phrase[]>
     {
-        var positiveHits = LookupHelper.lookupHits(polarWordPair.positive);
-        var negativeHits = LookupHelper.lookupHits(polarWordPair.negative);
+        var positiveHits = await LookupHelper.lookupHits(polarWordPair.positive);
+        var negativeHits = await LookupHelper.lookupHits(polarWordPair.negative);
 
         for (let phrase of phrases)
         {
-            PolarityCalculator.computePolarity(phrase, polarWordPair, positiveHits, negativeHits);
+            await PolarityCalculator.computePolarity(phrase, polarWordPair, positiveHits, negativeHits);
 
             console.log(`${phrase.phrase} => ${phrase.polarity}`);
         }
@@ -19,10 +19,10 @@ export class PolarityCalculator
         return phrases;
     }
 
-    private static computePolarity(phrase:Phrase, polarWordPair:PolarWordPair, positiveHits:number, negativeHits:number)
+    private static async computePolarity(phrase:Phrase, polarWordPair:PolarWordPair, positiveHits:number, negativeHits:number)
     {
-        var positiveNearHits = LookupHelper.lookupHitsNear(phrase, polarWordPair.positive);
-        var negativeNearHits = LookupHelper.lookupHitsNear(phrase, polarWordPair.negative);
+        var positiveNearHits = await LookupHelper.lookupHitsNear(phrase, polarWordPair.positive);
+        var negativeNearHits = await LookupHelper.lookupHitsNear(phrase, polarWordPair.negative);
 
         console.log(positiveNearHits, negativeNearHits, positiveHits, negativeHits);
 

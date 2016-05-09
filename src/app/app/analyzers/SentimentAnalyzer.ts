@@ -12,8 +12,6 @@ export class SentimentAnalyzer
 
         var polarWordPair = new PolarWordPair("good", "bad");
 
-        phrases = PolarityCalculator.computePolarityOfPhrases(phrases, polarWordPair);
-
-        return phrases;
+        PolarityCalculator.computePolarityOfPhrases(phrases, polarWordPair);
     }
 }

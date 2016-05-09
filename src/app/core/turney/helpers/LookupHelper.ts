@@ -7,32 +7,31 @@ const pos = require("pos");
 
 export class LookupHelper
 {
-    public static lookupHits(word:string):number
-    {
-        var allReviews = DbContext.reviews.cloneDeep() as Review[];
-        var count = 0;
-        let lexer = new pos.Lexer();
+    private static allReviews = DbContext.reviews.cloneDeep() as Review[];
 
-        for (let review of allReviews)
+    private static lexer = new pos.Lexer();
+
+    public static async lookupHits(word:string):Promise<number>
+    {
+        var count = 0;
+
+        for (let review of LookupHelper.allReviews)
         {
             let reviewBody = review.reviewBody;
-            let words = lexer.lex(reviewBody);
-            let wordCounts = _.countBy(words, _.identity);
+            let words = LookupHelper.lexer.lex(reviewBody);
 
-            if (wordCounts[word])
-            {
-                count += wordCounts[word];
-            }
+            count += words.filter(w => w === word).length;
         }
         return count;
     }
 
-    public static lookupHitsNear(phrase:Phrase, polarWord:string):number
+    public static async lookupHitsNear(phrase:Phrase, polarWord:string):Promise<number>
     {
-        var allReviews = DbContext.reviews.cloneDeep() as Review[];
+        // var filteredReviews = LookupHelper.allReviews.filter(x => x.gameId !== "323470");
+
         var count = 0;
 
-        for (let review of allReviews)
+        for (let review of LookupHelper.allReviews)
         {
             let reviewBody = review.reviewBody;
             if (reviewBody.includes(phrase.phrase) && reviewBody.includes(polarWord))
