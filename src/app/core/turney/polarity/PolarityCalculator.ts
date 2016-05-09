@@ -1,6 +1,6 @@
 import {Phrase} from "../../database/models/Phrase";
 import {LookupHelper} from "../helpers/LookupHelper";
-import _ from "lodash";
+import _ = require("lodash");
 
 export class PolarityCalculator
 {
@@ -21,21 +21,14 @@ export class PolarityCalculator
 
     private static async computePolarity(phrase:Phrase, vocabularySize:number):Promise<number>
     {
-        return PolarityCalculator.computeLaplaceProbability(phrase, vocabularySize, "pos") -
-            PolarityCalculator.computeLaplaceProbability(phrase, vocabularySize, "neg");
+        var posOccurences = LookupHelper.lookupPositiveOccurrences(phrase);
+        var negOccurences = LookupHelper.lookupNegativeOccurrences(phrase);
+        var allOccurences = LookupHelper.lookupAllOccurrences(phrase);
+
+        var numerator = posOccurences - negOccurences + 1;
+
+        var denominator = allOccurences + 1 + vocabularySize;
+
+        return numerator / denominator;
     }
-
-    private static async computeLaplaceProbability(phrase:Phrase, vocabularySize:number, type:string):Promise<number>
-    {
-        if (type === "pos") {
-            var numerator = LookupHelper.lookupPositiveOccurrences(phrase) + 1;
-        }
-        else {
-            var numerator = LookupHelper.lookupNegativeOccurrences(phrase) + 1;
-        }
-        var denominator = LookupHelper.lookupAllOccurrences(phrase) + 1 + vocabularySize;
-
-        return numerator/denominator;
-    }
-
 }
