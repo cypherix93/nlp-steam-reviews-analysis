@@ -6,10 +6,8 @@ import _ = require("lodash");
 const pos = require("pos");
 
 export class LookupHelper {
-    protected phrase:Phrase;
-    protected word:string;
 
-    public lookupHits(word:string):number {
+    public static lookupHits(word:string):number {
         var allReviews = DbContext.reviews.cloneDeep() as Review[];
         var count = 0;
         let lexer = new pos.Lexer();
@@ -26,8 +24,19 @@ export class LookupHelper {
         return count;
     }
 
-    public lookupHitsNear(phrase:Phrase, polarWord:String):number {
-        return 0;
+    public static lookupHitsNear(phrase:Phrase, polarWord:String):number {
+        var allReviews = DbContext.reviews.cloneDeep() as Review[];
+        var count = 0;
+
+        for (let review of allReviews) {
+            let reviewBody = review.reviewBody;
+            if (reviewBody.includes(phrase.phrase)) {
+                if (reviewBody.includes(polarWord)) {
+                    count++;
+                }
+            }
+        }
+        return count;
     }
 
 }
