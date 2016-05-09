@@ -14,6 +14,9 @@ export class GameRepository
                 .filter(r => r.gameId === game.appId)
                 .size()
                 .value();
+
+            game.positiveReviewsPercentage = Math.random();
+            game.negativeReviewsPercentage = 1 - game.positiveReviewsPercentage;
         }
 
         return games;
@@ -24,6 +27,6 @@ export class GameRepository
         return DbContext.games
             .chain()
             .filter(g => g.appId === id)
-            .value();
+            .value()[0];
     }
 }

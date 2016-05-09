@@ -1,8 +1,7 @@
 "use strict";
 
 angular.module("AngularApp")
-    .config(function ($stateProvider, $urlRouterProvider, $locationProvider)
-    {
+    .config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
         $locationProvider.html5Mode(false);
 
         // Home page routes
@@ -19,4 +18,11 @@ angular.module("AngularApp")
                 url: "/test",
                 templateUrl: "views/test/index.html"
             });
+
+        $stateProvider
+            .state("gameInfo",
+                {
+                    url: "/gameInfo/:appId",
+                    templateUrl: "views/gameInfo/gameInfo.html"
+                });
     });

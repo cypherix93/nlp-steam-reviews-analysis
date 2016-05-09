@@ -1,4 +1,4 @@
-<div class="panel panel-default">
+<div class="panel panel-default" ui-sref="gameInfo({appId: game.appId })">
     <div class="panel-body row">
         <div class="col-xs-3">
             <img src="" alt="Some Image" class="img-thumbnail img-responsive">
@@ -7,14 +7,7 @@
             <h4>
                 {{game.title}}
             </h4>
-            <uib-progress>
-                <uib-bar value="69" type="success">
-                    <span>Positive: 69%</span>
-                </uib-bar>
-                <uib-bar value="31" type="danger">
-                    <span>Negative: 31%</span>
-                </uib-bar>
-            </uib-progress>
+            <pos-neg-bar pos="game.positiveReviewsPercentage" neg="game.negativeReviewsPercentage"></pos-neg-bar>
             <hr>
 
             <div class="pull-left">
