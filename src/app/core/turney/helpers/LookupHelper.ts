@@ -27,7 +27,7 @@ export class LookupHelper
         return count;
     }
 
-    public static lookupHitsNear(phrase:Phrase, polarWord:String):number
+    public static lookupHitsNear(phrase:Phrase, polarWord:string):number
     {
         var allReviews = DbContext.reviews.cloneDeep() as Review[];
         var count = 0;
@@ -35,14 +35,12 @@ export class LookupHelper
         for (let review of allReviews)
         {
             let reviewBody = review.reviewBody;
-            if (reviewBody.includes(phrase.phrase))
+            if (reviewBody.includes(phrase.phrase) && reviewBody.includes(polarWord))
             {
-                if (reviewBody.includes(polarWord))
-                {
-                    count++;
-                }
+                count++;
             }
         }
+
         return count;
     }
 

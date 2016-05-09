@@ -1,4 +1,6 @@
 import {PhraseExtractor} from "../../core/turney/phrases/PhraseExtractor";
+import {PolarityCalculator} from "../../core/turney/polarity/PolarityCalculator";
+import {PolarWordPair} from "../../core/turney/polarity/PolarWordPair";
 
 export class SentimentAnalyzer
 {
@@ -8,7 +10,9 @@ export class SentimentAnalyzer
     {
         var phrases = SentimentAnalyzer.extractor.extract(sequence);
 
-        console.log(phrases.map(x => x.phrase));
+        var polarWordPair = new PolarWordPair("good", "bad");
+
+        phrases = PolarityCalculator.computePolarityOfPhrases(phrases, polarWordPair);
 
         return phrases;
     }
