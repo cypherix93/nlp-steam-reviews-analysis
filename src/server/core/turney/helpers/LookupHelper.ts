@@ -6,7 +6,7 @@ import _ = require("lodash");
 
 export class LookupHelper
 {
-    private static allReviews = DbContext.reviews.cloneDeep().filter(x => x.gameId !== "323470") as Review[];
+    private static allReviews = DbContext.reviews.cloneDeep() as Review[];
 
     public static lookupOccurrences(phrase:Phrase):{positive:number, negative:number}
     {
