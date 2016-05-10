@@ -1,5 +1,5 @@
 angular.module("AngularApp")
-    .controller("TestController", function (AppComponentService)
+    .controller("TestController", function (IPCService)
     {
         const self = this;
 
@@ -12,8 +12,12 @@ angular.module("AngularApp")
             if(!self.sequence)
                 return;
 
-            var analyzer = AppComponentService.getModule("app/analyzers/SentimentAnalyzer").SentimentAnalyzer;
+            IPCService.send("analyzer/analyzeSequence", { sequence: self.sequence})
+                .then((response) =>
+                {
+                    console.log("App returned: " + response);
+                });
 
-            self.phrases = analyzer.analyzeSequence(self.sequence);
+            console.log("Async Asserted");
         }
     });

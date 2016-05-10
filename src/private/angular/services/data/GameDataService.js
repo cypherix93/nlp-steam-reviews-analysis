@@ -1,19 +1,32 @@
 angular.module("AngularApp")
-    .service("GameDataService", function GameDataService(AppComponentService)
+    .service("GameDataService", function GameDataService($q, IPCService)
     {
         const self = this;
-
-        // Get the db context
-        const gameRepository = AppComponentService.getModule("app/repositories/GameRepository").GameRepository;
 
         // Get games
         self.getGamesForWidgets = function()
         {
-            return gameRepository.getGamesForWidgets();
-        }
+            var def = $q.defer();
+
+            IPCService.send("game/getGamesForWidgets")
+                .then(response =>
+                {
+                    def.resolve(response);
+                });
+
+            return def.promise;
+        };
 
         self.getGameById = function(appId)
         {
-            return gameRepository.getById(appId);
-        }
+            var def = $q.defer();
+
+            IPCService.send("game/getById", {id: appId})
+                .then(response =>
+                {
+                    def.resolve(response);
+                });
+
+            return def.promise;
+        };
     });

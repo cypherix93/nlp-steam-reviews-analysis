@@ -4,6 +4,8 @@ export class Phrase
 {
     public words:Word[];
 
+    public polarity:number;
+
     constructor(...words:Word[])
     {
         this.words = words;

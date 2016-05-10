@@ -3,5 +3,9 @@ angular.module("AngularApp")
     {
         const self = this;
         
-        self.games = GameDataService.getGamesForWidgets();
+        GameDataService.getGamesForWidgets()
+            .then(games =>
+            {
+                self.games = games;
+            });
     });

@@ -16,9 +16,9 @@ export class Review extends Model
         foundFunny: number
     };
 
-    public gameId:number;
+    public gameId:string;
 
-    constructor(gameId:number)
+    constructor(gameId:string)
     {
         super();
         

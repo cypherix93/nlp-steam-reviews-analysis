@@ -1,6 +1,7 @@
 /// <reference path="../../typings/main.d.ts" />
 
 import {Config} from "./core/config/Config";
+import {Bootstrapper} from "./core/config/Bootstrap";
 
 export class ElectronApp
 {
@@ -11,10 +12,13 @@ export class ElectronApp
 
     public static main()
     {
-        // Bootstrap the application and couple the middlewares
+        // Init the application and open the renderer view
         ElectronApp.init();
 
-        // Start up the server
+        // Bootstrap the main process and setup event handlers
+        Bootstrapper.bootstrap();
+
+        // Start up the app
         console.log("=> Starting Electron...");
     }
 
@@ -43,25 +47,16 @@ export class ElectronApp
         // Emitted when the window is closed.
         mainWindow.on('closed', function ()
         {
-            // Dereference the window object, usually you would store windows
-            // in an array if your app supports multi windows, this is the time
-            // when you should delete the corresponding element.
             mainWindow = null
         });
     }
 
     private static initWindowEvents()
     {
-        // This method will be called when Electron has finished
-        // initialization and is ready to create browser windows.
-        // Some APIs can only be used after this event occurs.
         ElectronApp.electronApp.on("ready", ElectronApp.createMainWindow);
 
-        // Quit when all windows are closed.
         ElectronApp.electronApp.on("window-all-closed", function ()
         {
-            // On OS X it is common for applications and their menu bar
-            // to stay active until the user quits explicitly with Cmd + Q
             if (process.platform !== "darwin")
             {
                 ElectronApp.electronApp.quit();
@@ -70,8 +65,6 @@ export class ElectronApp
 
         ElectronApp.electronApp.on('activate', function ()
         {
-            // On OS X it's common to re-create a window in the app when the
-            // dock icon is clicked and there are no other windows open.
             if (ElectronApp.mainWindow === null)
             {
                 ElectronApp.createMainWindow();

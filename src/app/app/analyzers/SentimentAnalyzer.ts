@@ -1,15 +1,26 @@
 import {PhraseExtractor} from "../../core/turney/phrases/PhraseExtractor";
+import {PolarityCalculator} from "../../core/turney/polarity/PolarityCalculator";
+import {DbContext} from "../../core/database/context/DbContext";
+import {Review} from "../../core/database/models/Review";
+import {Phrase} from "../../core/database/models/Phrase";
 
 export class SentimentAnalyzer
 {
     private static extractor = new PhraseExtractor();
 
-    public static analyzeSequence(sequence:string)
+    public static async analyzeSequence(sequence:string)
     {
-        var phrases = SentimentAnalyzer.extractor.extract(sequence);
+        var dragonBallReviews = DbContext.reviews.filter(x => x.gameId === "323470") as Review[];
 
-        console.log(phrases.map(x => x.phrase));
+        var allPhrases:Phrase[] = [];
 
-        return phrases;
+        for (let review of dragonBallReviews)
+        {
+            let phrases = SentimentAnalyzer.extractor.extract(review.reviewBody);
+
+            allPhrases = allPhrases.concat(phrases);
+        }
+
+        return PolarityCalculator.computePolarityOfPhrases(allPhrases);
     }
 }
