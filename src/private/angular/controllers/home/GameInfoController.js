@@ -3,7 +3,7 @@ angular.module("AngularApp")
     {
         var self = this;
 
-        APIService.post("/game/getById", {id: $stateParams.appId})
+        APIService.get("/games/getById/" + $stateParams.appId)
             .success(function(response)
             {
                 self.game = response;   
