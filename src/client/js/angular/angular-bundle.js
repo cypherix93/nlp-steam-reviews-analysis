@@ -127,10 +127,10 @@ angular.module("AngularApp")
     {
         var self = this;
 
-        APIService.post("game/getById", {id: $stateParams.appId})
-            .then(function(response)
+        APIService.post("/game/getById", {id: $stateParams.appId})
+            .success(function(response)
             {
-                self.game = response;  
+                self.game = response;   
             });
 
         self.badFeatures = ["Poop", "Makes", "the", "World", "Poopier"];
@@ -149,8 +149,8 @@ angular.module("AngularApp")
     {
         var self = this;
 
-        APIService.get("games/getForWidgets")
-            .then(function(response)
+        APIService.get("/games/getForWidgets")
+            .success(function(response)
             {
                 self.games = response;
             });

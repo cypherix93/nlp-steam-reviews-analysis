@@ -3,10 +3,10 @@ angular.module("AngularApp")
     {
         var self = this;
 
-        APIService.post("game/getById", {id: $stateParams.appId})
-            .then(function(response)
+        APIService.post("/game/getById", {id: $stateParams.appId})
+            .success(function(response)
             {
-                self.game = response;  
+                self.game = response;   
             });
 
         self.badFeatures = ["Poop", "Makes", "the", "World", "Poopier"];

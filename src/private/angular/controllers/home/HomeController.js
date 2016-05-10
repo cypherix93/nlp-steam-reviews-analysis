@@ -3,8 +3,8 @@ angular.module("AngularApp")
     {
         var self = this;
 
-        APIService.get("games/getForWidgets")
-            .then(function(response)
+        APIService.get("/games/getForWidgets")
+            .success(function(response)
             {
                 self.games = response;
             });

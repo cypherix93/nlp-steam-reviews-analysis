@@ -23,18 +23,18 @@
             <div class="col-md-6">
                 <h3 class="pull right">Top 5 Bad Things</h3>
                 <ol>
-                    <div ng-repeat="n in gameInfo.goodFeatures track by $index">
-                        <li>{{n}}</li>
-                    </div>
+                    <li ng-repeat="n in gameInfo.goodFeatures track by $index">
+                        {{n}}
+                    </li>
                 </ol>
             </div>
         </div>
         <div class="col-md-6">
             <h3 class="pull right">Top 5 Bad Things</h3>
             <ol>
-                <div ng-repeat="n in gameInfo.badFeatures track by $index">
-                    <li>{{n}}</li>
-                </div>
+                <li ng-repeat="n in gameInfo.badFeatures track by $index">
+                    {{n}}
+                </li>
             </ol>
         </div>
 
