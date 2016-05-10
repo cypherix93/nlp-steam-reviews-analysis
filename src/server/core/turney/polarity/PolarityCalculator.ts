@@ -8,9 +8,6 @@ export class PolarityCalculator
     {
         var distinctPhrases = _.uniqBy(phrases, "phrase");
 
-        console.log(phrases.length);
-        console.log(distinctPhrases.length);
-
         var vocabularySize = distinctPhrases.length;
 
         for (let phrase of distinctPhrases)

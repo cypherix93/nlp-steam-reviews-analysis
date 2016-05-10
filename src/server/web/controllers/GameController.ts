@@ -11,7 +11,7 @@ import {Game} from "../../core/database/models/Game";
 export class GameController
 {
     @Get("/getForWidgets")
-    public getGamesForWidgets():GameInfoWidget[]
+    public getForWidgets():GameInfoWidget[]
     {
         return GameRepository.getGamesForWidgets();
     }

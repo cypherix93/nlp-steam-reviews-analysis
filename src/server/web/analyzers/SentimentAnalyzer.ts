@@ -10,11 +10,18 @@ export class SentimentAnalyzer
 
     public static async analyzeSequence(sequence:string)
     {
-        var dragonBallReviews = DbContext.reviews.filter(x => x.gameId === "323470").slice(0, 5) as Review[];
+        var phrases = SentimentAnalyzer.extractor.extract(sequence);
+
+        return await PolarityCalculator.computePolarityOfPhrases(phrases);
+    }
+
+    public static async analyzeGame(appId:string)
+    {
+        var gameReviews = DbContext.reviews.filter(x => x.gameId === appId).slice(0, 5) as Review[];
 
         var allPhrases:Phrase[] = [];
 
-        for (let review of dragonBallReviews)
+        for (let review of gameReviews)
         {
             let phrases = SentimentAnalyzer.extractor.extract(review.reviewBody);
 
