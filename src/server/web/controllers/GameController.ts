@@ -1,24 +1,24 @@
-import {Controller} from "../../core/base/Controller";
+import {Request, Response} from "express";
+import {JsonController} from "routing-controllers/decorator/Controllers";
+import {Get, Post, Put, Patch, Delete} from "routing-controllers/decorator/Methods";
+import {Req, Res} from "routing-controllers/decorator/Params";
+
 import {GameRepository} from "../repositories/GameRepository";
 import {GameInfoWidget} from "../viewmodels/GameInfoWidget";
 import {Game} from "../../core/database/models/Game";
 
-export class GameController extends Controller
+@JsonController("/games")
+export class GameController
 {
-    constructor()
-    {
-        super();
-
-        this.initSelf(this);
-    }
-
+    @Get("/getForWidgets")
     public getGamesForWidgets():GameInfoWidget[]
     {
         return GameRepository.getGamesForWidgets();
     }
 
-    public getById(request):Game
+    @Get("/getById/:id")
+    public getById(@Req() request: Request):Game
     {
-        return GameRepository.getById(request.id);
+        return GameRepository.getById(request.params.id);
     }
 }

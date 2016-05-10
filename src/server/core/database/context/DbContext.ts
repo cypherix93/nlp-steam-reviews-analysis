@@ -7,7 +7,7 @@ import {Config} from "../../config/Config";
 
 export class DbContext
 {
-    private static dbLocation:string = path.join(Config.current.rootPath, "../data/db.json");
+    private static dbLocation:string = path.join(Config.current.rootPath, "../../data/db.json");
 
     public static context = lowdb(DbContext.dbLocation, {storage}, false);
 

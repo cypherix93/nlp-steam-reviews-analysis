@@ -9,7 +9,6 @@ var plugins = require("gulp-load-plugins")();
 
 // NPM Tools
 var runSequence = require("run-sequence");
-var merge = require("merge-stream");
 var streamqueue = require("streamqueue");
 
 // Directories

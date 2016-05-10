@@ -1,26 +1,18 @@
-import {Controller} from "../../core/base/Controller";
-import {SentimentAnalyzer} from "../analyzers/SentimentAnalyzer";
+import {Request, Response} from "express";
+import {JsonController} from "routing-controllers/decorator/Controllers";
+import {Get, Post, Put, Patch, Delete} from "routing-controllers/decorator/Methods";
+import {Req, Res, Param} from "routing-controllers/decorator/Params";
 import q = require("q");
 
-export class AnalyzerController extends Controller
+import {SentimentAnalyzer} from "../analyzers/SentimentAnalyzer";
+
+@JsonController("/analyzer")
+export class AnalyzerController
 {
-    constructor()
+    @Get("/")
+    public async analyzeSequence(request)
     {
-        super();
-
-        this.initSelf(this);
-    }
-
-    public analyzeSequence(request)
-    {
-        var def = q.defer();
-
-        SentimentAnalyzer.analyzeSequence(request.sequence)
-            .then(result => def.resolve(result));
-
-        console.log("Async Asserted");
-
-        return def.promise;
+        return await SentimentAnalyzer.analyzeSequence(request.sequence);
     }
 
     public test(request)

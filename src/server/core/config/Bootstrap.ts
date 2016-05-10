@@ -1,25 +1,19 @@
-import {Config} from "./Config";
-import path = require("path");
+import bodyParser = require("body-parser");
 
-const recursiveReaddirSync = require("recursive-readdir-sync");
+import {RoutesConfig} from "./routes/RoutesConfig";
+import {Express} from "express";
 
 export class Bootstrapper
 {
-    public static bootstrap()
+    public static bootstrap(app:Express)
     {
-        var controllerPath = path.join(Config.current.rootPath, "app/app/controllers");
-        var controllerFiles = recursiveReaddirSync(controllerPath);
+        console.log("=> Bootstrapping application...");
 
-        for (let file of controllerFiles)
-        {
-            let relativePath = path.relative(__dirname, file);
+        // Configure express middlewares
+        app.use(bodyParser.json());
+        app.use(bodyParser.urlencoded({extended: true}));
 
-            let controllerName = path.basename(relativePath, ".js");
-
-            let controller = require(relativePath)[controllerName];
-
-            // Instantiate the controller
-            new controller();
-        }
+        // Setup routes
+        RoutesConfig.init(app);
     }
 }
