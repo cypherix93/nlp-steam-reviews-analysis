@@ -17,7 +17,7 @@ angular.module("AngularApp")
                 {
                     console.log("App returned: " + response);
                 });
-
+            
             console.log("Async Asserted");
         }
     });

@@ -3,10 +3,10 @@
 module.exports = function (gulp, plugins, paths)
 {
     // Watch server files for changes
-    gulp.task("watch", ["watch-app", "watch-ui"]);
+    gulp.task("watch", ["watch-server", "watch-client"]);
 
     // Watch server files for changes
-    gulp.task("watch-app",
+    gulp.task("watch-server",
         function ()
         {
             plugins.watch(paths.app + "**",
@@ -17,13 +17,13 @@ module.exports = function (gulp, plugins, paths)
         });
 
     // Watch client files for changes
-    gulp.task("watch-ui",
+    gulp.task("watch-client",
         function ()
         {
-            plugins.watch(paths.ui + "**",
+            plugins.watch(paths.client + "**",
                 plugins.batch(function (events, done)
                 {
-                    gulp.start("copy-ui-files", done);
+                    gulp.start("copy-client-files", done);
                 }));
 
             plugins.watch([paths.angular + "**/*.js", paths.angular + "templates/**/*.html"],

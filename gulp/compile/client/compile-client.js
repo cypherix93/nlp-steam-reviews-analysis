@@ -6,20 +6,20 @@ var runSequence = require("run-sequence");
 module.exports = function (gulp, plugins, paths)
 {    
     // Compile Client files
-    gulp.task("compile-ui", ["bundle-ng-files", "preprocess-sass"], function (callback)
+    gulp.task("compile-client", ["bundle-ng-files", "preprocess-sass"], function (callback)
     {
         runSequence(
             ["bundle-ng-files", "preprocess-sass"],
-            "copy-ui-files",
+            "copy-client-files",
             callback
         );
     });
 
     // Compile Client files
-    gulp.task("copy-ui-files", function ()
+    gulp.task("copy-client-files", function ()
     {
-        return gulp.src(paths.ui + "**")
-            .pipe(plugins.debug({title: "[ui] copied:"}))
-            .pipe(gulp.dest(paths.build + "ui/"));
+        return gulp.src(paths.client + "**")
+            .pipe(plugins.debug({title: "[client] copied:"}))
+            .pipe(gulp.dest(paths.build + "client/"));
     });
 };

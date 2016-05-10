@@ -5,7 +5,7 @@ var typescript = require("typescript");
 module.exports = function (gulp, plugins, paths)
 {
     // Compile Server files
-    gulp.task("compile-app", function ()
+    gulp.task("compile-server", function ()
     {
         var tsFilter = plugins.filter("**/*.ts", {restore: true});
 
@@ -18,8 +18,8 @@ module.exports = function (gulp, plugins, paths)
                 experimentalDecorators: true,
                 removeComments: true
             }))
-            .pipe(plugins.debug({title: "[app] compiled:"}))
+            .pipe(plugins.debug({title: "[server] compiled:"}))
             .pipe(tsFilter.restore)
-            .pipe(gulp.dest(paths.build + "app/"));
+            .pipe(gulp.dest(paths.build + "server/"));
     });
 };

@@ -18,12 +18,14 @@ module.exports = function (gulp, plugins, paths)
         
         var angularTemplates = paths.angular + "templates/**/*.html";
         
-        var angularDest = paths.ui + "js/angular/";
+        var angularDest = paths.client + "js/angular/";
         
         var scripts = gulp.src(angularScripts)
             .pipe(plugins.debug({title: "angular app:"}))
+            .pipe(plugins.plumber())
             .pipe(plugins.concat("angular-scripts.js"))
-            .pipe(plugins.ngAnnotate());
+            .pipe(plugins.ngAnnotate())
+            .pipe(plugins.plumber.stop());
         
         var templates = gulp.src(angularTemplates)
             .pipe(plugins.debug({title: "angular templates:"}))
