@@ -29,7 +29,7 @@ module.exports = function (gulp, plugins, paths, meta)
             .pipe(gulp.dest("."));
         
         // Update meta.json Info
-        var metaJson = gulp.src(paths.ui + "angular/meta.json")
+        var metaJson = gulp.src(paths.client + "angular/meta.json")
             .pipe(plugins.debug({title: "meta.json:"}))
             .pipe(plugins.jsonEditor({
                 name: meta.name,
@@ -38,7 +38,7 @@ module.exports = function (gulp, plugins, paths, meta)
                 copyright: meta.copyright,
                 authors: meta.authors
             }))
-            .pipe(gulp.dest(paths.ui + "angular/"));
+            .pipe(gulp.dest(paths.client + "angular/"));
         
         return merge(bowerJson, packageJson, metaJson);
     });

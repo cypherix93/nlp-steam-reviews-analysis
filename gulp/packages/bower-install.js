@@ -8,7 +8,7 @@ module.exports = function (gulp, plugins, paths)
     // Install Bower Packages
     gulp.task("bower-install", ["bower-restore"], function ()
     {
-        var libDir = paths.ui + "lib/";
+        var libDir = paths.client + "lib/";
         
         var jsFilter = plugins.filter(["**/*.js", "!**/*.min.js"], {restore: true});
         var cssFilter = plugins.filter(["**/*.css", "!**/*.min.css"], {restore: true});

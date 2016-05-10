@@ -1,12 +1,12 @@
 angular.module("AngularApp")
-    .controller("GameInfoController", function GameInfoController(GameDataService, $stateParams)
+    .controller("GameInfoController", function GameInfoController(APIService, $stateParams)
     {
-        const self = this;
+        var self = this;
 
-        GameDataService.getGameById($stateParams.appId)
-            .then(game =>
+        APIService.get("/games/getById/" + $stateParams.appId)
+            .success(function(response)
             {
-                self.game = game;
+                self.game = response;   
             });
 
         self.badFeatures = ["Poop", "Makes", "the", "World", "Poopier"];
