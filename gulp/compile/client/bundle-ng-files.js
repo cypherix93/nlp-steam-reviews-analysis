@@ -42,6 +42,11 @@ module.exports = function (gulp, plugins, paths)
             .queue(templates)
             .done()
             .pipe(plugins.concat("angular-bundle.js"))
+            .pipe(gulp.dest(angularDest))
+            .pipe(plugins.uglify())
+            .pipe(plugins.rename({
+                suffix: ".min"
+            }))
             .pipe(gulp.dest(angularDest));
         
         return bundle;

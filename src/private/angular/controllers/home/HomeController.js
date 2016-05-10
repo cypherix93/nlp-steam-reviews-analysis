@@ -1,11 +1,11 @@
 angular.module("AngularApp")
-    .controller("HomeController", function HomeController(GameDataService)
+    .controller("HomeController", function HomeController(APIService)
     {
-        const self = this;
-        
-        GameDataService.getGamesForWidgets()
-            .then(games =>
+        var self = this;
+
+        APIService.get("games/getForWidgets")
+            .then(function(response)
             {
-                self.games = games;
+                self.games = response;
             });
     });

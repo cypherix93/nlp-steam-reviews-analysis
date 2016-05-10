@@ -1,5 +1,5 @@
 angular.module("AngularApp")
-    .run(function($state)
+    .run(function ($state)
     {
         $state.go("home");
     });

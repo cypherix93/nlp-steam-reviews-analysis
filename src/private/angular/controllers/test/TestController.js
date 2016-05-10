@@ -1,7 +1,7 @@
 angular.module("AngularApp")
-    .controller("TestController", function (IPCService)
+    .controller("TestController", function (APIService)
     {
-        const self = this;
+        var self = this;
 
         self.phrases = [];
 
@@ -9,15 +9,13 @@ angular.module("AngularApp")
 
         self.analyze = function ()
         {
-            if(!self.sequence)
+            if (!self.sequence)
                 return;
 
-            IPCService.send("analyzer/analyzeSequence", { sequence: self.sequence})
-                .then((response) =>
+            APIService.post("analyze/sequence", {sequence: self.sequence})
+                .then(function(response)
                 {
                     console.log("App returned: " + response);
                 });
-            
-            console.log("Async Asserted");
         }
     });

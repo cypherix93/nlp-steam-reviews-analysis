@@ -11,24 +11,25 @@ angular.module("AngularApp", [
 "use strict";
 
 angular.module("AngularApp")
-    .config(["$stateProvider", "$urlRouterProvider", "$locationProvider", function ($stateProvider, $urlRouterProvider, $locationProvider) {
+    .config(["$stateProvider", "$urlRouterProvider", "$locationProvider", function ($stateProvider, $urlRouterProvider, $locationProvider)
+    {
         $locationProvider.html5Mode(false);
-
+        
         // Home page routes
         $stateProvider
             .state("home",
-            {
-                url: "/",
-                templateUrl: "views/home/index.html"
-            });
-
+                {
+                    url: "/",
+                    templateUrl: "views/home/index.html"
+                });
+        
         $stateProvider
             .state("test",
-            {
-                url: "/test",
-                templateUrl: "views/test/index.html"
-            });
-
+                {
+                    url: "/test",
+                    templateUrl: "views/test/index.html"
+                });
+        
         $stateProvider
             .state("gameInfo",
                 {
@@ -37,56 +38,59 @@ angular.module("AngularApp")
                 });
     }]);
 angular.module("AngularApp")
-    .run(["$state", function($state)
+    .run(["$state", function ($state)
     {
         $state.go("home");
     }]);
 angular.module("AngularApp")
-    .service("IPCService", function IPCService()
+    .service("APIService", ["$http", "ConstantsService", function APIService($http, ConstantsService)
     {
-        const self = this;
-    
-        const IpcClient = require("electron-ipc-tunnel/client").default;
-    
-        const client = new IpcClient();
+        var self = this;
 
-        self.send = function(channel, request)
+        var baseUrl = ConstantsService.apiBaseUrl;
+
+        var bindMethods = function ()
         {
-            return client.send(channel, request);
-        }
-    });
-angular.module("AngularApp")
-    .service("GameDataService", ["$q", "IPCService", function GameDataService($q, IPCService)
-    {
-        const self = this;
+            for (var i = 0; i < arguments.length; i++)
+            {
+                var arg = arguments[i];
 
-        // Get games
-        self.getGamesForWidgets = function()
-        {
-            var def = $q.defer();
-
-            IPCService.send("game/getGamesForWidgets")
-                .then(response =>
+                self[arg] = (function(method)
                 {
-                    def.resolve(response);
-                });
-
-            return def.promise;
+                    return function (apiUrl, config)
+                    {
+                        return $http[method](baseUrl + apiUrl, config);
+                    }
+                })(arg);
+            }
         };
 
-        self.getGameById = function(appId)
+        var bindMethodsWithData = function ()
         {
-            var def = $q.defer();
+            for (var i = 0; i < arguments.length; i++)
+            {
+                var arg = arguments[i];
 
-            IPCService.send("game/getById", {id: appId})
-                .then(response =>
+                self[arg] = (function(method)
                 {
-                    def.resolve(response);
-                });
-
-            return def.promise;
+                    return function (apiUrl, data, config)
+                    {
+                        return $http[method](baseUrl + apiUrl, data, config);
+                    }
+                })(arg);
+            }
         };
+
+        bindMethods("get", "delete", "head", "jsonp");
+        bindMethodsWithData("post", "put", "patch");
     }]);
+angular.module("AngularApp")
+    .service("ConstantsService", function ConstantsService()
+    {
+        var self = this;
+
+        self.apiBaseUrl = "http://localhost:31363";
+    });
 angular.module("AngularApp")
     .directive("gameInfoWidget", function()
     {
@@ -119,14 +123,14 @@ angular.module("AngularApp")
         }
     });
 angular.module("AngularApp")
-    .controller("GameInfoController", ["GameDataService", "$stateParams", function GameInfoController(GameDataService, $stateParams)
+    .controller("GameInfoController", ["APIService", "$stateParams", function GameInfoController(APIService, $stateParams)
     {
-        const self = this;
+        var self = this;
 
-        GameDataService.getGameById($stateParams.appId)
-            .then(game =>
+        APIService.post("game/getById", {id: $stateParams.appId})
+            .then(function(response)
             {
-                self.game = game;
+                self.game = response;  
             });
 
         self.badFeatures = ["Poop", "Makes", "the", "World", "Poopier"];
@@ -141,20 +145,20 @@ angular.module("AngularApp")
         self.reviewsCount = 666;
     }]);
 angular.module("AngularApp")
-    .controller("HomeController", ["GameDataService", function HomeController(GameDataService)
+    .controller("HomeController", ["APIService", function HomeController(APIService)
     {
-        const self = this;
-        
-        GameDataService.getGamesForWidgets()
-            .then(games =>
+        var self = this;
+
+        APIService.get("games/getForWidgets")
+            .then(function(response)
             {
-                self.games = games;
+                self.games = response;
             });
     }]);
 angular.module("AngularApp")
-    .controller("TestController", ["IPCService", function (IPCService)
+    .controller("TestController", ["APIService", function (APIService)
     {
-        const self = this;
+        var self = this;
 
         self.phrases = [];
 
@@ -162,16 +166,14 @@ angular.module("AngularApp")
 
         self.analyze = function ()
         {
-            if(!self.sequence)
+            if (!self.sequence)
                 return;
 
-            IPCService.send("analyzer/analyzeSequence", { sequence: self.sequence})
-                .then((response) =>
+            APIService.post("analyze/sequence", {sequence: self.sequence})
+                .then(function(response)
                 {
                     console.log("App returned: " + response);
                 });
-            
-            console.log("Async Asserted");
         }
     }]);
 angular.module("AngularApp").run(["$templateCache", function($templateCache) {$templateCache.put("templates/home/game-info-widget-template.html","<div class=\"panel panel-default\" ui-sref=\"gameInfo({appId: game.appId })\">\r\n    <div class=\"panel-body row\">\r\n        <div class=\"col-xs-3\">\r\n            <img src=\"\" alt=\"Some Image\" class=\"img-thumbnail img-responsive\">\r\n        </div>\r\n        <div class=\"col-xs-9\">\r\n            <h4>\r\n                {{game.title}}\r\n            </h4>\r\n            <pos-neg-bar pos=\"game.positiveReviewsPercentage\" neg=\"game.negativeReviewsPercentage\"></pos-neg-bar>\r\n            <hr>\r\n\r\n            <div class=\"pull-left\">\r\n                App ID: {{game.appId}}\r\n            </div>\r\n            <div class=\"pull-right\">\r\n                {{game.reviewsCount | number:0}} reviews\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>");
