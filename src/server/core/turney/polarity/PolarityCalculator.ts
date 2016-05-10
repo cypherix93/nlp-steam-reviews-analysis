@@ -16,10 +16,9 @@ export class PolarityCalculator
         for (let phrase of distinctPhrases)
         {
             phrase.polarity = await PolarityCalculator.computePolarity(phrase, vocabularySize);
-            console.log(`${phrase.phrase} => ${phrase.polarity}`);
         }
 
-        return distinctPhrases; 
+        return distinctPhrases;
     }
 
     private static async computePolarity(phrase:Phrase, vocabularySize:number):Promise<number>

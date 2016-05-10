@@ -1,6 +1,6 @@
 import {Request, Response} from "express";
 import {JsonController} from "routing-controllers/decorator/Controllers";
-import {Get, Post, Put, Patch, Delete} from "routing-controllers/decorator/Methods";
+import {Get, Post} from "routing-controllers/decorator/Methods";
 import {Req, Res} from "routing-controllers/decorator/Params";
 
 import {GameRepository} from "../repositories/GameRepository";

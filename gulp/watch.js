@@ -12,7 +12,7 @@ module.exports = function (gulp, plugins, paths)
             plugins.watch(paths.app + "**",
                 plugins.batch(function (events, done)
                 {
-                    gulp.start("compile-app", done);
+                    gulp.start("compile-server", done);
                 }));
         });
 
