@@ -1,4 +1,6 @@
 import {Controller} from "../../core/base/Controller";
+import {SentimentAnalyzer} from "../analyzers/SentimentAnalyzer";
+import q = require("q");
 
 export class AnalyzerController extends Controller
 {
@@ -9,8 +11,24 @@ export class AnalyzerController extends Controller
         this.initSelf(this);
     }
 
-    public index():any
+    public analyzeSequence(request)
     {
-        console.log("Event bootstrap worked!!");
+        var def = q.defer();
+
+        SentimentAnalyzer.analyzeSequence(request.sequence)
+            .then(result => def.resolve(result));
+
+        console.log("Async Asserted");
+
+        return def.promise;
+    }
+
+    public test(request)
+    {
+        var def = q.defer();
+
+        setTimeout(() => def.resolve(request.sequence), 3000);
+
+        return def.promise;
     }
 }
