@@ -21,8 +21,6 @@ export class AnalyzerController
     {
         var appId = request.params.appId;
 
-        console.log(appId);
-
         return await SentimentAnalyzer.analyzeGame(appId);
     }
 }
