@@ -10,6 +10,9 @@ export class Config
         cors: {
             origin: "http://localhost:32363",
             credentials: true
+        },
+        db: {
+            connectionString: "mongodb://localhost:27017/nlp-steam-reviews-analysis"
         }
     };
 
