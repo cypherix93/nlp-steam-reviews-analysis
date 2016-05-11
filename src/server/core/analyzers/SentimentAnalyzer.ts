@@ -1,8 +1,8 @@
-import {PhraseExtractor} from "../../core/turney/phrases/PhraseExtractor";
-import {PolarityCalculator} from "../../core/turney/polarity/PolarityCalculator";
-import {DbContext} from "../../core/database/context/DbContext";
-import {Review} from "../../core/database/models/Review";
-import {Phrase} from "../../core/database/models/Phrase";
+import {PhraseExtractor} from "../turney/phrases/PhraseExtractor";
+import {PolarityCalculator} from "../turney/polarity/PolarityCalculator";
+import {DbContext} from "../database/context/DbContext";
+import {Review} from "../database/models/Review";
+import {Phrase} from "../database/models/Phrase";
 
 export class SentimentAnalyzer
 {
