@@ -3,7 +3,7 @@ import {JsonController} from "routing-controllers/decorator/Controllers";
 import {Get, Post} from "routing-controllers/decorator/Methods";
 import {Req, Res} from "routing-controllers/decorator/Params";
 
-import {SentimentAnalyzer} from "../analyzers/SentimentAnalyzer";
+import {SentimentAnalyzer} from "../../core/analyzers/SentimentAnalyzer";
 
 @JsonController("/analyze")
 export class AnalyzerController

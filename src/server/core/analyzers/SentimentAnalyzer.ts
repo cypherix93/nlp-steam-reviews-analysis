@@ -17,7 +17,7 @@ export class SentimentAnalyzer
 
     public static async analyzeGame(appId:string)
     {
-        var gameReviews = DbContext.reviews.filter(x => x.gameId === appId).slice(0, 5) as Review[];
+        var gameReviews = DbContext.reviews.filter(x => x.gameId === appId) as Review[];
 
         var allPhrases:Phrase[] = [];
 
