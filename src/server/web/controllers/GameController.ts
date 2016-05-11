@@ -11,14 +11,14 @@ import {Game} from "../../core/database/models/Game";
 export class GameController
 {
     @Get("/getForWidgets")
-    public getForWidgets():GameInfoWidget[]
+    public async getForWidgets():Promise<GameInfoWidget[]>
     {
-        return GameRepository.getGamesForWidgets();
+        return await GameRepository.getGamesForWidgets();
     }
 
     @Get("/getById/:id")
-    public getById(@Req() request: Request):Game
+    public async getById(@Req() request: Request):Promise<Game>
     {
-        return GameRepository.getById(request.params.id);
+        return await GameRepository.getById(request.params.id);
     }
 }
