@@ -6,16 +6,16 @@ import _ = require("lodash");
 
 export class LookupHelper
 {
-    private static allReviews = DbContext.reviews.cloneDeep() as Review[];
-
-    public static lookupOccurrences(phrase:Phrase):{positive:number, negative:number}
+    public static async lookupOccurrences(phrase:Phrase):Promise<{positive:number, negative:number}>
     {
+        var allReviews = await DbContext.reviews.find().toArray() as Review[];
+        
         var result = {
             positive: 0,
             negative: 0
         };
 
-        for (let review of LookupHelper.allReviews)
+        for (let review of allReviews)
         {
             let reviewBody = review.reviewBody;
 

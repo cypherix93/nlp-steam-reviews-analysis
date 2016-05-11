@@ -4,17 +4,16 @@ import {Game} from "../../core/database/models/Game";
 
 export class GameRepository
 {
-    public static getGamesForWidgets():GameInfoWidget[]
+    public static async getGamesForWidgets():Promise<GameInfoWidget[]>
     {
-        var games = DbContext.games.cloneDeep() as GameInfoWidget[];
+        var games = await DbContext.games
+            .find()
+            .toArray() as GameInfoWidget[];
 
         for (let game of games)
         {
-            game.reviewsCount = DbContext.reviews
-                .chain()
-                .filter(r => r.gameId === game.appId)
-                .size()
-                .value();
+            game.reviewsCount = await DbContext.reviews
+                .count({gameId: game.appId});
 
             game.positiveReviewsPercentage = Math.random();
             game.negativeReviewsPercentage = 1 - game.positiveReviewsPercentage;
@@ -23,11 +22,8 @@ export class GameRepository
         return games;
     }
 
-    public static getById(id:number):Game
+    public static async getById(id:number):Promise<Game>
     {
-        return DbContext.games
-            .chain()
-            .filter(g => g.appId === id)
-            .value()[0];
+        return await DbContext.games.findOne({appId: id});
     }
 }
