@@ -8,26 +8,32 @@ export class SentimentAnalyzer
 {
     private static extractor = new PhraseExtractor();
 
-    public static async analyzeSequence(sequence:string)
+    public static async analyzeSequence(sequence:string):Phrase[]
     {
         var phrases = SentimentAnalyzer.extractor.extract(sequence);
 
         return await PolarityCalculator.computePolarityOfPhrases(phrases);
     }
 
-    public static async analyzeGame(appId:string)
+    public static async analyzeGame(appId:string):Phrase[]
     {
-        var gameReviews = DbContext.reviews.filter(x => x.gameId === appId).slice(0, 5) as Review[];
+        var gameReviews = await DbContext.reviews
+            .find({gameId: appId})
+            .toArray() as Review[];
 
         var allPhrases:Phrase[] = [];
 
-        for (let review of gameReviews)
+        var predictedReviews = [];
+
+        for (let review of gameReviews.slice(0,5))
         {
-            let phrases = SentimentAnalyzer.extractor.extract(review.reviewBody);
+            console.log(review);
+
+            let phrases = await SentimentAnalyzer.analyzeSequence(review.reviewBody);
 
             allPhrases = allPhrases.concat(phrases);
         }
 
-        return await PolarityCalculator.computePolarityOfPhrases(allPhrases);
+        return allPhrases;
     }
 }

@@ -20,7 +20,7 @@ export class PolarityCalculator
 
     private static async computePolarity(phrase:Phrase, vocabularySize:number):Promise<number>
     {
-        var occurences = LookupHelper.lookupOccurrences(phrase);
+        var occurences = await LookupHelper.lookupOccurrences(phrase);
 
         var posOccurences = occurences.positive;
         var negOccurences = occurences.negative;
