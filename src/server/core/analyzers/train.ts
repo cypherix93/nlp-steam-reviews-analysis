@@ -22,7 +22,7 @@ export class Train {
         phrases = DbContext.phrases;
 
         //This next method needs to be updated to take in a static vocabulary size, and other things
-        //Train.polarityCalculator.computePolarityOfPhrases();
+        //phrasesTrain.polarityCalculator.computePolarityOfPhrases();
 
         return phrases;
     }
@@ -49,7 +49,7 @@ export class Train {
 
         for (let phrase of Phrases)
         {
-            var phraseExists = DbContext.phrases
+            let phraseExists = DbContext.phrases
                 .chain()
                 .find({words: phrase.words});
 
@@ -107,8 +107,8 @@ export class Train {
     // This method extracts all of the phrases from each review, and updates them in the db.
     public static countPhrases(trainingReviews:Review[]) {
         for (let review of trainingReviews) {
-            var recommended = review.recommended;
-            var phrases:Phrase[] = Train.extractor.extract(review.reviewBody);
+            let recommended = review.recommended;
+            let phrases:Phrase[] = Train.extractor.extract(review.reviewBody);
             Train.computePhraseCountByRecommended(phrases, recommended);
         }
     }
