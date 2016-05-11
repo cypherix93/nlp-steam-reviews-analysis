@@ -11,8 +11,7 @@ export class Train {
     private static polarityCalculator = new PolarityCalculator();
 
     // This method takes in the appId of the game we're testing.
-    //
-    private trainGame(appId:number):Phrase[] {
+    public static trainGame(appId:number):Phrase[] {
         var trainingReviews:Review[] = Train.getTrainCorpus(appId);
         var phrases:Phrase[];
 
