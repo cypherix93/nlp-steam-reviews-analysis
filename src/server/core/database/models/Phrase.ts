@@ -6,6 +6,10 @@ export class Phrase
 
     public polarity:number;
 
+    public positiveReviewCount:number;
+    public negativeReviewCount:number;
+
+
     constructor(...words:Word[])
     {
         this.words = words;

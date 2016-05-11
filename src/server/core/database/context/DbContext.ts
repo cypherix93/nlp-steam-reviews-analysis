@@ -20,4 +20,8 @@ export class DbContext
     {
         return DbContext.context("reviews");
     }
+    public static get phrases()
+    {
+        return DbContext.context("phrases");
+    }
 }
