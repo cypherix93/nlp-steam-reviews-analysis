@@ -1,4 +1,4 @@
-import {Word} from "../database/models/Word";
+import {Word} from "../../database/models/Word";
 const pos = require("pos");
 
 export class POSTagger

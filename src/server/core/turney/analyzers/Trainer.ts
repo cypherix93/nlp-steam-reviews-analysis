@@ -11,14 +11,14 @@ export class Trainer
 
     // This method takes in the appId of the game we're testing and then trains over all the other games.
     // If appId is not provided, it trains with all the games
-    public static async trainForGame(appId?:string):{[key:string]:Phrase}
+    public static async trainForGame(appId?:string):Promise<{[key:string]:Phrase}>
     {
         // Reset the phrases map
         Trainer.phrasesMap = {};
 
-        var trainingReviews:Review[] = Trainer.getTrainCorpus(appId);
+        var trainingReviews:Review[] = await Trainer.getTrainCorpus(appId);
 
-        Trainer.extractPhrasesAndComputeCounts(trainingReviews);
+        await Trainer.extractPhrasesAndComputeCounts(trainingReviews);
 
         // Return a copy of phrasesMap so we don't run into race conditions
         return Object.assign({}, Trainer.phrasesMap);
@@ -26,7 +26,7 @@ export class Trainer
 
     // This method gets the training corpus, which is all of the reviews that isn't the game we're training for.
     // This method returns an array of only the review bodies and IDs
-    private static async getTrainCorpus(appId:string):Review[]
+    private static async getTrainCorpus(appId:string):Promise<Review[]>
     {
         var query = {gameId: {$ne: appId}};
         var projection = {reviewBody: true};
@@ -73,8 +73,8 @@ export class Trainer
             else
             {
                 // Set the counts
-                phrase.positiveReviewCount = recommended | 0;
-                phrase.negativeReviewCount = recommended | 0;
+                phrase.positiveReviewCount = recommended ? 1 : 0;
+                phrase.negativeReviewCount = recommended ? 0 : 1;
 
                 // Store the phrase in the map
                 Trainer.phrasesMap[phrase.phrase] = phrase;

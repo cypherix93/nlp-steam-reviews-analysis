@@ -13,7 +13,7 @@ export class SentimentAnalyzer
     {
         var gameReviews = await DbContext.reviews.find({gameId: appId}) as Review[];
 
-        var trainingPhrases = Trainer.trainForGame(appId);
+        var trainingPhrases = await Trainer.trainForGame(appId);
 
         for (let review of gameReviews)
         {
@@ -33,7 +33,7 @@ export class SentimentAnalyzer
     
     public static async analyzeSequence(sequence:string)
     {
-        var trainingPhrases = Trainer.trainForGame();
+        var trainingPhrases = await Trainer.trainForGame();
 
         let phrases = SentimentAnalyzer.extractor.extract(sequence);
 
