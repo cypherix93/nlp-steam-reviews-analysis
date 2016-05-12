@@ -47,7 +47,7 @@ export class Trainer
 
             for (let phrase of phrases)
             {
-                let trainingPhrase = new TrainingPhrase(review.gameId, phrase, recommended.recommendation);
+                let trainingPhrase = new TrainingPhrase(review.gameId, phrase, recommended.recommended);
                 await dbTrainingPhrases.save(trainingPhrase);
             }
 

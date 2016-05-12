@@ -3,13 +3,13 @@ import {Model} from "../../../base/Model";
 export class ReviewRecommendation extends Model
 {
     public reviewId:string;
-    public recommendation:boolean;
+    public recommended:boolean;
 
-    constructor(reviewId:string, recommendation:boolean)
+    constructor(reviewId:string, recommended:boolean)
     {
         super();
 
         this.reviewId = reviewId;
-        this.recommendation = recommendation;
+        this.recommended = recommended;
     }
 }
