@@ -1,8 +1,7 @@
-import {PhraseExtractor} from "../turney/phrases/PhraseExtractor";
-import {PolarityCalculator} from "../turney/polarity/PolarityCalculator";
-import {DbContext} from "../database/context/DbContext";
-import {Review} from "../database/models/Review";
-import {Phrase} from "../database/models/Phrase";
+import {PhraseExtractor} from "../phrases/PhraseExtractor";
+import {Phrase} from "../../database/models/Phrase";
+import {Review} from "../../database/models/Review";
+import {DbContext} from "../../database/context/DbContext";
 
 export class Trainer
 {
@@ -16,10 +15,8 @@ export class Trainer
         // Reset the phrases map
         Trainer.phrasesMap = {};
 
-        // Get the training corpus of all the other games
         var trainingReviews:Review[] = Trainer.getTrainCorpus(appId);
 
-        // Extract the phrases and compute their counts from the reviews and save them to phrasesMap
         Trainer.extractPhrasesAndComputeCounts(trainingReviews);
 
         // Return a copy of phrasesMap so we don't run into race conditions
@@ -39,10 +36,12 @@ export class Trainer
     // This method extracts all of the phrases from each review we are training on
     private static async extractPhrasesAndComputeCounts(trainingReviews:Review[])
     {
+        var dbTraining = DbContext.training;
+
         for (let review of trainingReviews)
         {
             // Get the recommendation the review has
-            let recommended = await DbContext.training.findOne({reviewId: review._id});
+            let recommended = await dbTraining.findOne({reviewId: review._id});
 
             // Extract the phrases from the review
             let phrases:Phrase[] = Trainer.extractor.extract(review.reviewBody);
