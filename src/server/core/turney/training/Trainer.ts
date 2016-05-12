@@ -2,6 +2,7 @@ import {PhraseExtractor} from "../phrases/PhraseExtractor";
 import {Phrase} from "../../database/models/Phrase";
 import {Review} from "../../database/models/Review";
 import {DbContext} from "../../database/context/DbContext";
+import {TrainingPhrase} from "../../database/models/training/TrainingPhrase";
 
 export class Trainer
 {
@@ -9,46 +10,46 @@ export class Trainer
 
     private static phrasesMap:{[key:string]:Phrase};
 
-    // This method takes in the appId of the game we're testing and then trains over all the other games.
-    // If appId is not provided, it trains with all the games
-    public static async trainForGame(appId?:string):Promise<{[key:string]:Phrase}>
+    public static async train()
     {
-        // Reset the phrases map
-        Trainer.phrasesMap = {};
+        var trainingReviews:Review[] = await Trainer.getReviewsForTraining();
 
-        var trainingReviews:Review[] = await Trainer.getTrainCorpus(appId);
-
-        await Trainer.extractPhrasesAndComputeCounts(trainingReviews);
-
-        // Return a copy of phrasesMap so we don't run into race conditions
-        return Object.assign({}, Trainer.phrasesMap);
+        await Trainer.trainPhrases(trainingReviews);
     }
 
     // This method gets the training corpus, which is all of the reviews that isn't the game we're training for.
     // This method returns an array of only the review bodies and IDs
-    private static async getTrainCorpus(appId:string):Promise<Review[]>
+    private static async getReviewsForTraining():Promise<Review[]>
     {
-        var query = {gameId: {$ne: appId}};
-        var projection = {reviewBody: true};
+        var query = {};
+        var projection = {reviewBody: true, gameId: true};
 
         return await DbContext.reviews.find(query, projection);
     }
 
     // This method extracts all of the phrases from each review we are training on
-    private static async extractPhrasesAndComputeCounts(trainingReviews:Review[])
+    private static async trainPhrases(trainingReviews:Review[])
     {
-        var dbTraining = DbContext.training;
+        var dbTrainingRecommendations = DbContext.trainingRecommendations;
+        var dbTrainingPhrases = DbContext.trainingPhrases;
+
+        var n = 0;
 
         for (let review of trainingReviews)
         {
             // Get the recommendation the review has
-            let recommended = await dbTraining.findOne({reviewId: review._id});
+            let recommended = await dbTrainingRecommendations.findOne({reviewId: review._id});
 
             // Extract the phrases from the review
             let phrases:Phrase[] = Trainer.extractor.extract(review.reviewBody);
 
-            // Save the computed counts in the phrase map
-            Trainer.computePhraseCountByRecommended(phrases, recommended);
+            for (let phrase of phrases)
+            {
+                let trainingPhrase = new TrainingPhrase(review.gameId, phrase, recommended);
+                await dbTrainingPhrases.save(trainingPhrase);
+            }
+
+            console.log(++n);
         }
     }
 
@@ -59,9 +60,9 @@ export class Trainer
         {
             let phraseInMap = Trainer.phrasesMap[phrase.phrase];
 
-            if(phraseInMap)
+            if (phraseInMap)
             {
-                if(recommended)
+                if (recommended)
                 {
                     phraseInMap.positiveReviewCount++;
                 }

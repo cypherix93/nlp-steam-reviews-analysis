@@ -21,4 +21,9 @@ export class Phrase
             .map(w => w.word)
             .join(" ");
     }
+
+    public toString = function():string
+    {
+        return this.phrase;
+    }
 }
