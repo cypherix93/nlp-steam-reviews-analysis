@@ -9,7 +9,7 @@ export class Corpus
 
     public static async getTrainingCorpusForGame(appId?:string):Promise<{[key:string]:Phrase}>
     {
-        Trainer.train();
+        await Trainer.train();
 
         // Find all phrases where the gameId provided doesn't match
         var trainingPhrases = await DbContext.trainingPhrases.find({gameId: {$ne: appId}});

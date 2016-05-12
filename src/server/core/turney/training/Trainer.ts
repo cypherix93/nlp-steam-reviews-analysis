@@ -3,6 +3,7 @@ import {Phrase} from "../../database/models/Phrase";
 import {Review} from "../../database/models/Review";
 import {DbContext} from "../../database/context/DbContext";
 import {TrainingPhrase} from "../../database/models/training/TrainingPhrase";
+import {ReviewRecommendation} from "../../database/models/training/ReviewRecommendation";
 
 export class Trainer
 {
@@ -31,23 +32,26 @@ export class Trainer
         var dbTrainingRecommendations = DbContext.trainingRecommendations;
         var dbTrainingPhrases = DbContext.trainingPhrases;
 
+        // Empty the training phrases collection
+        dbTrainingPhrases.remove();
+
         var n = 0;
 
         for (let review of trainingReviews)
         {
             // Get the recommendation the review has
-            let recommended = await dbTrainingRecommendations.findOne({reviewId: review._id});
+            let recommended = await dbTrainingRecommendations.findOne({reviewId: review._id}) as ReviewRecommendation;
 
             // Extract the phrases from the review
             let phrases:Phrase[] = Trainer.extractor.extract(review.reviewBody);
 
             for (let phrase of phrases)
             {
-                let trainingPhrase = new TrainingPhrase(review.gameId, phrase, recommended);
+                let trainingPhrase = new TrainingPhrase(review.gameId, phrase, recommended.recommendation);
                 await dbTrainingPhrases.save(trainingPhrase);
             }
 
-            console.log(++n);
+            console.log("Training: " + ++n);
         }
     }
 }

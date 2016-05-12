@@ -1,6 +1,6 @@
 import {Model} from "../../../base/Model";
 
-export class Recommendation extends Model
+export class ReviewRecommendation extends Model
 {
     public reviewId:string;
     public recommendation:boolean;

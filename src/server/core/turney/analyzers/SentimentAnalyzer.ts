@@ -31,7 +31,7 @@ export class SentimentAnalyzer
 
             await DbContext.testingRecommendations.update(query, update);
 
-            console.log(++n);
+            console.log("Analyzing: " + ++n);
         }
     }
     
