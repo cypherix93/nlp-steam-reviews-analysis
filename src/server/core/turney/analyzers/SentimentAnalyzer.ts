@@ -39,13 +39,13 @@ export class SentimentAnalyzer
     
     public static async analyzeSequence(sequence:string)
     {
-        let phrases = SentimentAnalyzer.extractor.extract(sequence);
+        var phrases = SentimentAnalyzer.extractor.extract(sequence);
 
         var trainingPhrases = await Corpus.getTrainingCorpusForGame();
 
-        let polarity = PolarityCalculator.computeAveragePolarityOfPhrases(phrases, trainingPhrases);
+        var polarity = PolarityCalculator.computeAveragePolarityOfPhrases(phrases, trainingPhrases);
 
-        let recommended = polarity === 0 ? null : (polarity > 0);
+        var recommended = polarity === 0 ? null : (polarity > 0);
 
         return {phrases,polarity,recommended};
     }
