@@ -33,9 +33,9 @@ export class SentimentAnalyzer
     
     public static async analyzeSequence(sequence:string)
     {
-        var trainingPhrases = await Trainer.trainForGame();
-
         let phrases = SentimentAnalyzer.extractor.extract(sequence);
+
+        var trainingPhrases = await Trainer.trainForGame();
 
         let polarity = PolarityCalculator.computeAveragePolarityOfPhrases(phrases, trainingPhrases);
 
