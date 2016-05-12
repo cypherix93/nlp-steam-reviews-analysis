@@ -3,30 +3,24 @@ import {PolarityCalculator} from "../turney/polarity/PolarityCalculator";
 import {DbContext} from "../database/context/DbContext";
 import {Review} from "../database/models/Review";
 import {Phrase} from "../database/models/Phrase";
-import {SentimentAnalyzer} from "./SentimentAnalyzer";
 
 export class Trainer
 {
     private static extractor = new PhraseExtractor();
-    private static polarityCalculator = new PolarityCalculator();
 
     private static phrasesMap:{[key:string]:Phrase};
 
-    // This method takes in the appId of the game we're testing.
-    public static async trainForGame(appId:string):Phrase[]
+    // This method takes in the appId of the game we're testing and then trains over all the other games.
+    public static async trainForGame(appId:string):{[key:string]:Phrase}
     {
         // Reset the phrases map
         Trainer.phrasesMap = {};
 
+        // Get the training corpus of all the other games
         var trainingReviews:Review[] = Trainer.getTrainCorpus(appId);
 
-        Trainer.countPhrases(trainingReviews);
-
-        // Calculate the polarity on the db set. All phrases at this point do NOT have polarity calculated.
-        // They do however have counts.
-
-        //This next method needs to be updated to take in a static vocabulary size, and other things
-        //phrasesTrain.polarityCalculator.computePolarityOfPhrases();
+        // Extract the phrases and compute their counts from the reviews and save them to phrasesMap
+        Trainer.extractPhrasesAndComputeCounts(trainingReviews);
 
         // Return a copy of phrasesMap so we don't run into race conditions
         return Object.assign({}, Trainer.phrasesMap);
@@ -43,8 +37,7 @@ export class Trainer
     }
 
     // This method extracts all of the phrases from each review we are training on
-    // And returns their counts (positive / negative)
-    public static async countPhrases(trainingReviews:Review[])
+    public static async extractPhrasesAndComputeCounts(trainingReviews:Review[])
     {
         for (let review of trainingReviews)
         {
@@ -87,6 +80,5 @@ export class Trainer
                 Trainer.phrasesMap[phrase.phrase] = phrase;
             }
         }
-        return;
     }
 }
