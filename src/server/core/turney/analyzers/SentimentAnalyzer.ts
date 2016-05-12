@@ -10,7 +10,7 @@ export class SentimentAnalyzer
 
     public static async analyzeGame(appId:string)
     {
-        var gameReviews = DbContext.reviews.find({gameId: appId}) as Review[];
+        var gameReviews = await DbContext.reviews.find({gameId: appId}) as Review[];
 
         var trainingPhrases = Trainer.trainForGame(appId);
 
@@ -20,7 +20,7 @@ export class SentimentAnalyzer
         }
     }
     
-    private static computePolarityOfReview(review:Review, trainingPhrases:{[key:string]:Phrase})
+    private static async computePolarityOfReview(review:Review, trainingPhrases:{[key:string]:Phrase})
     {
         var phrases = SentimentAnalyzer.extractor.extract(review.reviewBody);
         
@@ -32,7 +32,7 @@ export class SentimentAnalyzer
         var query = {reviewId: review._id};
         var update = {polarity,recommended,phrases};
 
-        DbContext.testing.update(query, update);
+        await DbContext.testing.update(query, update);
     }
     
     private static computeAveragePolarityOfPhrases(phrases:Phrase[], trainingPhrases:{[key:string]:Phrase}):number
