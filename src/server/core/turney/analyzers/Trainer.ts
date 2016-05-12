@@ -10,7 +10,8 @@ export class Trainer
     private static phrasesMap:{[key:string]:Phrase};
 
     // This method takes in the appId of the game we're testing and then trains over all the other games.
-    public static async trainForGame(appId:string):{[key:string]:Phrase}
+    // If appId is not provided, it trains with all the games
+    public static async trainForGame(appId?:string):{[key:string]:Phrase}
     {
         // Reset the phrases map
         Trainer.phrasesMap = {};

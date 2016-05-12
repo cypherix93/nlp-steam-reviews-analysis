@@ -3,6 +3,7 @@ import {PhraseExtractor} from "../phrases/PhraseExtractor";
 import {DbContext} from "../../database/context/DbContext";
 import {Review} from "../../database/models/Review";
 import {Phrase} from "../../database/models/Phrase";
+import {PolarityCalculator} from "../polarity/PolarityCalculator";
 
 export class SentimentAnalyzer
 {
@@ -16,65 +17,30 @@ export class SentimentAnalyzer
 
         for (let review of gameReviews)
         {
-            SentimentAnalyzer.computePolarityOfReview(review, trainingPhrases);
+            let phrases = SentimentAnalyzer.extractor.extract(review.reviewBody);
+
+            let polarity = PolarityCalculator.computeAveragePolarityOfPhrases(phrases, trainingPhrases);
+
+            let recommended = polarity > 0;
+
+            // Update the testing collection in DB with the polarity values
+            let query = {reviewId: review._id};
+            let update = {polarity,recommended,phrases};
+
+            await DbContext.testing.update(query, update);
         }
     }
     
-    private static async computePolarityOfReview(review:Review, trainingPhrases:{[key:string]:Phrase})
+    public static async analyzeSequence(sequence:string)
     {
-        var phrases = SentimentAnalyzer.extractor.extract(review.reviewBody);
-        
-        var polarity = SentimentAnalyzer.computeAveragePolarityOfPhrases(phrases, trainingPhrases);
+        var trainingPhrases = Trainer.trainForGame();
 
-        var recommended = polarity > 0;
+        let phrases = SentimentAnalyzer.extractor.extract(sequence);
 
-        // Update the testing collection in DB with the polarity values
-        var query = {reviewId: review._id};
-        var update = {polarity,recommended,phrases};
+        let polarity = PolarityCalculator.computeAveragePolarityOfPhrases(phrases, trainingPhrases);
 
-        await DbContext.testing.update(query, update);
-    }
-    
-    private static computeAveragePolarityOfPhrases(phrases:Phrase[], trainingPhrases:{[key:string]:Phrase}):number
-    {
-        var sum = 0;
-        var count = 0;
-        
-        for (let phrase of phrases)
-        {
-            sum += SentimentAnalyzer.computePolarityOfPhrase(phrase, trainingPhrases);
-            count++;
-        }
-        
-        return sum / count;
-    }
-    
-    private static computePolarityOfPhrase(testPhrase:Phrase, trainingPhrases:{[key:string]:Phrase}):number
-    {
-        var phraseKeys = Object.keys(trainingPhrases);
-        var vocabularySize = phraseKeys.length;
+        let recommended = polarity > 0;
 
-        var lookupPhrase = trainingPhrases[testPhrase.phrase];
-
-        var posOccurences, negOccurences, allOccurences;
-
-        // If phrase exists, compute polarity based on occurence counts
-        if(lookupPhrase)
-        {
-            posOccurences = lookupPhrase.positiveReviewCount;
-            negOccurences = lookupPhrase.negativeReviewCount;
-            allOccurences = posOccurences + negOccurences;
-        }
-        // Otherwise return smoothed probability
-        else
-        {
-            posOccurences = negOccurences = allOccurences = 0;
-        }
-
-        // Laplace
-        var numerator = posOccurences - negOccurences + 1;
-        var denominator = allOccurences + 1 + vocabularySize;
-
-        return numerator / denominator;
+        return {phrases,polarity,recommended};
     }
 }
