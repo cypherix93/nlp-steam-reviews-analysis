@@ -45,7 +45,7 @@ export class SentimentAnalyzer
 
         let polarity = PolarityCalculator.computeAveragePolarityOfPhrases(phrases, trainingPhrases);
 
-        let recommended = polarity > 0;
+        let recommended = polarity === 0 ? null : (polarity > 0);
 
         return {phrases,polarity,recommended};
     }
