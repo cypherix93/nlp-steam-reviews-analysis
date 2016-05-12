@@ -1,9 +1,9 @@
-import {Trainer} from "./Trainer";
 import {PhraseExtractor} from "../phrases/PhraseExtractor";
 import {DbContext} from "../../database/context/DbContext";
 import {Review} from "../../database/models/Review";
-import {Phrase} from "../../database/models/Phrase";
 import {PolarityCalculator} from "../polarity/PolarityCalculator";
+import {Trainer} from "../training/Trainer";
+import {Corpus} from "../training/Corpus";
 
 export class SentimentAnalyzer
 {
@@ -13,7 +13,9 @@ export class SentimentAnalyzer
     {
         var gameReviews = await DbContext.reviews.find({gameId: appId}) as Review[];
 
-        var trainingPhrases = await Trainer.trainForGame(appId);
+        var trainingPhrases = await Corpus.getTrainingCorpusForGame(appId);
+
+        var n = 0;
 
         for (let review of gameReviews)
         {
@@ -27,7 +29,9 @@ export class SentimentAnalyzer
             let query = {reviewId: review._id};
             let update = {polarity,recommended,phrases};
 
-            await DbContext.testing.update(query, update);
+            await DbContext.testingRecommendations.update(query, update);
+
+            console.log(++n);
         }
     }
     
@@ -35,7 +39,7 @@ export class SentimentAnalyzer
     {
         let phrases = SentimentAnalyzer.extractor.extract(sequence);
 
-        var trainingPhrases = await Trainer.trainForGame();
+        var trainingPhrases = await Corpus.getTrainingCorpusForGame();
 
         let polarity = PolarityCalculator.computeAveragePolarityOfPhrases(phrases, trainingPhrases);
 

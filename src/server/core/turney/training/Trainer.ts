@@ -8,8 +8,6 @@ export class Trainer
 {
     private static extractor = new PhraseExtractor();
 
-    private static phrasesMap:{[key:string]:Phrase};
-
     public static async train()
     {
         var trainingReviews:Review[] = await Trainer.getReviewsForTraining();
@@ -50,36 +48,6 @@ export class Trainer
             }
 
             console.log(++n);
-        }
-    }
-
-    // This method takes in all the phrases from a review, and updates the phrasesMap with the occurences and shit.
-    private static computePhraseCountByRecommended(Phrases:Phrase[], recommended:boolean)
-    {
-        for (let phrase of Phrases)
-        {
-            let phraseInMap = Trainer.phrasesMap[phrase.phrase];
-
-            if (phraseInMap)
-            {
-                if (recommended)
-                {
-                    phraseInMap.positiveReviewCount++;
-                }
-                else
-                {
-                    phraseInMap.negativeReviewCount++;
-                }
-            }
-            else
-            {
-                // Set the counts
-                phrase.positiveReviewCount = recommended ? 1 : 0;
-                phrase.negativeReviewCount = recommended ? 0 : 1;
-
-                // Store the phrase in the map
-                Trainer.phrasesMap[phrase.phrase] = phrase;
-            }
         }
     }
 }
