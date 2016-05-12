@@ -23,15 +23,17 @@ export class SentimentAnalyzer
 
             let polarity = PolarityCalculator.computeAveragePolarityOfPhrases(phrases, trainingPhrases);
 
-            let recommended = polarity > 0;
+            let recommended = polarity === 0 ? null : (polarity > 0);
 
             // Update the testing collection in DB with the polarity values
-            let query = {reviewId: review._id};
-            let update = {polarity,recommended,phrases};
+            let reviewId = review._id;
+            let query = {reviewId};
+            let update = {reviewId,polarity,recommended,phrases};
 
-            await DbContext.testingRecommendations.update(query, update);
+            await DbContext.testingRecommendations.update(query, update, {upsert:true});
 
             console.log("Analyzing: " + ++n);
+            console.log(polarity,recommended);
         }
     }
     

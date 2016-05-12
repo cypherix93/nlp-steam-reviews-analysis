@@ -20,8 +20,8 @@ export class AnalyzerController
     {
         var appId = request.params.appId;
 
-        SentimentAnalyzer.analyzeGame(appId);
+        await SentimentAnalyzer.analyzeGame(appId);
 
-        return "Analyzing game with AppID " + appId;
+        return "Analyzed game with AppID " + appId;
     }
 }

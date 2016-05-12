@@ -20,7 +20,9 @@ export class Corpus
         for (let trainingPhrase of trainingPhrases)
         {
             let recommended = trainingPhrase.recommended;
-            let mapKey = trainingPhrase.phrase.toString();
+            let phrase = Object.assign(new Phrase(), trainingPhrase.phrase);
+
+            let mapKey = phrase.toString();
 
             let phraseInMap = phrasesMap[mapKey];
 
@@ -37,8 +39,6 @@ export class Corpus
             }
             else
             {
-                // Get the copy of the phrase
-                let phrase = Object.assign(new Phrase(), trainingPhrase.phrase);
 
                 // Set the counts
                 phrase.positiveReviewCount = recommended ? 1 : 0;

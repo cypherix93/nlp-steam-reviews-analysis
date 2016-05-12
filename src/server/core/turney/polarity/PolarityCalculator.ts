@@ -18,7 +18,7 @@ export class PolarityCalculator
             count++;
         }
 
-        return sum / count;
+        return (sum / count) || 0;
     }
 
     private static computePolarityOfPhrase(lookupPhrase:Phrase, vocabularySize:number):number
