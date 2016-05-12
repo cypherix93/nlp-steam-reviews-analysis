@@ -14,25 +14,25 @@ export class SentimentAnalyzer
 
         var trainingPhrases = Trainer.trainForGame(appId);
 
-        var dbTesting = DbContext.testing;
-
         for (let review of gameReviews)
         {
-            let polarity = SentimentAnalyzer.computePolarityOfReview(review.reviewBody, trainingPhrases);
-            let recommended = polarity > 0;
-
-            // Update the testing collection in DB with the polarity values
-            let query = {reviewId: review._id};
-            let update = {polarity,recommended};
-            dbTesting.update(query, update);
+            SentimentAnalyzer.computePolarityOfReview(review, trainingPhrases);
         }
     }
     
-    private static computePolarityOfReview(reviewBody:string, trainingPhrases:{[key:string]:Phrase}):number
+    private static computePolarityOfReview(review:Review, trainingPhrases:{[key:string]:Phrase})
     {
-        var phrases = SentimentAnalyzer.extractor.extract(reviewBody);
+        var phrases = SentimentAnalyzer.extractor.extract(review.reviewBody);
         
-        return SentimentAnalyzer.computeAveragePolarityOfPhrases(phrases, trainingPhrases);
+        var polarity = SentimentAnalyzer.computeAveragePolarityOfPhrases(phrases, trainingPhrases);
+
+        var recommended = polarity > 0;
+
+        // Update the testing collection in DB with the polarity values
+        var query = {reviewId: review._id};
+        var update = {polarity,recommended,phrases};
+
+        DbContext.testing.update(query, update);
     }
     
     private static computeAveragePolarityOfPhrases(phrases:Phrase[], trainingPhrases:{[key:string]:Phrase}):number
