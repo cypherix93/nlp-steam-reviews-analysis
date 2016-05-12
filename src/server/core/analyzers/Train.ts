@@ -5,13 +5,14 @@ import {Review} from "../database/models/Review";
 import {Phrase} from "../database/models/Phrase";
 import {SentimentAnalyzer} from "./SentimentAnalyzer";
 
-export class Train {
-
+export class Train
+{
     private static extractor = new PhraseExtractor();
     private static polarityCalculator = new PolarityCalculator();
 
     // This method takes in the appId of the game we're testing.
-    public static trainGame(appId:number):Phrase[] {
+    public static trainGame(appId:string):Phrase[]
+    {
         var trainingReviews:Review[] = Train.getTrainCorpus(appId);
         var phrases:Phrase[];
 
@@ -29,12 +30,15 @@ export class Train {
 
     // This method gets the training corpus, which is all of the reviews that isn't the game we're testing.
     // 100% guaranteed that you're gonna change to filter.
-    private static getTrainCorpus(appId:number):Review[] {
+    private static getTrainCorpus(appId:string):Review[]
+    {
         var allReviews = DbContext.reviews;
         var trainingReviews = [];
 
-        for (let review of allReviews) {
-            if (review.gameId !== appId) {
+        for (let review of allReviews)
+        {
+            if (review.gameId !== appId)
+            {
                 trainingReviews.push(review);
             }
         }
@@ -42,10 +46,11 @@ export class Train {
     }
 
     /* This method takes in all the phrases for a review, and increments its ReviewCount in the Db.
-    The three cases are whether it's a positive review, negative review, or review doesn't exist.
-          Might be able to make this more efficient. ^^
-    */
-    private static computePhraseCountByRecommended(Phrases:Phrase[], recommended:boolean) {
+     The three cases are whether it's a positive review, negative review, or review doesn't exist.
+     Might be able to make this more efficient. ^^
+     */
+    private static computePhraseCountByRecommended(Phrases:Phrase[], recommended:boolean)
+    {
 
         for (let phrase of Phrases)
         {
@@ -105,8 +110,10 @@ export class Train {
     }
 
     // This method extracts all of the phrases from each review, and updates them in the db.
-    public static countPhrases(trainingReviews:Review[]) {
-        for (let review of trainingReviews) {
+    public static countPhrases(trainingReviews:Review[])
+    {
+        for (let review of trainingReviews)
+        {
             let recommended = review.recommended;
             let phrases:Phrase[] = Train.extractor.extract(review.reviewBody);
             Train.computePhraseCountByRecommended(phrases, recommended);
