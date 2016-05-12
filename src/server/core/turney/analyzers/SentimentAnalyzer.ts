@@ -3,6 +3,7 @@ import {PolarityCalculator} from "../turney/polarity/PolarityCalculator";
 import {DbContext} from "../database/context/DbContext";
 import {Review} from "../database/models/Review";
 import {Phrase} from "../database/models/Phrase";
+import {Trainer} from "./Trainer";
 
 export class SentimentAnalyzer
 {
@@ -11,6 +12,11 @@ export class SentimentAnalyzer
     public static async analyzeGame(appId:string)
     {
         var gameReviews = DbContext.reviews.filter(x => x.gameId === appId) as Review[];
+
+        var phrasesMap = Trainer.trainForGame(appId);
+        var phrases = 
+        
+        var vocabularySize = Object.keys(phrasesMap).length;
 
         var allPhrases:Phrase[] = [];
 

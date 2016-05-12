@@ -37,7 +37,7 @@ export class Trainer
     }
 
     // This method extracts all of the phrases from each review we are training on
-    public static async extractPhrasesAndComputeCounts(trainingReviews:Review[])
+    private static async extractPhrasesAndComputeCounts(trainingReviews:Review[])
     {
         for (let review of trainingReviews)
         {
