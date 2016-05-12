@@ -5,7 +5,7 @@ import {Review} from "../database/models/Review";
 import {Phrase} from "../database/models/Phrase";
 import {SentimentAnalyzer} from "./SentimentAnalyzer";
 
-export class Train
+export class Trainer
 {
     private static extractor = new PhraseExtractor();
     private static polarityCalculator = new PolarityCalculator();
@@ -16,11 +16,11 @@ export class Train
     public static async trainForGame(appId:string):Phrase[]
     {
         // Reset the phrases map
-        Train.phrasesMap = {};
+        Trainer.phrasesMap = {};
 
-        var trainingReviews:Review[] = Train.getTrainCorpus(appId);
+        var trainingReviews:Review[] = Trainer.getTrainCorpus(appId);
 
-        Train.countPhrases(trainingReviews);
+        Trainer.countPhrases(trainingReviews);
 
         // Calculate the polarity on the db set. All phrases at this point do NOT have polarity calculated.
         // They do however have counts.
@@ -29,7 +29,7 @@ export class Train
         //phrasesTrain.polarityCalculator.computePolarityOfPhrases();
 
         // Return a copy of phrasesMap so we don't run into race conditions
-        return Object.assign({}, Train.phrasesMap);
+        return Object.assign({}, Trainer.phrasesMap);
     }
 
     // This method gets the training corpus, which is all of the reviews that isn't the game we're training for.
@@ -52,10 +52,10 @@ export class Train
             let recommended = await DbContext.training.findOne({reviewId: review._id});
 
             // Extract the phrases from the review
-            let phrases:Phrase[] = Train.extractor.extract(review.reviewBody);
+            let phrases:Phrase[] = Trainer.extractor.extract(review.reviewBody);
 
             // Save the computed counts in the phrase map
-            Train.computePhraseCountByRecommended(phrases, recommended);
+            Trainer.computePhraseCountByRecommended(phrases, recommended);
         }
     }
 
@@ -64,7 +64,7 @@ export class Train
     {
         for (let phrase of Phrases)
         {
-            let phraseInMap = Train.phrasesMap[phrase.phrase];
+            let phraseInMap = Trainer.phrasesMap[phrase.phrase];
 
             if(phraseInMap)
             {
@@ -84,7 +84,7 @@ export class Train
                 phrase.negativeReviewCount = recommended | 0;
 
                 // Store the phrase in the map
-                Train.phrasesMap[phrase.phrase] = phrase;
+                Trainer.phrasesMap[phrase.phrase] = phrase;
             }
         }
         return;
