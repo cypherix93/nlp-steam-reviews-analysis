@@ -7,7 +7,6 @@ export class Review extends Model
     public reviewerHoursPlayed:number;
 
     public datePosted:Date;
-    public recommended:boolean;
 
     public reviewVotes:{
         foundHelpful: number,

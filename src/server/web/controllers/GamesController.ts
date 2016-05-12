@@ -3,7 +3,7 @@ import {JsonController} from "routing-controllers/decorator/Controllers";
 import {Get, Post} from "routing-controllers/decorator/Methods";
 import {Req, Res} from "routing-controllers/decorator/Params";
 
-import {GameRepository} from "../repositories/GameRepository";
+import {GameRepository} from "../repositories/GamesRepository";
 import {GameInfoWidget} from "../viewmodels/GameInfoWidget";
 import {Game} from "../../core/database/models/Game";
 
