@@ -13,13 +13,16 @@ export class DbContext
     {
         return DbContext.context.games;
     }
-
     public static get reviews()
     {
         return DbContext.context.reviews;
     }
-    public static get phrases()
+    public static get training()
     {
-        return DbContext.context("phrases");
+        return DbContext.context.training_recommendations;
+    }
+    public static get testing()
+    {
+        return DbContext.context.testing_recommendations;
     }
 }

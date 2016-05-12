@@ -3,9 +3,9 @@ import {Model} from "../../base/Model";
 export class Game extends Model
 {
     public title:string;
-    public appId:number;
+    public appId:string;
 
-    constructor(title?:string, appId?:number)
+    constructor(title?:string, appId?:string)
     {
         super();
 
