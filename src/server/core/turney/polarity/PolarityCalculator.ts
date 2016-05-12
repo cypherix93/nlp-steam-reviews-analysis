@@ -7,9 +7,13 @@ export class PolarityCalculator
         var sum = 0;
         var count = 0;
 
+        var vocabularySize = Object.keys(trainingPhrases).length;
+
         for (let phrase of phrases)
         {
-            phrase.polarity = PolarityCalculator.computePolarityOfPhrase(phrase, trainingPhrases);
+            let lookupPhrase = trainingPhrases[phrase.phrase];
+
+            phrase.polarity = PolarityCalculator.computePolarityOfPhrase(lookupPhrase, vocabularySize);
             sum += phrase.polarity;
             count++;
         }
@@ -17,13 +21,8 @@ export class PolarityCalculator
         return sum / count;
     }
 
-    private static computePolarityOfPhrase(testPhrase:Phrase, trainingPhrases:{[key:string]:Phrase}):number
+    private static computePolarityOfPhrase(lookupPhrase:Phrase, vocabularySize:number):number
     {
-        var phraseKeys = Object.keys(trainingPhrases);
-        var vocabularySize = phraseKeys.length;
-
-        var lookupPhrase = trainingPhrases[testPhrase.phrase];
-
         var posOccurences, negOccurences, allOccurences;
 
         // If phrase exists, compute polarity based on occurence counts
