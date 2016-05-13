@@ -10,7 +10,7 @@
     "mime": "registry:dt/mime#0.0.0+20160316155526",
     "moment": "registry:dt/moment#2.8.0+20160316155526",
     "moment-node": "registry:dt/moment-node#2.11.1+20160417135035",
-    "node": "registry:dt/node#4.0.0+20160423143914",
+    "node": "registry:dt/node#4.0.0+20160509154515",
     "passport": "registry:dt/passport#0.2.0+20160317120654",
     "passport-local": "registry:dt/passport-local#0.0.0+20160316155526",
     "q": "registry:dt/q#0.0.0+20160417152954",
