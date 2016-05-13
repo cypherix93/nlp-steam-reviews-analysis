@@ -2,8 +2,7 @@ import {Request, Response} from "express";
 import {JsonController} from "routing-controllers/decorator/Controllers";
 import {Get, Post} from "routing-controllers/decorator/Methods";
 import {Req, Res} from "routing-controllers/decorator/Params";
-
-import {SentimentAnalyzer} from "../analyzers/SentimentAnalyzer";
+import {SentimentAnalyzer} from "../../core/turney/analyzers/SentimentAnalyzer";
 
 @JsonController("/analyze")
 export class AnalyzerController
@@ -21,6 +20,8 @@ export class AnalyzerController
     {
         var appId = request.params.appId;
 
-        return await SentimentAnalyzer.analyzeGame(appId);
+        await SentimentAnalyzer.analyzeGame(appId);
+
+        return "Analyzed game with AppID " + appId;
     }
 }

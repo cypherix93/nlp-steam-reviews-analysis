@@ -5,66 +5,83 @@ const path = require("path");
 const fs = require("fs");
 const jsonfile = require("jsonfile");
 
-// LowDB stuff
-const lowdb = require("lowdb");
-const storage = require("lowdb/file-sync");
+// MongoDB stuff
+var db = require("promised-mongo")("mongodb://localhost:27017/nlp-steam-reviews-analysis");
 
 // Directories
 const dataDir = path.join(__dirname, "../../data");
 const scraperDir = path.join(dataDir, "scraper");
 
-// Init db
-const dbLocation = path.join(dataDir, "db.json");
-const db = lowdb(dbLocation, {storage}, false);
-
 // Apps file
 const apps = require("./apps.json");
 
-// Drop create all the tables
-db.object.games = [];
-db.object.reviews = [];
-const dbReviews = db("reviews");
-const dbGames = db("games");
-
-// Loop through all games in scraped dir
-var gameDirs = fs.readdirSync(scraperDir);
-for (let gameDir of gameDirs)
+// Main function
+(function()
 {
-    let gamePath = path.join(scraperDir, gameDir);
-    let dataFiles = fs.readdirSync(gamePath);
 
-    // Save the game in its collection
-    let game = {
-        title: apps.filter(x => x.id === (gameDir | 0)).map(x => x.game)[0],
-        appId: gameDir
-    };
+    // Drop create all the tables
+    const dbReviews = db.reviews;
+    const dbGames = db.games;
+    const dbTraining = db.training_recommendations;
 
-    dbGames.push(game);
+    dbReviews.remove();
+    dbGames.remove();
 
-    // Then save all the reviews for the game
-    for (let file of dataFiles)
+    // Loop through all games in scraped dir
+    var gameDirs = fs.readdirSync(scraperDir);
+    for (let gameDir of gameDirs)
     {
-        console.log(`Parsing file '${file}' of ${game.title} (${game.appId})...`);
+        let gamePath = path.join(scraperDir, gameDir);
+        let dataFiles = fs.readdirSync(gamePath);
 
-        let filePath = path.join(gamePath, file);
+        // Save the game in its collection
+        let game = {
+            title: apps.filter(x => x.id === (gameDir | 0)).map(x => x.game)[0],
+            appId: gameDir
+        };
 
-        // Get the file's data
-        let fileData = jsonfile.readFileSync(filePath);
+        dbGames.save(game);
 
-        // Parse the file's data and add to DB
-        let parsedReviews = parseFile(fileData);
-
-        // Write to DB
-        parsedReviews.forEach(r =>
+        // Then save all the reviews for the game
+        for (let file of dataFiles)
         {
-            r.gameId = gameDir;
-            dbReviews.push(r);
-        });
+            console.log(`Parsing file '${file}' of ${game.title} (${game.appId})...`);
+
+            let filePath = path.join(gamePath, file);
+
+            // Get the file's data
+            let fileData = jsonfile.readFileSync(filePath);
+
+            // Parse the file's data and add to DB
+            let parsedReviews = parseFile(fileData);
+
+            // Write to DB
+            parsedReviews.forEach(r =>
+            {
+                // Set game Id
+                r.gameId = gameDir;
+
+                // Save the recommended flag in temp
+                let recommended = r.recommended;
+                delete r.recommended;
+
+                // Save the review
+                dbReviews.save(r)
+                    .then(review =>
+                    {
+                        // Save the training recommendation
+                        dbTraining.save({
+                            reviewId: review._id,
+                            recommended: recommended
+                        });
+                    });
+            });
+        }
     }
 
-    // Write all the changes made to the DB
-    db.write();
-}
+    // Close mongo connection
+    db = null;
+})();
 
 function parseFile(fileData)
 {

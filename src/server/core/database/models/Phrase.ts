@@ -6,6 +6,10 @@ export class Phrase
 
     public polarity:number;
 
+    public positiveReviewCount:number;
+    public negativeReviewCount:number;
+
+
     constructor(...words:Word[])
     {
         this.words = words;
@@ -16,5 +20,10 @@ export class Phrase
         return this.words
             .map(w => w.word)
             .join(" ");
+    }
+
+    public toString = function():string
+    {
+        return this.phrase;
     }
 }

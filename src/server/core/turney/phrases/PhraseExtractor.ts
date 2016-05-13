@@ -1,7 +1,7 @@
 import {PhraseExtractorBase} from "./PhraseExtractorBase";
 import {Phrase} from "../../database/models/Phrase";
-import {POSTagger} from "../../tagger/POSTagger";
 import {Word} from "../../database/models/Word";
+import {POSTagger} from "../tagger/POSTagger";
 
 export class PhraseExtractor extends PhraseExtractorBase
 {
