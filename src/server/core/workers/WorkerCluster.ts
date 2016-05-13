@@ -4,19 +4,19 @@ import q = require("q");
 
 export class WorkerCluster
 {
-    public static async splitWorkLoad(task:Function, payload:any[], workers?:number = 2)
+    public static async splitWorkLoad(task:Function, payload:any[], numWorkers:number = 2)
     {
         var slaves = [];
 
         // Create workers
-        for (let i = 0; i < workers; i++)
+        for (let i = 0; i < numWorkers; i++)
         {
             let worker = WorkerFactory.createWorkerWithTask(task);
             slaves.push(worker);
         }
 
         // Split payload up
-        var chunkLength = payload.length / slaves;
+        var chunkLength = (payload.length / numWorkers) + 1;
         var chunks = _.chunk(payload, chunkLength);
 
         // Loop over all workers and start workload with promises
