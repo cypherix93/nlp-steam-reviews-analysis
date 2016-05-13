@@ -18,7 +18,8 @@
     "q": "^1.4.1",
     "routing-controllers": "^0.5.7",
     "serve-favicon": "~2.3.0",
-    "shortid": "^2.2.6"
+    "shortid": "^2.2.6",
+    "webworker-threads": "^0.7.4"
   },
   "devDependencies": {
     "bower": "^1.7.2",
