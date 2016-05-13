@@ -4,6 +4,7 @@ import {Review} from "../../database/models/Review";
 import {DbContext} from "../../database/context/DbContext";
 import {TrainingPhrase} from "../../database/models/training/TrainingPhrase";
 import {ReviewRecommendation} from "../../database/models/training/ReviewRecommendation";
+import {WorkerCluster} from "../../workers/WorkerCluster";
 
 export class Trainer
 {
@@ -13,7 +14,10 @@ export class Trainer
     {
         var trainingReviews:Review[] = await Trainer.getReviewsForTraining();
 
-        await Trainer.trainPhrases(trainingReviews);
+        // Empty the training phrases collection
+        await DbContext.trainingPhrases.remove();
+
+        await WorkerCluster.splitWorkLoad(Trainer.trainPhrases, trainingReviews, 20);
     }
 
     // This method gets the training corpus, which is all of the reviews that isn't the game we're training for.
@@ -31,9 +35,6 @@ export class Trainer
     {
         var dbTrainingRecommendations = DbContext.trainingRecommendations;
         var dbTrainingPhrases = DbContext.trainingPhrases;
-
-        // Empty the training phrases collection
-        dbTrainingPhrases.remove();
 
         var n = 0;
 

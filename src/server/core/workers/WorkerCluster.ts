@@ -1,4 +1,3 @@
-import {WorkerFactory} from "./WorkerFactory";
 import _ = require("lodash");
 import q = require("q");
 
@@ -6,33 +5,19 @@ export class WorkerCluster
 {
     public static async splitWorkLoad(task:Function, payload:any[], numWorkers:number = 2)
     {
-        var slaves = [];
-
-        // Create workers
-        for (let i = 0; i < numWorkers; i++)
-        {
-            let worker = WorkerFactory.createWorkerWithTask(task);
-            slaves.push(worker);
-        }
-
         // Split payload up
         var chunkLength = (payload.length / numWorkers) + 1;
         var chunks = _.chunk(payload, chunkLength);
 
+        console.log("Split work into: " + chunks.length);
+
         // Loop over all workers and start workload with promises
         var promises = [];
-        for (let i = 0; i < slaves.length; i++)
+        for (let chunk of chunks)
         {
-            let slave = slaves[i];
-            let chunk = chunks[i];
-
             let def = q.defer();
 
-            slave.onmessage = function (event)
-            {
-                def.resolve(event.data);
-            };
-            slave.postMessage(chunk);
+            task(chunk).then(data => def.resolve(data));
 
             promises.push(def.promise);
         }

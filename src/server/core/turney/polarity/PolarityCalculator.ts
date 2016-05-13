@@ -42,6 +42,6 @@ export class PolarityCalculator
         var numerator = posOccurences - negOccurences + 1;
         var denominator = allOccurences + 1 + vocabularySize;
 
-        return numerator / denominator;
+        return Math.log2(numerator / denominator);
     }
 }
