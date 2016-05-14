@@ -7,13 +7,11 @@ export class PolarityCalculator
         var sum = 0;
         var count = 0;
 
-        var vocabularySize = Object.keys(trainingPhrases).length;
-
         for (let phrase of phrases)
         {
             let lookupPhrase = trainingPhrases[phrase.phrase];
 
-            phrase.polarity = PolarityCalculator.computePolarityOfPhrase(lookupPhrase, vocabularySize);
+            phrase.polarity = PolarityCalculator.computePolarityOfPhrase(lookupPhrase);
             sum += phrase.polarity;
             count++;
         }
@@ -21,26 +19,11 @@ export class PolarityCalculator
         return (sum / count) || 0;
     }
 
-    private static computePolarityOfPhrase(lookupPhrase:Phrase, vocabularySize:number):number
+    private static computePolarityOfPhrase(lookupPhrase:Phrase):number
     {
-        var posOccurences, negOccurences, allOccurences;
-
-        // If phrase exists, compute polarity based on occurence counts
-        if(lookupPhrase)
-        {
-            posOccurences = lookupPhrase.positiveReviewCount;
-            negOccurences = lookupPhrase.negativeReviewCount;
-            allOccurences = posOccurences + negOccurences;
-        }
-        // Otherwise return smoothed probability
-        else
-        {
-            posOccurences = negOccurences = allOccurences = 0;
-        }
-
         // Laplace
-        var numerator = posOccurences - negOccurences + 1;
-        var denominator = allOccurences + 1 + vocabularySize;
+        var numerator = lookupPhrase.positiveReviewCount + 1;
+        var denominator = lookupPhrase.negativeReviewCount + 1;
 
         return Math.log2(numerator / denominator);
     }
