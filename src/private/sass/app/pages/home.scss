@@ -1,0 +1,16 @@
+.game-cards-container
+{
+    .game-card
+    {
+        .panel
+        {
+            cursor: pointer;
+            transition: background 0.25s ease;
+
+            &:hover
+            {
+                background: lighten($panel-bg, 3%);
+            }
+        }
+    }
+}

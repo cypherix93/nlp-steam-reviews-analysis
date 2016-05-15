@@ -6160,3 +6160,9 @@ textarea {
     .navbar .navbar-brand img {
       height: 58px;
       margin: -8px 8px 0 -58px; }
+
+.game-cards-container .game-card .panel {
+  cursor: pointer;
+  transition: background 0.25s ease; }
+  .game-cards-container .game-card .panel:hover {
+    background: #283b4d; }
