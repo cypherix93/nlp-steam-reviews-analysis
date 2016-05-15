@@ -40,19 +40,19 @@
     </div>
     <hr>
     <div class="row">
-        <div class="col-md-5 col-md-offset-2">
-            <h3 class="pull right">Top 5 Good Things</h3>
+        <div class="col-md-5 col-md-offset-1 text-success">
+            <h3 class="text-center">Top 10 Good Things</h3>
             <ol>
-                <li ng-repeat="n in gameInfo.goodFeatures track by $index">
-                    {{n}}
+                <li ng-repeat="phrase in gameInfo.game.topPhrases.positive track by $index">
+                    {{phrase.words}}
                 </li>
             </ol>
         </div>
-        <div class="col-md-5">
-            <h3 class="pull right">Top 5 Bad Things</h3>
+        <div class="col-md-5 text-danger">
+            <h3 class="text-center">Top 10 Bad Things</h3>
             <ol>
-                <li ng-repeat="n in gameInfo.badFeatures track by $index">
-                    {{n}}
+                <li ng-repeat="phrase in gameInfo.game.topPhrases.negative track by $index">
+                    {{phrase.words}}
                 </li>
             </ol>
         </div>
