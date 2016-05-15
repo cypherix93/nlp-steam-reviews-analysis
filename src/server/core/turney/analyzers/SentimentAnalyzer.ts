@@ -13,15 +13,13 @@ export class SentimentAnalyzer
     {
         var gameReviews = await DbContext.reviews.find({gameId: appId}) as Review[];
 
-        var trainingPhrases = await Corpus.getTrainingCorpusForGame(appId);
-
-        var n = 0;
+        var trainingCorpus = await Corpus.getTrainingCorpus(appId);
 
         for (let review of gameReviews)
         {
             let phrases = SentimentAnalyzer.extractor.extract(review.reviewBody);
 
-            let polarity = PolarityCalculator.computeAveragePolarityOfPhrases(phrases, trainingPhrases);
+            let polarity = PolarityCalculator.computeAveragePolarityOfPhrases(phrases, trainingCorpus);
 
             let recommended = polarity === 0 ? null : (polarity > 0);
 
@@ -31,9 +29,6 @@ export class SentimentAnalyzer
             let update = {reviewId,polarity,recommended,phrases};
 
             await DbContext.testingRecommendations.update(query, update, {upsert:true});
-
-            console.log("Analyzing: " + ++n);
-            console.log(polarity,recommended);
         }
     }
     
@@ -41,9 +36,9 @@ export class SentimentAnalyzer
     {
         var phrases = SentimentAnalyzer.extractor.extract(sequence);
 
-        var trainingPhrases = await Corpus.getTrainingCorpusForGame();
+        var trainingCorpus = await Corpus.getTrainingCorpus();
 
-        var polarity = PolarityCalculator.computeAveragePolarityOfPhrases(phrases, trainingPhrases);
+        var polarity = PolarityCalculator.computeAveragePolarityOfPhrases(phrases, trainingCorpus);
 
         var recommended = polarity === 0 ? null : (polarity > 0);
 

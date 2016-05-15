@@ -36,8 +36,6 @@ export class Trainer
         var dbTrainingRecommendations = DbContext.trainingRecommendations;
         var dbTrainingPhrases = DbContext.trainingPhrases;
 
-        var n = 0;
-
         for (let review of trainingReviews)
         {
             // Get the recommendation the review has
@@ -51,8 +49,6 @@ export class Trainer
                 let trainingPhrase = new TrainingPhrase(review.gameId, phrase, recommended.recommended);
                 await dbTrainingPhrases.save(trainingPhrase);
             }
-
-            console.log("Training: " + ++n);
         }
     }
 }
