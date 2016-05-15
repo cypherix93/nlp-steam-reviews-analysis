@@ -11,8 +11,14 @@ export class TurneyHandler
         console.log("Training completed.");
     }
 
-    public static async test(appId:string)
+    public static async test(appId?:string)
     {
+        if(!appId)
+        {
+            await SentimentAnalyzer.analyzeAllGames();
+            return;
+        }
+
         await SentimentAnalyzer.analyzeGame(appId);
         console.log("Completed testing game successfully.");
     }
