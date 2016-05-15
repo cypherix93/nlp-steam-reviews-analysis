@@ -16,6 +16,7 @@
     "pos": "^0.3.0",
     "promised-mongo": "^1.2.0",
     "q": "^1.4.1",
+    "readline-sync": "^1.4.2",
     "routing-controllers": "^0.5.7",
     "serve-favicon": "~2.3.0",
     "shortid": "^2.2.6"
