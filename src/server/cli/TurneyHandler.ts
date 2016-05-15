@@ -1,22 +1,25 @@
 import {Trainer} from "../core/turney/training/Trainer";
 import {SentimentAnalyzer} from "../core/turney/analyzers/SentimentAnalyzer";
+import {AccuracyEvaluator} from "../core/turney/evaluators/AccuracyEvaluator";
 
 export class TurneyHandler
 {
-    public static async train()
+    public static train()
     {
-        await Trainer.train();
-
-        console.log("Training completed.");
-
-        return;
+        Trainer.train()
+            .then(() => console.log("Training completed."));
     }
-    public static async test(appId:string)
+
+    public static test(appId:string)
     {
-        await SentimentAnalyzer.analyzeGame(appId);
+        SentimentAnalyzer.analyzeGame(appId)
+            .then(() => console.log("Completed testing game successfully."));
+    }
 
-        console.log("Completed testing game successfully.");
+    public static async computeAccuracy(appId?:string)
+    {
+        var result = await AccuracyEvaluator.computeAccuracy(appId);
 
-        return;
+        console.log(`Accuracy on ${appId ? "game (" + appId + ")" : "all games"}: ${result}`);
     }
 }
