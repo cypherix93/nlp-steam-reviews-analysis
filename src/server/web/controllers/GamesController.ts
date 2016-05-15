@@ -4,14 +4,13 @@ import {Get, Post} from "routing-controllers/decorator/Methods";
 import {Req, Res} from "routing-controllers/decorator/Params";
 
 import {GameRepository} from "../repositories/GamesRepository";
-import {GameInfoWidget} from "../viewmodels/GameInfoWidget";
 import {Game} from "../../core/database/models/Game";
 
 @JsonController("/games")
 export class GameController
 {
     @Get("/getForWidgets")
-    public async getForWidgets():Promise<GameInfoWidget[]>
+    public async getForWidgets():Promise<Game[]>
     {
         return await GameRepository.getGamesForWidgets();
     }

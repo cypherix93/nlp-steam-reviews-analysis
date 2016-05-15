@@ -16,7 +16,7 @@ export class TurneyHandler
         if(!appId)
         {
             await SentimentAnalyzer.analyzeAllGames();
-            return;
+            return; 
         }
 
         await SentimentAnalyzer.analyzeGame(appId);
