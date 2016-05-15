@@ -9,11 +9,10 @@ angular.module("AngularApp")
             },
             link: function(scope, element, attrs)
             {
-                if (scope.pos < 1)
-                    scope.pos = scope.pos * 100 | 0;
-
-                if (scope.neg < 1)
-                    scope.neg = scope.neg * 100 | 0;
+                if (scope.pos === 0 && scope.neg === 0)
+                {
+                    scope.empty = true;
+                }
             },
             templateUrl: "templates/shared/pos-neg-bar-template.html"
         }

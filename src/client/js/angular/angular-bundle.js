@@ -113,15 +113,35 @@ angular.module("AngularApp")
             },
             link: function(scope, element, attrs)
             {
-                if (scope.pos < 1)
-                    scope.pos = scope.pos * 100 | 0;
-
-                if (scope.neg < 1)
-                    scope.neg = scope.neg * 100 | 0;
+                if (scope.pos === 0 && scope.neg === 0)
+                {
+                    scope.empty = true;
+                }
             },
             templateUrl: "templates/shared/pos-neg-bar-template.html"
         }
     });
+angular.module("AngularApp")
+    .controller("TestController", ["APIService", function (APIService)
+    {
+        var self = this;
+
+        self.phrases = [];
+
+        self.sequence = null;
+
+        self.analyze = function ()
+        {
+            if (!self.sequence)
+                return;
+
+            APIService.post("analyze/sequence", {sequence: self.sequence})
+                .then(function(response)
+                {
+                    console.log("App returned: " + response);
+                });
+        }
+    }]);
 angular.module("AngularApp")
     .controller("GameInfoController", ["APIService", "$stateParams", function GameInfoController(APIService, $stateParams)
     {
@@ -155,26 +175,5 @@ angular.module("AngularApp")
                 self.games = response;
             });
     }]);
-angular.module("AngularApp")
-    .controller("TestController", ["APIService", function (APIService)
-    {
-        var self = this;
-
-        self.phrases = [];
-
-        self.sequence = null;
-
-        self.analyze = function ()
-        {
-            if (!self.sequence)
-                return;
-
-            APIService.post("analyze/sequence", {sequence: self.sequence})
-                .then(function(response)
-                {
-                    console.log("App returned: " + response);
-                });
-        }
-    }]);
-angular.module("AngularApp").run(["$templateCache", function($templateCache) {$templateCache.put("templates/home/game-info-widget-template.html","<div class=\"panel panel-default\" ui-sref=\"gameInfo({appId: game.appId })\">\n    <div class=\"panel-body row\">\n        <div class=\"col-xs-3\">\n            <img src=\"\" alt=\"Some Image\" class=\"img-thumbnail img-responsive\">\n        </div>\n        <div class=\"col-xs-9\">\n            <h4>\n                {{game.title}}\n            </h4>\n            <hr>\n            <h6 class=\"text-center\">Train</h6>\n            <pos-neg-bar pos=\"game.train.positive\" neg=\"game.train.negative\"></pos-neg-bar>\n            <hr>\n            <h6 class=\"text-center\">Test</h6>\n            <pos-neg-bar pos=\"game.test.positive\" neg=\"game.test.negative\"></pos-neg-bar>\n            <hr>\n\n            <div class=\"pull-left\">\n                App ID: {{game.appId}}\n            </div>\n            <div class=\"pull-right\">\n                {{game.reviewsCount | number:0}} reviews\n            </div>\n        </div>\n    </div>\n</div>");
-$templateCache.put("templates/shared/pos-neg-bar-template.html","<uib-progress>\n    <uib-bar value=\"pos\" type=\"success\"></uib-bar>\n    <uib-bar value=\"neg\" type=\"danger\"></uib-bar>\n</uib-progress>\n<span>Positive: {{pos}}%</span>\n<span class=\"pull-right\">Negative: {{neg}}%</span>");}]);
+angular.module("AngularApp").run(["$templateCache", function($templateCache) {$templateCache.put("templates/home/game-info-widget-template.html","<div class=\"panel panel-default\" ui-sref=\"gameInfo({appId: game.appId })\">\r\n    <div class=\"panel-body row\">\r\n        <div class=\"col-xs-3\">\r\n            <img src=\"\" alt=\"Some Image\" class=\"img-thumbnail img-responsive\">\r\n        </div>\r\n        <div class=\"col-xs-9\">\r\n            <h4>\r\n                {{game.title}}\r\n            </h4>\r\n            <hr>\r\n            <h6 class=\"text-center\">Train</h6>\r\n            <pos-neg-bar pos=\"game.reviewsPercentages.train.positive\" neg=\"game.reviewsPercentages.train.negative\"></pos-neg-bar>\r\n            <hr>\r\n            <h6 class=\"text-center\">Test</h6>\r\n            <pos-neg-bar pos=\"game.reviewsPercentages.test.positive\" neg=\"game.reviewsPercentages.test.negative\"></pos-neg-bar>\r\n            <hr>\r\n\r\n            <div class=\"pull-left\">\r\n                App ID: {{game.appId}}\r\n            </div>\r\n            <div class=\"pull-right\">\r\n                {{game.reviewsCount | number:0}} reviews\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>");
+$templateCache.put("templates/shared/pos-neg-bar-template.html","<uib-progress ng-hide=\"empty\">\r\n    <uib-bar value=\"pos\" type=\"success\"></uib-bar>\r\n    <uib-bar value=\"neg\" type=\"danger\"></uib-bar>\r\n</uib-progress>\r\n<uib-progress ng-show=\"empty\">\r\n    <uib-bar value=\"50\"></uib-bar>\r\n    <uib-bar value=\"50\"></uib-bar>\r\n</uib-progress>\r\n\r\n<div class=\"pull-left\">\r\n    Positive: {{pos || \"N/A\"}}{{neg ? \"%\" : \"\"}}\r\n</div>\r\n<div class=\"pull-right\">\r\n    Negative: {{neg || \"N/A\"}}{{neg ? \"%\" : \"\"}}\r\n</div>");}]);

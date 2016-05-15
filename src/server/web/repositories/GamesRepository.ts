@@ -41,25 +41,31 @@ export class GameRepository
         return await GameRepository.getReviewStats(gameId, "testing");
     }
 
-    private static async getReviewStats(gameId:string, type:string)
+    private static async getReviewStats(gameId:string, type:string):Promise<{positive:number, negative:number}>
     {
-        var reviews = await DbContext.reviews.find({gameId: gameId}, {_id: true}).toArray() as Review[];
-        var reviewIds = reviews.map(r => r._id);
+        var query = {gameId: gameId};
+        var projection = {_id: true};
+
+        var reviews = await DbContext.reviews.find(query, projection).toArray() as Review[];
+        var reviewIds = reviews.map(x => x._id) as string[];
+
         var recommendations;
-        
-        if (type === "testing") {
-            recommendations = DbContext.testingRecommendations.find({reviewId: {$in: reviewIds}});
-        }
-        else {
-            recommendations = DbContext.trainingRecommendations.find({reviewId: {$in: reviewIds}});
-        }
 
-        var positiveReviews = await recommendations.count({ recommended: true });
-        var negativeReviews = await recommendations.count({ recommended: false });
-        var totalReviews = recommendations.count();
+        if (type === "testing")
+            recommendations = DbContext.testingRecommendations;
+        else
+            recommendations = DbContext.trainingRecommendations;
 
-        var positive = positiveReviews/totalReviews;
-        var negative = negativeReviews/totalReviews;
+        recommendations = await recommendations.find({reviewId: {$in: reviewIds}}).toArray() as ReviewRecommendation[];
+
+        var positiveReviews = recommendations.filter(x => x.recommended === true).length;
+        var negativeReviews = recommendations.filter(x => x.recommended === false).length;
+        var totalReviews = recommendations.filter(x => x.recommended !== null).length;
+
+        console.log(positiveReviews, negativeReviews, totalReviews);
+
+        var positive = ((positiveReviews / totalReviews) * 100) | 0;
+        var negative = ((negativeReviews / totalReviews) * 100) | 0;
 
         return {positive, negative};
     }
