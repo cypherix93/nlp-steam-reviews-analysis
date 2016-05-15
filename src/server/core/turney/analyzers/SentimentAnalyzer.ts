@@ -15,10 +15,6 @@ export class SentimentAnalyzer
 
         var trainingCorpus = await Corpus.getTrainingCorpus(appId);
 
-        console.log(trainingCorpus);
-
-        var n = 0;
-
         for (let review of gameReviews)
         {
             let phrases = SentimentAnalyzer.extractor.extract(review.reviewBody);
@@ -33,9 +29,6 @@ export class SentimentAnalyzer
             let update = {reviewId,polarity,recommended,phrases};
 
             await DbContext.testingRecommendations.update(query, update, {upsert:true});
-
-            console.log("Analyzing: " + ++n);
-            console.log(polarity,recommended);
         }
     }
     
