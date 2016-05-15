@@ -1,4 +1,4 @@
-<div ng-controller="GameInfoController as gameInfo">
+<div class="game-info-container" ng-controller="GameInfoController as gameInfo">
     <div class="panel-body row">
         <div class="col-xs-3">
             <img ng-src="/images/games/{{gameInfo.game.appId}}.jpg" alt="Some Image" class="img-thumbnail img-responsive">
@@ -39,20 +39,30 @@
         </div>
     </div>
     <hr>
-    <div class="row">
-        <div class="col-md-5 col-md-offset-2">
-            <h3 class="pull right">Top 5 Good Things</h3>
-            <ol>
-                <li ng-repeat="n in gameInfo.goodFeatures track by $index">
-                    {{n}}
+    <div class="polarity-stats row">
+        <div class="col-md-5 col-md-offset-1 text-success">
+            <h4 class="polarity-header text-center">Top 10 Good Things</h4>
+            <hr>
+            <h5 class="polarity-table-header pull-left">Phrase</h5>
+            <h5 class="polarity-table-header pull-right">Polarity</h5>
+            <hr>
+            <ol class="polarity-list list-unstyled">
+                <li ng-repeat="phrase in gameInfo.game.topPhrases.positive track by $index">
+                    <span phrase="phrase"></span>
+                    <small class="pull-right">{{phrase.polarity | number:8 }}</small>
                 </li>
             </ol>
         </div>
-        <div class="col-md-5">
-            <h3 class="pull right">Top 5 Bad Things</h3>
-            <ol>
-                <li ng-repeat="n in gameInfo.badFeatures track by $index">
-                    {{n}}
+        <div class="col-md-5 text-danger">
+            <h4 class="polarity-header text-center">Top 10 Bad Things</h4>
+            <hr>
+            <h5 class="polarity-table-header pull-left">Phrase</h5>
+            <h5 class="polarity-table-header pull-right">Polarity</h5>
+            <hr>
+            <ol class="polarity-list list-unstyled">
+                <li ng-repeat="phrase in gameInfo.game.topPhrases.negative track by $index">
+                    <span phrase="phrase"></span>
+                    <small class="pull-right">{{phrase.polarity | number:8 }}</small>
                 </li>
             </ol>
         </div>

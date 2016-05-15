@@ -1,4 +1,5 @@
 import {Model} from "../../base/Model";
+import {Phrase} from "./Phrase";
 
 export class Game extends Model
 {
@@ -6,11 +7,11 @@ export class Game extends Model
     public appId:string;
 
     public reviewsPercentages:{
-        train: {
+        train:{
             positive:number,
             negative:number
         },
-        test: {
+        test:{
             positive:number,
             negative:number
         }
@@ -18,7 +19,12 @@ export class Game extends Model
 
     public reviewsCount:number;
 
-    public accuracy:number;
+    public accuracy:number; 
+
+    public topPhrases:{
+        positive:Phrase[],
+        negative:Phrase[]
+    };
 
     constructor(title?:string, appId?:string)
     {
@@ -26,5 +32,8 @@ export class Game extends Model
 
         this.title = title;
         this.appId = appId;
+
+        this.reviewsPercentages = {train: {}, test: {}} as any;
+        this.topPhrases = {} as any;
     }
 }

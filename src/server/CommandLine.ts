@@ -22,8 +22,17 @@ export class CommandLine
             case "--accuracy":
                 await TurneyHandler.computeAccuracy(arg);
                 break;
+            case "--update":
+                await TurneyHandler.updateGame(arg);
+                break;
         }
     }
 }
 
-CommandLine.main();
+CommandLine.main()
+    .then(() => process.exit(0))
+    .catch(err =>
+    {
+        console.error(err);
+        process.exit(1);
+    });

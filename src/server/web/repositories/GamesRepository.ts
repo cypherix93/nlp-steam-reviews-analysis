@@ -5,8 +5,10 @@ export class GameRepository
 {
     public static async getGamesForWidgets():Promise<Game[]>
     {
+        var projection = {topPhrases: false};
+
         return await DbContext.games
-            .find()
+            .find({}, projection)
             .toArray();
     }
 

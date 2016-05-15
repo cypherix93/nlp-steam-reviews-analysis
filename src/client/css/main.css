@@ -6164,6 +6164,15 @@ textarea {
     .navbar .navbar-brand:hover {
       text-shadow: #fff 0 0 28px; }
 
+.game-info-container .polarity-stats > div {
+  padding: 0 30px; }
+
+.game-info-container .polarity-stats .polarity-table-header {
+  padding: 0 20px; }
+
+.game-info-container .polarity-stats .polarity-list > li {
+  padding: 0 20px; }
+
 .game-cards-container .game-card .panel {
   cursor: pointer;
   transition: background 0.25s ease; }

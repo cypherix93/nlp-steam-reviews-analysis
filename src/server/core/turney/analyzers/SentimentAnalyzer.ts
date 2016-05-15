@@ -38,7 +38,13 @@ export class SentimentAnalyzer
             // Update the testing collection in DB with the polarity values
             let reviewId = review._id;
             let query = {reviewId};
-            let update = {reviewId, polarity, recommended, phrases};
+            let update = {
+                reviewId,
+                polarity,
+                recommended,
+                phrases,
+                gameId: appId
+            };
 
             await DbContext.testingRecommendations.update(query, update, {upsert: true});
         }
