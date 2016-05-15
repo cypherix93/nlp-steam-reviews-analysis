@@ -40,26 +40,26 @@
     </div>
     <hr>
     <div class="polarity-stats row">
-        <div class="col-md-4 col-md-offset-2 text-success">
+        <div class="col-md-5 col-md-offset-1 text-success">
             <h4 class="polarity-header text-center">Top 10 Good Things</h4>
             <hr>
             <h5 class="polarity-table-header pull-left">Phrase</h5>
             <h5 class="polarity-table-header pull-right">Polarity</h5>
             <hr>
-            <ol class="polarity-list">
+            <ol class="polarity-list list-unstyled">
                 <li ng-repeat="phrase in gameInfo.game.topPhrases.positive track by $index">
                     <span phrase="phrase"></span>
                     <small class="pull-right">{{phrase.polarity | number:8 }}</small>
                 </li>
             </ol>
         </div>
-        <div class="col-md-4 col-md-offset-1 text-danger">
+        <div class="col-md-5 text-danger">
             <h4 class="polarity-header text-center">Top 10 Bad Things</h4>
             <hr>
             <h5 class="polarity-table-header pull-left">Phrase</h5>
             <h5 class="polarity-table-header pull-right">Polarity</h5>
             <hr>
-            <ol class="polarity-list">
+            <ol class="polarity-list list-unstyled">
                 <li ng-repeat="phrase in gameInfo.game.topPhrases.negative track by $index">
                     <span phrase="phrase"></span>
                     <small class="pull-right">{{phrase.polarity | number:8 }}</small>

@@ -2,6 +2,11 @@
 {
     .polarity-stats
     {
+        > div
+        {
+            padding: 0 30px;
+        }
+
         .polarity-table-header
         {
             padding: 0 25px;

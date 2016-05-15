@@ -6164,6 +6164,9 @@ textarea {
     .navbar .navbar-brand:hover {
       text-shadow: #fff 0 0 28px; }
 
+.game-info-container .polarity-stats > div {
+  padding: 0 30px; }
+
 .game-info-container .polarity-stats .polarity-table-header {
   padding: 0 25px; }
 
