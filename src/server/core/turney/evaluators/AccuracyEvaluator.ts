@@ -9,6 +9,8 @@ export class AccuracyEvaluator
 
         var trainingRecommendations = await DbContext.trainingRecommendations.find(query) as ReviewRecommendation[];
 
+        var testingRecommendations = DbContext.testingRecommendations;
+
         var totalCount = 0;
         var correctCount = 0;
 
@@ -16,7 +18,7 @@ export class AccuracyEvaluator
         {
             let reviewId = rec.reviewId;
 
-            let testingRec = await DbContext.testingRecommendations.findOne({reviewId: reviewId}) as ReviewRecommendation;
+            let testingRec = await testingRecommendations.findOne({reviewId: reviewId}) as ReviewRecommendation;
 
             if (!testingRec || testingRec.recommended === null)
                 continue;
