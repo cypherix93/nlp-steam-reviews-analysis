@@ -21,6 +21,7 @@ export class CommandLine
 
                 train: TurneyHandler.train,
                 test: TurneyHandler.test,
+                accuracy: TurneyHandler.computeAccuracy,
 
                 exit: CommandLine.exit
             });
