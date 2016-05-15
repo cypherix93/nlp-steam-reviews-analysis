@@ -1,0 +1,19 @@
+.game-info-container
+{
+    .polarity-stats
+    {
+        .polarity-table-header
+        {
+            padding: 0 25px;
+        }
+        .polarity-list
+        {
+            padding-left: 20px;
+
+            > li
+            {
+                padding-left: 5px;
+            }
+        }
+    }
+}
