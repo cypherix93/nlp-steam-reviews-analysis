@@ -59,6 +59,6 @@ export class StatsHelper
             reviewsPercentages: percentages,
             reviewsCount: reviewIds.length
         };
-        await DbContext.games.update({appId: appId}, update);
+        await DbContext.games.update({appId: appId}, {$set: update});
     }
 }
