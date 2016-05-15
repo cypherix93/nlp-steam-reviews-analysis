@@ -1,14 +1,15 @@
 import {DbContext} from "../database/context/DbContext";
-import {Review} from "../database/models/Review";
 import {Game} from "../database/models/Game";
 import {AccuracyEvaluator} from "../turney/evaluators/AccuracyEvaluator";
+import _ = require("lodash");
+import {Phrase} from "../database/models/Phrase";
 import {ReviewRecommendation} from "../database/models/training/ReviewRecommendation";
 
 export class StatsHelper
 {
     public static async updateAllGameStats()
     {
-        var games = await DbContext.games.find({},{appId: true}).toArray() as Game[];
+        var games = await DbContext.games.find({}, {appId: true}).toArray() as Game[];
         var gameIds = games.map(x => x.appId) as string[];
 
         for (let gameId of gameIds)
@@ -21,17 +22,26 @@ export class StatsHelper
     {
         await StatsHelper.updateGameReviewStats(appId);
         await StatsHelper.updateGameAccuracyStats(appId);
+        await StatsHelper.updateGamePolarityStats(appId);
     }
 
     private static async updateGamePolarityStats(appId:string)
     {
-        var query = {gameId: appId};
-        var testingRecommendations = DbContext.testingRecommendations.find(query);
+        var query = {gameId: appId, phrases: {$exists: true, $not: {$size: 0}}};
+        var projection = {phrases: true};
 
-        var top = await testingRecommendations.sort({polarity: -1}).limit(5);
-        var bottom = await testingRecommendations.sort({polarity: 1}).limit(5);
+        var testingPhrases = await DbContext.testingRecommendations.find(query, projection) as ReviewRecommendation[];
 
+        var phrases = _.flatten(testingPhrases.map(x => x.phrases)) as Phrase[];
 
+        var sorted = phrases.sort(x => x.polarity);
+
+        var positive = sorted.reverse().slice(0, 5);
+        var negative = sorted.slice(0, 5);
+
+        var update = {positive, negative};
+
+        await DbContext.games.update({gameId: appId}, {$set: update});
     }
 
     private static async updateGameAccuracyStats(appId:string)
