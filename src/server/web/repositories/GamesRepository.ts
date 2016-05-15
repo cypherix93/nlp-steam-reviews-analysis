@@ -17,10 +17,7 @@ export class GameRepository
             game.reviewsCount = await DbContext.reviews
                 .count({gameId: game.appId});
 
-            game.reviewsPercentages = {} as any;
-
-            game.reviewsPercentages.train = await GameRepository.getTrainingReviewStats(game.appId);
-            game.reviewsPercentages.test = await GameRepository.getTestingReviewStats(game.appId);
+            game.reviewsPercentages = await GameRepository.getReviewStats(game.appId);
         }
 
         return games;
@@ -31,17 +28,7 @@ export class GameRepository
         return await DbContext.games.findOne({appId: id});
     }
 
-    public static async getTrainingReviewStats(gameId:string)
-    {
-        return await GameRepository.getReviewStats(gameId, "training");
-    }
-
-    public static async getTestingReviewStats(gameId:string)
-    {
-        return await GameRepository.getReviewStats(gameId, "testing");
-    }
-
-    private static async getReviewStats(gameId:string, type:string):Promise<{positive:number, negative:number}>
+    private static async getReviewStats(gameId:string):Promise<any>
     {
         var query = {gameId: gameId};
         var projection = {_id: true};
@@ -49,24 +36,35 @@ export class GameRepository
         var reviews = await DbContext.reviews.find(query, projection).toArray() as Review[];
         var reviewIds = reviews.map(x => x._id) as string[];
 
-        var recommendations;
+        var query = {reviewId: {$in: reviewIds}};
 
-        if (type === "testing")
-            recommendations = DbContext.testingRecommendations;
-        else
-            recommendations = DbContext.trainingRecommendations;
+        var [training, testing] = await Promise.all([
+            DbContext.trainingRecommendations.find(query).toArray(),
+            DbContext.testingRecommendations.find(query).toArray()
+        ]);
 
-        recommendations = await recommendations.find({reviewId: {$in: reviewIds}}).toArray() as ReviewRecommendation[];
+        var result = {} as any;
 
-        var positiveReviews = recommendations.filter(x => x.recommended === true).length;
-        var negativeReviews = recommendations.filter(x => x.recommended === false).length;
-        var totalReviews = recommendations.filter(x => x.recommended !== null).length;
+        var pos, neg, total;
 
-        console.log(positiveReviews, negativeReviews, totalReviews);
+        pos = training.filter(x => x.recommended === true).length;
+        neg = training.filter(x => x.recommended === false).length;
+        total = training.filter(x => x.recommended !== null).length;
 
-        var positive = ((positiveReviews / totalReviews) * 100) | 0;
-        var negative = ((negativeReviews / totalReviews) * 100) | 0;
+        result.train = {
+            positive: ((pos / total) * 100) | 0,
+            negative: ((neg / total) * 100) | 0
+        };
 
-        return {positive, negative};
+        pos = testing.filter(x => x.recommended === true).length;
+        neg = testing.filter(x => x.recommended === false).length;
+        total = testing.filter(x => x.recommended !== null).length;
+
+        result.test = {
+            positive: ((pos / total) * 100) | 0,
+            negative: ((neg / total) * 100) | 0
+        };
+
+        return result;
     }
 }
