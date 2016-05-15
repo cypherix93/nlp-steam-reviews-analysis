@@ -6168,12 +6168,10 @@ textarea {
   padding: 0 30px; }
 
 .game-info-container .polarity-stats .polarity-table-header {
-  padding: 0 25px; }
+  padding: 0 20px; }
 
-.game-info-container .polarity-stats .polarity-list {
-  padding-left: 20px; }
-  .game-info-container .polarity-stats .polarity-list > li {
-    padding-left: 5px; }
+.game-info-container .polarity-stats .polarity-list > li {
+  padding: 0 20px; }
 
 .game-cards-container .game-card .panel {
   cursor: pointer;
