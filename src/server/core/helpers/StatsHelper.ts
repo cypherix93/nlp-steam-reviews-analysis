@@ -2,6 +2,7 @@ import {DbContext} from "../database/context/DbContext";
 import {Review} from "../database/models/Review";
 import {Game} from "../database/models/Game";
 import {AccuracyEvaluator} from "../turney/evaluators/AccuracyEvaluator";
+import {ReviewRecommendation} from "../database/models/training/ReviewRecommendation";
 
 export class StatsHelper
 {
@@ -22,6 +23,17 @@ export class StatsHelper
         await StatsHelper.updateGameAccuracyStats(appId);
     }
 
+    private static async updateGamePolarityStats(appId:string)
+    {
+        var query = {gameId: appId};
+        var testingRecommendations = DbContext.testingRecommendations.find(query);
+
+        var top = await testingRecommendations.sort({polarity: -1}).limit(5);
+        var bottom = await testingRecommendations.sort({polarity: 1}).limit(5);
+
+
+    }
+
     private static async updateGameAccuracyStats(appId:string)
     {
         var accuracy = await AccuracyEvaluator.computeAccuracy(appId);
@@ -30,20 +42,12 @@ export class StatsHelper
             accuracy: (accuracy * 100) | 0
         };
 
-        console.log(update);
-
         await DbContext.games.update({appId: appId}, {$set: update});
     }
 
     private static async updateGameReviewStats(appId:string)
     {
-        var query = {gameId: appId} as any;
-        var projection = {_id: true};
-
-        var reviews = await DbContext.reviews.find(query, projection).toArray() as Review[];
-        var reviewIds = reviews.map(x => x._id) as string[];
-
-        query = {reviewId: {$in: reviewIds}} as any;
+        var query = {gameId: appId};
 
         var [training, testing] = await Promise.all([
             DbContext.trainingRecommendations.find(query).toArray(),
@@ -75,7 +79,7 @@ export class StatsHelper
         // Update the game
         var update = {
             reviewsPercentages: percentages,
-            reviewsCount: reviewIds.length
+            reviewsCount: training.length
         };
         await DbContext.games.update({appId: appId}, {$set: update});
     }

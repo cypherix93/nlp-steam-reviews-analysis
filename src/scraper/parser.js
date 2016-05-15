@@ -73,7 +73,8 @@ const apps = require("./apps.json");
                         // Save the training recommendation
                         dbTraining.save({
                             reviewId: review._id,
-                            recommended: recommended
+                            recommended: recommended,
+                            gameId: review.gameId
                         });
                     });
             });
