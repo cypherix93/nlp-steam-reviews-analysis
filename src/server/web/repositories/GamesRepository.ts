@@ -1,6 +1,8 @@
 import {DbContext} from "../../core/database/context/DbContext";
 import {GameInfoWidget} from "../viewmodels/GameInfoWidget";
 import {Game} from "../../core/database/models/Game";
+import {ReviewRecommendation} from "../../core/database/models/training/ReviewRecommendation";
+import {Review} from "../../core/database/models/Review";
 
 export class GameRepository
 {
@@ -15,8 +17,10 @@ export class GameRepository
             game.reviewsCount = await DbContext.reviews
                 .count({gameId: game.appId});
 
-            game.positiveReviewsPercentage = Math.random();
-            game.negativeReviewsPercentage = 1 - game.positiveReviewsPercentage;
+            game.reviewsPercentages = {} as any;
+
+            game.reviewsPercentages.train = await GameRepository.getTrainingReviewStats(game.appId);
+            game.reviewsPercentages.test = await GameRepository.getTestingReviewStats(game.appId);
         }
 
         return games;
@@ -39,37 +43,24 @@ export class GameRepository
 
     private static async getReviewStats(gameId:string, type:string)
     {
-        var reviewIds = await DbContext.reviews.find({gameId: gameId}, {_id: true}) as number[];
+        var reviews = await DbContext.reviews.find({gameId: gameId}, {_id: true}).toArray() as Review[];
+        var reviewIds = reviews.map(r => r._id);
         var recommendations;
-
+        
         if (type === "testing") {
-            recommendations = await DbContext.testingRecommendations.find({reviewId: {$in: reviewIds}});
+            recommendations = DbContext.testingRecommendations.find({reviewId: {$in: reviewIds}});
         }
         else {
-            recommendations = await DbContext.trainingRecommendations.find({reviewId: {$in: reviewIds}});
+            recommendations = DbContext.trainingRecommendations.find({reviewId: {$in: reviewIds}});
         }
 
-        var positiveReviews = 0;
-        var negativeReviews = 0;
-        var totalReviews = recommendations.length;
+        var positiveReviews = await recommendations.count({ recommended: true });
+        var negativeReviews = await recommendations.count({ recommended: false });
+        var totalReviews = recommendations.count();
 
-        for (recommendation in recommendations)
-        {
-            if (recommendation.recommended)
-            {
-                positiveReviews++;
-            }
-            else {
-                negativeReviews++;
-            }
-        }
+        var positive = positiveReviews/totalReviews;
+        var negative = negativeReviews/totalReviews;
 
-        var positiveReviewPercentage = positiveReviews/totalReviews;
-        var negativeReviewPercentage = negativeReviews/totalReviews;
-
-        return {
-            positiveReviewPercentage,
-            negativeReviewPercentage
-        }
+        return {positive, negative};
     }
 }

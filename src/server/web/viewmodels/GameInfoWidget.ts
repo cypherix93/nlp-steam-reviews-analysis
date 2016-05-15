@@ -1,14 +1,26 @@
 export class GameInfoWidget
 {
     public title:string;
-    public appId:number;
+    public appId:string;
 
-    public positiveReviewsPercentage:number;
-    public negativeReviewsPercentage:number;
+    public reviewsPercentages:{
+        train: {
+            positive:number,
+            negative:number
+        },
+        test: {
+            positive:number,
+            negative:number
+        }
+    };
+
     public reviewsCount:number;
 
     constructor()
     {
-
+        this.reviewsPercentages = {
+            train:{},
+            test:{}
+        } as any ;
     }
 }
