@@ -9,19 +9,17 @@ export class TurneyHandler
     {
         await Trainer.train();
 
-        console.log("Training completed.");
+        console.log("\nTraining completed.");
     }
 
     public static async test(appId?:string)
     {
         if(!appId)
-        {
             await SentimentAnalyzer.analyzeAllGames();
-            return; 
-        }
+        else
+            await SentimentAnalyzer.analyzeGame(appId);
 
-        await SentimentAnalyzer.analyzeGame(appId);
-        console.log("Completed testing game successfully.");
+        console.log("\nCompleted testing game(s) successfully.");
     }
     
     public static async updateGame(appId?:string)
@@ -30,12 +28,14 @@ export class TurneyHandler
             await StatsHelper.updateAllGameStats();
         else
             await StatsHelper.updateGameStats(appId);
+
+        console.log("\nCompleted updating game(s) successfully.");
     }
 
     public static async computeAccuracy(appId?:string)
     {
         var result = await AccuracyEvaluator.computeAccuracy(appId);
 
-        console.log(`Accuracy on ${appId ? "game (" + appId + ")" : "all games"}: ${result}`);
+        console.log(`\nAccuracy on ${appId ? "game (" + appId + ")" : "all games"}: ${result}`);
     }
 }
