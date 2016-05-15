@@ -1,6 +1,7 @@
 import {DbContext} from "../database/context/DbContext";
 import {Review} from "../database/models/Review";
 import {Game} from "../database/models/Game";
+import {AccuracyEvaluator} from "../turney/evaluators/AccuracyEvaluator";
 
 export class StatsHelper
 {
@@ -15,6 +16,16 @@ export class StatsHelper
     public static async updateGameStats(appId:string)
     {
         await StatsHelper.updateGameReviewStats(appId);
+        await StatsHelper.updateGameAccuracyStats(appId);
+    }
+
+    private static async updateGameAccuracyStats(appId:string)
+    {
+        var accuracy = await AccuracyEvaluator.computeAccuracy(appId);
+
+        var update = {accuracy};
+
+        await DbContext.games.update({appId: appId}, {$set: update});
     }
 
     private static async updateGameReviewStats(appId:string)
