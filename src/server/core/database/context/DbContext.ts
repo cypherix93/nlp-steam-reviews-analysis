@@ -14,7 +14,6 @@ export class DbContext
             "training_phrases"
         ]);
     }
-
     public static get games()
     {
         return DbContext.context.games;

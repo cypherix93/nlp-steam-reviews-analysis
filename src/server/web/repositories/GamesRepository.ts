@@ -26,4 +26,59 @@ export class GameRepository
     {
         return await DbContext.games.findOne({appId: id});
     }
+
+    public static getTrainingReviewStats(id:number)
+    {
+        var game = DbContext.trainingRecommendations.findOne({appId: id});
+        var positiveReviews = 0;
+        var negativeReviews = 0;
+        var totalReviews = game.reviews.length;
+
+        for (review in game.reviews)
+        {
+            if (review.recommended)
+            {
+                positiveReviews++;
+            }
+            else {
+                negativeReviews++;
+            }
+        }
+
+        var positiveReviewPercentage = positiveReviews/totalReviews;
+        var negativeReviewPercentage = negativeReviews/totalReviews;
+
+        return {
+            positiveReviewPercentage,
+            negativeReviewPercentage
+        }
+    }
+
+    public static getTestingReviewStats(id:number)
+    {
+        var game = DbContext.testingRecommendations.findOne({appId: id});
+        var positiveReviews = 0;
+        var negativeReviews = 0;
+        var totalReviews = game.reviews.length;
+
+        for (review in game.reviews)
+        {
+            if (review.recommended)
+            {
+                positiveReviews++;
+            }
+            else {
+                negativeReviews++;
+            }
+        }
+
+        var positiveReviewPercentage = positiveReviews/totalReviews;
+        var negativeReviewPercentage = negativeReviews/totalReviews;
+
+        return {
+            positiveReviewPercentage,
+            negativeReviewPercentage
+        }
+
+    }
 }
