@@ -27,43 +27,35 @@ export class GameRepository
         return await DbContext.games.findOne({appId: id});
     }
 
-    public static getTrainingReviewStats(id:number)
+    public static async getTrainingReviewStats(gameId:string)
     {
-        var game = DbContext.trainingRecommendations.findOne({appId: id});
-        var positiveReviews = 0;
-        var negativeReviews = 0;
-        var totalReviews = game.reviews.length;
-
-        for (review in game.reviews)
-        {
-            if (review.recommended)
-            {
-                positiveReviews++;
-            }
-            else {
-                negativeReviews++;
-            }
-        }
-
-        var positiveReviewPercentage = positiveReviews/totalReviews;
-        var negativeReviewPercentage = negativeReviews/totalReviews;
-
-        return {
-            positiveReviewPercentage,
-            negativeReviewPercentage
-        }
+        return await GameRepository.getReviewStats(gameId, "training");
     }
 
-    public static getTestingReviewStats(id:number)
+    public static async getTestingReviewStats(gameId:string)
     {
-        var game = DbContext.testingRecommendations.findOne({appId: id});
+        return await GameRepository.getReviewStats(gameId, "testing");
+    }
+
+    private static async getReviewStats(gameId:string, type:string)
+    {
+        var reviewIds = await DbContext.reviews.find({gameId: gameId}, {_id: true}) as number[];
+        var recommendations;
+
+        if (type === "testing") {
+            recommendations = await DbContext.testingRecommendations.find({reviewId: {$in: reviewIds}});
+        }
+        else {
+            recommendations = await DbContext.trainingRecommendations.find({reviewId: {$in: reviewIds}});
+        }
+
         var positiveReviews = 0;
         var negativeReviews = 0;
-        var totalReviews = game.reviews.length;
+        var totalReviews = recommendations.length;
 
-        for (review in game.reviews)
+        for (recommendation in recommendations)
         {
-            if (review.recommended)
+            if (recommendation.recommended)
             {
                 positiveReviews++;
             }
@@ -79,6 +71,5 @@ export class GameRepository
             positiveReviewPercentage,
             negativeReviewPercentage
         }
-
     }
 }
