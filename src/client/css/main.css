@@ -6156,10 +6156,13 @@ textarea {
   -webkit-box-shadow: #222222 0 0 5px;
   box-shadow: #222222 0 0 5px; }
   .navbar .navbar-brand {
-    padding: 15px; }
+    padding: 15px;
+    transition: text-shadow 0.25s ease; }
     .navbar .navbar-brand img {
       height: 58px;
       margin: -8px 8px 0 -58px; }
+    .navbar .navbar-brand:hover {
+      text-shadow: #fff 0 0 28px; }
 
 .game-cards-container .game-card .panel {
   cursor: pointer;
