@@ -13,11 +13,9 @@ export class SentimentAnalyzer
     {
         var gameReviews = await DbContext.reviews.find({gameId: appId}) as Review[];
 
-        var trainingPhrases = await Corpus.getTrainingCorpusForGame(appId);
-        var posPhrasesCount = await DbContext.trainingPhrases.count({recommended:true});
-        var negPhrasesCount = await DbContext.trainingPhrases.count({recommended:false});
+        var trainingCorpus = await Corpus.getTrainingCorpus(appId);
 
-        var trainingCorpus = {trainingPhrases,posPhrasesCount,negPhrasesCount};
+        console.log(trainingCorpus);
 
         var n = 0;
 
@@ -25,7 +23,7 @@ export class SentimentAnalyzer
         {
             let phrases = SentimentAnalyzer.extractor.extract(review.reviewBody);
 
-            let polarity = await PolarityCalculator.computeAveragePolarityOfPhrases(phrases, trainingCorpus);
+            let polarity = PolarityCalculator.computeAveragePolarityOfPhrases(phrases, trainingCorpus);
 
             let recommended = polarity === 0 ? null : (polarity > 0);
 
@@ -45,9 +43,9 @@ export class SentimentAnalyzer
     {
         var phrases = SentimentAnalyzer.extractor.extract(sequence);
 
-        var trainingPhrases = await Corpus.getTrainingCorpusForGame();
+        var trainingCorpus = await Corpus.getTrainingCorpus();
 
-        var polarity = PolarityCalculator.computeAveragePolarityOfPhrases(phrases, trainingPhrases);
+        var polarity = PolarityCalculator.computeAveragePolarityOfPhrases(phrases, trainingCorpus);
 
         var recommended = polarity === 0 ? null : (polarity > 0);
 
