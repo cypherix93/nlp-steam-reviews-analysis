@@ -1262,7 +1262,7 @@ mark,
   text-transform: capitalize; }
 
 .text-muted {
-  color: #233343; }
+  color: #677583; }
 
 .text-primary {
   color: #DF691A; }
@@ -2030,7 +2030,7 @@ table {
 caption {
   padding-top: 6px;
   padding-bottom: 6px;
-  color: #233343;
+  color: #677583;
   text-align: left; }
 
 th {
@@ -5890,7 +5890,7 @@ table,
     text-decoration: none; }
   table .text-muted,
   .table .text-muted {
-    color: #233343; }
+    color: #677583; }
   table > thead > tr > th,
   table > tbody > tr > th,
   table > tfoot > tr > th,
