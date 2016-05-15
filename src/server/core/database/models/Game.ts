@@ -18,6 +18,8 @@ export class Game extends Model
 
     public reviewsCount:number;
 
+    public accuracy:number;
+
     constructor(title?:string, appId?:string)
     {
         super();

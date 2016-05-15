@@ -8,9 +8,12 @@ export class StatsHelper
     public static async updateAllGameStats()
     {
         var games = await DbContext.games.find({},{appId: true}).toArray() as Game[];
-        var gameIds = games.map(x => x.appId);
+        var gameIds = games.map(x => x.appId) as string[];
 
-        gameIds.forEach(id => StatsHelper.updateGameStats(id));
+        for (let gameId of gameIds)
+        {
+            await StatsHelper.updateGameStats(gameId);
+        }
     }
 
     public static async updateGameStats(appId:string)
@@ -23,7 +26,11 @@ export class StatsHelper
     {
         var accuracy = await AccuracyEvaluator.computeAccuracy(appId);
 
-        var update = {accuracy};
+        var update = {
+            accuracy: (accuracy * 100) | 0
+        };
+
+        console.log(update);
 
         await DbContext.games.update({appId: appId}, {$set: update});
     }
