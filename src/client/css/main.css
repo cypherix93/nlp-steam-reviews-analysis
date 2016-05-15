@@ -6092,8 +6092,9 @@ h1, h2, h3, h4, h5, h6 {
 #content-container {
   padding: 65px 30px 30px;
   overflow: hidden;
-  -webkit-box-shadow: #233343 0 0 3px;
-  box-shadow: #233343 0 0 3px; }
+  background: #111a22;
+  -webkit-box-shadow: #000 0 0 5px;
+  box-shadow: #000 0 0 5px; }
 
 div[ng-view] {
   width: 100%;
@@ -6153,8 +6154,8 @@ textarea {
   border-bottom-right-radius: 0; }
 
 .navbar {
-  -webkit-box-shadow: #222222 0 0 5px;
-  box-shadow: #222222 0 0 5px; }
+  -webkit-box-shadow: #000 0 0 5px;
+  box-shadow: #000 0 0 5px; }
   .navbar .navbar-brand {
     padding: 15px;
     transition: text-shadow 0.25s ease; }

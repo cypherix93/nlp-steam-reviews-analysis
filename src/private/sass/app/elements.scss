@@ -41,7 +41,9 @@ h1, h2, h3, h4, h5, h6
 
     overflow: hidden;
 
-    @include box-shadow($gray-light 0 0 3px);
+    background: lighten($body-bg, 2%);
+
+    @include box-shadow($gray-base 0 0 5px);
 }
 div[ng-view]
 {
