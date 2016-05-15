@@ -26,6 +26,7 @@ const apps = require("./apps.json");
 
     dbReviews.remove();
     dbGames.remove();
+    dbTraining.remove();
 
     // Loop through all games in scraped dir
     var gameDirs = fs.readdirSync(scraperDir);
