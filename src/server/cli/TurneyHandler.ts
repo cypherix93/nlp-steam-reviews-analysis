@@ -1,6 +1,7 @@
 import {Trainer} from "../core/turney/training/Trainer";
 import {SentimentAnalyzer} from "../core/turney/analyzers/SentimentAnalyzer";
 import {AccuracyEvaluator} from "../core/turney/evaluators/AccuracyEvaluator";
+import {StatsHelper} from "../core/helpers/StatsHelper";
 
 export class TurneyHandler
 {
@@ -21,6 +22,14 @@ export class TurneyHandler
 
         await SentimentAnalyzer.analyzeGame(appId);
         console.log("Completed testing game successfully.");
+    }
+    
+    public static async updateGame(appId?:string)
+    {
+        if(!appId)
+            await StatsHelper.updateAllGameStats();
+        else
+            await StatsHelper.updateGameStats(appId);
     }
 
     public static async computeAccuracy(appId?:string)

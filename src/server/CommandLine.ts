@@ -22,6 +22,9 @@ export class CommandLine
             case "--accuracy":
                 await TurneyHandler.computeAccuracy(arg);
                 break;
+            case "--update":
+                await TurneyHandler.updateGame(arg);
+                break;
         }
     }
 }
