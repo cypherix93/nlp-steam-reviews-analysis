@@ -1,19 +1,40 @@
 <div ng-controller="GameInfoController as gameInfo" class="col-md-12">
     <div class="panel-body row">
-        <div class="col-xs-2">
-            <img src="" alt="Some Image" class="img-thumbnail img-responsive">
-        </div>
-        <div class="col-xs-10">
-            <h4>
-                {{gameInfo.game.title}}
-            </h4>
-            <pos-neg-bar pos="gameInfo.trainingStats.positiveReviewPercentage" neg="gameInfo.trainingStats.negativeReviewPercentage"></pos-neg-bar>
+        <div class="col-xs-3">
+            <img ng-src="/images/games/{{gameInfo.game.appId}}.jpg" alt="Some Image" class="img-thumbnail img-responsive">
             <hr>
+            <div class="text-center">
+                <h5 class="text-muted">Accuracy</h5>
+                <h1>
+                    {{gameInfo.game.accuracy || "N/A"}}{{gameInfo.game.accuracy ? "%" : ""}}
+                </h1>
+            </div>
+        </div>
+        <div class="col-xs-9">
+            <h3>
+                {{gameInfo.game.title}}
+            </h3>
+            <hr>
+            <div>
+                <h5 class="text-center text-muted" style="margin-bottom: -15px">
+                    Train
+                </h5>
+                <pos-neg-bar pos="gameInfo.game.reviewsPercentages.train.positive" neg="gameInfo.game.reviewsPercentages.train.negative"></pos-neg-bar>
+            </div>
+            <hr>
+            <div>
+                <h5 class="text-center text-muted" style="margin-bottom: -15px">
+                    Test
+                </h5>
+                <pos-neg-bar pos="gameInfo.game.reviewsPercentages.test.positive" neg="gameInfo.game.reviewsPercentages.test.negative"></pos-neg-bar>
+            </div>
+            <hr>
+
             <div class="pull-left">
                 App ID: {{gameInfo.game.appId}}
             </div>
             <div class="pull-right">
-                {{gameInfo.reviewsCount | number: 0}} Reviews
+                {{gameInfo.game.reviewsCount | number:0}} reviews
             </div>
         </div>
     </div>
