@@ -86,6 +86,21 @@ textarea
     background: transparentize($gray-base, 0.5);
 }
 /*
+    Progress Bar
+--------------------------------------------------- */
+.progress
+{
+    height: 8px;
+}
+/*
+    Panels
+--------------------------------------------------- */
+.panel
+{
+    @include box-shadow($gray-base 0 0 5px);
+    border-radius: 5px;
+}
+/*
     Custom Classes
 --------------------------------------------------- */
 .border-top-radius-none
