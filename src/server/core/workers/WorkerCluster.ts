@@ -9,7 +9,7 @@ export class WorkerCluster
         var chunkLength = (payload.length / numWorkers) + 1;
         var chunks = _.chunk(payload, chunkLength);
 
-        console.log("Split work into: " + chunks.length);
+        console.log("Split work into: " + chunks.length + " async workers.");
 
         // Loop over all workers and start workload with promises
         var promises = [];
