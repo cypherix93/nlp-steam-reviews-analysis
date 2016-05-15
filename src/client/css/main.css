@@ -6157,3 +6157,6 @@ textarea {
   box-shadow: #222222 0 0 5px; }
   .navbar .navbar-brand {
     padding: 15px; }
+    .navbar .navbar-brand img {
+      height: 58px;
+      margin: -8px 8px 0 -58px; }
