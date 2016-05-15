@@ -1,7 +1,7 @@
+import _ = require("lodash");
 import {DbContext} from "../database/context/DbContext";
 import {Game} from "../database/models/Game";
 import {AccuracyEvaluator} from "../turney/evaluators/AccuracyEvaluator";
-import _ = require("lodash");
 import {Phrase} from "../database/models/Phrase";
 import {ReviewRecommendation} from "../database/models/training/ReviewRecommendation";
 
@@ -27,25 +27,52 @@ export class StatsHelper
 
     private static async updateGamePolarityStats(appId:string)
     {
+        console.log(`Updating game polarity stats for ${appId}...`);
+
         var query = {gameId: appId, phrases: {$exists: true, $not: {$size: 0}}};
         var projection = {phrases: true};
 
         var testingPhrases = await DbContext.testingRecommendations.find(query, projection) as ReviewRecommendation[];
 
+        // Get flattened array of phrases from the db result
         var phrases = _.flatten(testingPhrases.map(x => x.phrases)) as Phrase[];
 
-        var sorted = phrases.sort(x => x.polarity);
+        // Sort by phrase
+        var sortedByPhrase = phrases.sort((x, y) =>
+        {
+            var nameA = x.words.map(w => w.word).join(" ").toLowerCase();
+            var nameB = y.words.map(w => w.word).join(" ").toLowerCase();
 
-        var positive = sorted.reverse().slice(0, 5);
-        var negative = sorted.slice(0, 5);
+            if (nameA < nameB)
+                return -1;
 
-        var update = {positive, negative};
+            if (nameA > nameB)
+                return 1;
 
-        await DbContext.games.update({gameId: appId}, {$set: update});
+            return 0;
+        });
+
+        // Get unique phrases
+        var sortedUnique = _.sortedUniqBy(sortedByPhrase, x => x.words.map(x => x.word).join(" ").toLowerCase());
+
+        // Sort by polarity
+        var sortedByPolarity = sortedUnique.sort((x, y) => x.polarity - y.polarity);
+
+        // Get top ones
+        var negative = sortedByPolarity.slice(0, 10);
+        var positive = sortedByPolarity.reverse().slice(0, 10);
+
+        var update = {
+            topPhrases: {positive, negative}
+        };
+
+        await DbContext.games.update({appId: appId}, {$set: update});
     }
 
     private static async updateGameAccuracyStats(appId:string)
     {
+        console.log(`Updating accuracy stats for ${appId}...`);
+
         var accuracy = await AccuracyEvaluator.computeAccuracy(appId);
 
         var update = {
@@ -57,6 +84,8 @@ export class StatsHelper
 
     private static async updateGameReviewStats(appId:string)
     {
+        console.log(`Updating review percentage stats for ${appId}...`);
+
         var query = {gameId: appId};
 
         var [training, testing] = await Promise.all([
