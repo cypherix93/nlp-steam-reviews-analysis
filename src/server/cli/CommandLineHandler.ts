@@ -3,7 +3,7 @@ export class CommandLineHandler
     public static printWelcomeText()
     {
         console.log();
-        console.log("Welcome to the Syntactic Parsing playground for CSE 390");
+        console.log("Welcome to the Sentiment Analyzer playground for CSE 390");
         console.log("---------------------------------------------------------");
     }
 

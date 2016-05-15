@@ -16,7 +16,7 @@ angular.module("AngularApp")
             "This game does not deserve to be named FlatOut.\n\nIt was NOT made by BugBear. \nI'm not being an arrogant ♥♥♥ when I say that it looks more like it was made by your 10yo brother as his first attempt at making a game.\n\nFlatOut 2 is the one you want. FO Ultimate  Carnage is an upgraded version of FO2 with both benefits and downsides.\nI'll go and say I like FO2 better because the Bullet GT was ... well ... nerfed, I guess... Too bad, they could have buffed the other cars instead =/",
             "this  game is a complete ripoff, I want my money back, I want the time I wasted downloading back.\nI want someone at steam to feel the pain I feel for being ripped of by them It's like a kick in the nuts.\nluckily it was the summer sale and they only ripped me off for half the price of this garbage.\nI believe I may have made my last steam purchase.",
             "If you were a fan of the origional Flatout Series, this Isn't the game you're looking for. This game has an arcade type of feel versues the origional Flatout's more realistic feel, and quite frankly I hate it."];
-        self.positive = 69;
-        self.negative = 31;
+        //self.trainingStats = GameRepository.getTrainingReviewStats;
+        //self.testingStats = GameRepository.getTestingReviewStats;
         self.reviewsCount = 666;
     });

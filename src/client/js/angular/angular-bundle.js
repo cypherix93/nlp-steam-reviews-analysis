@@ -113,11 +113,10 @@ angular.module("AngularApp")
             },
             link: function(scope, element, attrs)
             {
-                if (scope.pos < 1)
-                    scope.pos = scope.pos * 100 | 0;
-
-                if (scope.neg < 1)
-                    scope.neg = scope.neg * 100 | 0;
+                if (scope.pos === 0 && scope.neg === 0)
+                {
+                    scope.empty = true;
+                }
             },
             templateUrl: "templates/shared/pos-neg-bar-template.html"
         }
@@ -140,8 +139,8 @@ angular.module("AngularApp")
             "This game does not deserve to be named FlatOut.\n\nIt was NOT made by BugBear. \nI'm not being an arrogant ♥♥♥ when I say that it looks more like it was made by your 10yo brother as his first attempt at making a game.\n\nFlatOut 2 is the one you want. FO Ultimate  Carnage is an upgraded version of FO2 with both benefits and downsides.\nI'll go and say I like FO2 better because the Bullet GT was ... well ... nerfed, I guess... Too bad, they could have buffed the other cars instead =/",
             "this  game is a complete ripoff, I want my money back, I want the time I wasted downloading back.\nI want someone at steam to feel the pain I feel for being ripped of by them It's like a kick in the nuts.\nluckily it was the summer sale and they only ripped me off for half the price of this garbage.\nI believe I may have made my last steam purchase.",
             "If you were a fan of the origional Flatout Series, this Isn't the game you're looking for. This game has an arcade type of feel versues the origional Flatout's more realistic feel, and quite frankly I hate it."];
-        self.positive = 69;
-        self.negative = 31;
+        //self.trainingStats = GameRepository.getTrainingReviewStats;
+        //self.testingStats = GameRepository.getTestingReviewStats;
         self.reviewsCount = 666;
     }]);
 angular.module("AngularApp")
@@ -176,5 +175,5 @@ angular.module("AngularApp")
                 });
         }
     }]);
-angular.module("AngularApp").run(["$templateCache", function($templateCache) {$templateCache.put("templates/home/game-info-widget-template.html","<div class=\"panel panel-default\" ui-sref=\"gameInfo({appId: game.appId })\">\n    <div class=\"panel-body row\">\n        <div class=\"col-xs-3\">\n            <img src=\"\" alt=\"Some Image\" class=\"img-thumbnail img-responsive\">\n        </div>\n        <div class=\"col-xs-9\">\n            <h4>\n                {{game.title}}\n            </h4>\n            <pos-neg-bar pos=\"game.positiveReviewsPercentage\" neg=\"game.negativeReviewsPercentage\"></pos-neg-bar>\n            <hr>\n\n            <div class=\"pull-left\">\n                App ID: {{game.appId}}\n            </div>\n            <div class=\"pull-right\">\n                {{game.reviewsCount | number:0}} reviews\n            </div>\n        </div>\n    </div>\n</div>");
-$templateCache.put("templates/shared/pos-neg-bar-template.html","<uib-progress>\n    <uib-bar value=\"pos\" type=\"success\">\n        <span>Positive: {{pos}}</span>\n    </uib-bar>\n    <uib-bar value=\"neg\" type=\"danger\">\n        <span>Negative: {{neg}}</span>\n    </uib-bar>\n</uib-progress>");}]);
+angular.module("AngularApp").run(["$templateCache", function($templateCache) {$templateCache.put("templates/home/game-info-widget-template.html","<div class=\"panel panel-default\" ui-sref=\"gameInfo({appId: game.appId })\">\r\n    <div class=\"panel-body row\">\r\n        <div class=\"col-xs-3\">\r\n            <img src=\"\" alt=\"Some Image\" class=\"img-thumbnail img-responsive\">\r\n        </div>\r\n        <div class=\"col-xs-9\">\r\n            <h4>\r\n                {{game.title}}\r\n            </h4>\r\n            <hr>\r\n            <div>\r\n                <h5 class=\"text-center\" style=\"margin-bottom: -15px\">\r\n                    Train\r\n                </h5>\r\n                <pos-neg-bar pos=\"game.reviewsPercentages.train.positive\" neg=\"game.reviewsPercentages.train.negative\"></pos-neg-bar>\r\n            </div>\r\n            <hr>\r\n            <div>\r\n                <h5 class=\"text-center\" style=\"margin-bottom: -15px\">\r\n                    Test\r\n                </h5>\r\n                <pos-neg-bar pos=\"game.reviewsPercentages.test.positive\" neg=\"game.reviewsPercentages.test.negative\"></pos-neg-bar>\r\n            </div>\r\n            <hr>\r\n\r\n            <div class=\"pull-left\">\r\n                App ID: {{game.appId}}\r\n            </div>\r\n            <div class=\"pull-right\">\r\n                {{game.reviewsCount | number:0}} reviews\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>");
+$templateCache.put("templates/shared/pos-neg-bar-template.html","<div class=\"clearfix\" style=\"padding-bottom: 5px\">\r\n    <div class=\"pull-left\">\r\n        Positive: {{pos || \"N/A\"}}{{neg ? \"%\" : \"\"}}\r\n    </div>\r\n    <div class=\"pull-right\">\r\n        Negative: {{neg || \"N/A\"}}{{neg ? \"%\" : \"\"}}\r\n    </div>\r\n</div>\r\n<uib-progress ng-hide=\"empty\">\r\n    <uib-bar value=\"pos\" type=\"success\"></uib-bar>\r\n    <uib-bar value=\"neg\" type=\"danger\"></uib-bar>\r\n</uib-progress>\r\n<uib-progress ng-show=\"empty\">\r\n    <uib-bar value=\"50\"></uib-bar>\r\n    <uib-bar value=\"50\"></uib-bar>\r\n</uib-progress>");}]);

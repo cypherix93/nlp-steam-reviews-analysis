@@ -2,8 +2,8 @@ import {PhraseExtractor} from "../phrases/PhraseExtractor";
 import {DbContext} from "../../database/context/DbContext";
 import {Review} from "../../database/models/Review";
 import {PolarityCalculator} from "../polarity/PolarityCalculator";
-import {Trainer} from "../training/Trainer";
 import {Corpus} from "../training/Corpus";
+import {StatsHelper} from "../../helpers/StatsHelper";
 
 export class SentimentAnalyzer
 {
@@ -30,6 +30,9 @@ export class SentimentAnalyzer
 
             await DbContext.testingRecommendations.update(query, update, {upsert:true});
         }
+        
+        // Update the game stats for the game just tested
+        await StatsHelper.updateGameStats(appId);
     }
     
     public static async analyzeSequence(sequence:string)

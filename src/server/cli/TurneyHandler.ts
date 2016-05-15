@@ -4,16 +4,17 @@ import {AccuracyEvaluator} from "../core/turney/evaluators/AccuracyEvaluator";
 
 export class TurneyHandler
 {
-    public static train()
+    public static async train()
     {
-        Trainer.train()
-            .then(() => console.log("Training completed."));
+        await Trainer.train();
+
+        console.log("Training completed.");
     }
 
-    public static test(appId:string)
+    public static async test(appId:string)
     {
-        SentimentAnalyzer.analyzeGame(appId)
-            .then(() => console.log("Completed testing game successfully."));
+        await SentimentAnalyzer.analyzeGame(appId);
+        console.log("Completed testing game successfully.");
     }
 
     public static async computeAccuracy(appId?:string)

@@ -7,7 +7,20 @@
             <h4>
                 {{game.title}}
             </h4>
-            <pos-neg-bar pos="game.positiveReviewsPercentage" neg="game.negativeReviewsPercentage"></pos-neg-bar>
+            <hr>
+            <div>
+                <h5 class="text-center" style="margin-bottom: -15px">
+                    Train
+                </h5>
+                <pos-neg-bar pos="game.reviewsPercentages.train.positive" neg="game.reviewsPercentages.train.negative"></pos-neg-bar>
+            </div>
+            <hr>
+            <div>
+                <h5 class="text-center" style="margin-bottom: -15px">
+                    Test
+                </h5>
+                <pos-neg-bar pos="game.reviewsPercentages.test.positive" neg="game.reviewsPercentages.test.negative"></pos-neg-bar>
+            </div>
             <hr>
 
             <div class="pull-left">

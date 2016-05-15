@@ -1,36 +1,28 @@
-const readlineSync = require("readline-sync");
 import {CommandLineHandler} from "./cli/CommandLineHandler";
 import {TurneyHandler} from "./cli/TurneyHandler";
 
 export class CommandLine
 {
-    public static main()
+    public static async main()
     {
-        var readline = readlineSync as any;
+        var command = process.argv[2];
+        var arg = process.argv[3];
 
-        // Print welcome text
-        CommandLineHandler.printWelcomeText();
-
-        // Print help text
-        CommandLineHandler.printHelpText();
-
-        // Start shell
-        readline.promptCLLoop(
-            {
-                help: CommandLineHandler.printHelpText,
-
-                train: TurneyHandler.train,
-                test: TurneyHandler.test,
-                accuracy: TurneyHandler.computeAccuracy,
-
-                exit: CommandLine.exit
-            });
-    }
-
-    private static exit()
-    {
-        console.log("\nGoodbye!\n");
-        return true;
+        switch(command)
+        {
+            case "--help":
+                CommandLineHandler.printHelpText();
+                break;
+            case "--train":
+                await TurneyHandler.train();
+                break;
+            case "--test":
+                await TurneyHandler.test(arg);
+                break;
+            case "--accuracy":
+                await TurneyHandler.computeAccuracy(arg);
+                break;
+        }
     }
 }
 

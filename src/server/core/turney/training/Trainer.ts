@@ -5,6 +5,7 @@ import {DbContext} from "../../database/context/DbContext";
 import {TrainingPhrase} from "../../database/models/training/TrainingPhrase";
 import {ReviewRecommendation} from "../../database/models/training/ReviewRecommendation";
 import {WorkerCluster} from "../../workers/WorkerCluster";
+import {StatsHelper} from "../../helpers/StatsHelper";
 
 export class Trainer
 {
@@ -18,6 +19,9 @@ export class Trainer
         await DbContext.trainingPhrases.remove();
 
         await WorkerCluster.splitWorkLoad(Trainer.trainPhrases, trainingReviews, 20);
+        
+        // Update the stats for all games
+        await StatsHelper.updateAllGameStats();
     }
 
     // This method gets the training corpus, which is all of the reviews that isn't the game we're training for.

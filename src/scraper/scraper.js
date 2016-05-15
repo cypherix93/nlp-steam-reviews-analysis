@@ -44,7 +44,7 @@ init().then(function (jquery)
 
 function getReviews(app)
 {
-    var makeRequest = function (page)
+    var makeRequest = function (page, tries)
     {
         console.log(`Scraping reviews for AppID:${app.game} (${app.id}) on Page ${page}`);
 
@@ -60,6 +60,20 @@ function getReviews(app)
 
             if (!body)
             {
+                if(!tries || tries < 3)
+                {
+                    console.log(`==> Trying page ${page} again for ${app.game} (${app.id})!`);
+                    console.log(url);
+                    makeRequest(page, (tries || 0) + 1);
+                }
+                else if(tries > 3 &&  tries < 6)
+                {
+                    console.log(`==> Skipping page ${page} for ${app.game} (${app.id})!`);
+                    console.log(url);
+                    makeRequest(page + 1, (tries || 0) + 1);
+                }
+
+                console.log(`==> Done scraping: ${app.game} (${app.id})`);
                 return;
             }
 
@@ -73,7 +87,7 @@ function getReviews(app)
                 })
                 .catch(function (err)
                 {
-                    console.log(err);
+                    console.error(err);
                 });
         });
     };
