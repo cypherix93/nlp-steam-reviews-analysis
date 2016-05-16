@@ -1,0 +1,58 @@
+<div class="reviews-container" ng-controller="ReviewsController as reviews">
+
+    <div class="pull-right text-muted">
+        Page: {{reviews.page}} of {{(reviews.counts.total / 10) | number:0}}
+    </div>
+    <h2>
+        Reviews for {{reviews.game.title}} ({{reviews.game.appId}})
+    </h2>
+    <hr>
+
+    <div class="review panel panel-default" ng-repeat="review in reviews.reviews track by $index">
+        <div class="panel-heading clearfix">
+            <div class="pull-left">
+                <b>
+                    {{review.reviewer}}
+                    <small class="text-muted">({{review.reviewerHoursPlayed}} hours on record)</small>
+                </b>
+            </div>
+            <div class="pull-right">
+                <small>Posted: {{review.datePosted | date}}</small>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="col-md-2 text-center">
+                <h5 class="text-muted">Reviewer</h5>
+                <div class="text-success" ng-show="review.recommendations.train.recommended === true">
+                    <span class="fa fa-2x fa-thumbs-up"></span> <br>
+                    <small>Recommended</small>
+                </div>
+                <div class="text-danger" ng-show="review.recommendations.train.recommended === false">
+                    <span class="fa fa-2x fa-thumbs-down"></span> <br>
+                    <small>Not Recommended</small>
+                </div>
+                <hr>
+                <h5 class="text-muted">System</h5>
+                <div class="text-success" ng-show="review.recommendations.test.recommended === true">
+                    <span class="fa fa-2x fa-thumbs-up"></span> <br>
+                    <small>Recommended</small>
+                </div>
+                <div class="text-danger" ng-show="review.recommendations.test.recommended === false">
+                    <span class="fa fa-2x fa-thumbs-down"></span> <br>
+                    <small>Not Recommended</small>
+                </div>
+                <div class="text-muted" ng-show="review.recommendations.test.recommended == null">
+                    <span class="fa fa-2x fa-minus"></span> <br>
+                    <small>N/A</small>
+                </div>
+            </div>
+            <div class="col-md-10" ng-bind-html="review.reviewBody"></div>
+        </div>
+        <hr>
+    </div>
+    <div class="text-center">
+        <uib-pagination total-items="reviews.counts.total" ng-model="reviews.page" ng-change="reviews.changePage()"
+                        max-size="10" force-ellipsis="true" boundary-links="true" boundary-link-numbers="true"
+                        previous-text="&lt;" next-text="&gt;" first-text="&lt;&lt;" last-text="&gt;&gt;"></uib-pagination>
+    </div>
+</div>

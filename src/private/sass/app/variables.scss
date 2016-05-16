@@ -1,11 +1,22 @@
 /* Font Stuff */
+$web-font-path: "https://fonts.googleapis.com/css?family=Open+Sans:400,700";
+@import url($web-font-path);
+
+$font-family-sans-serif: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+$font-family-serif: Georgia, "Times New Roman", Times, serif;
+
+$font-family-monospace: Menlo, Monaco, Consolas, "Courier New", monospace;
+$font-family-base: $font-family-sans-serif;
+
 $icon-font-path: "../lib/bootstrap/fonts/";
 
-//$font-size-base: 14px;
+$text-muted: hsl(210, 12%, 46%);
 
-$text-shadow: rgba(0,0,0,0.1) 0 0 1px;
+$text-shadow: rgba(0, 0, 0, 0.1) 0 0 1px;
 
 /* Nav-Bar */
+$navbar-height: 50px;
+
 $navbar-inverse-bg: $brand-primary;
 
 $navbar-inverse-brand-color: $gray-light;
@@ -14,3 +25,5 @@ $navbar-inverse-brand-hover-color: white;
 $navbar-inverse-link-color: $gray-lighter;
 $navbar-inverse-link-hover-color: white;
 $navbar-inverse-link-active-color: white;
+
+$nav-link-padding: 15px !important;

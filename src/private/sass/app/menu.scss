@@ -1,4 +1,22 @@
 ﻿.navbar
 {
-    @include box-shadow($gray 0 0 5px);
+    @include box-shadow($gray-base 0 0 5px);
+
+    .navbar-brand
+    {
+        padding: 15px;
+
+        img
+        {
+            height: 58px;
+            margin: -8px 8px 0 -58px;
+        }
+
+        &:hover
+        {
+            text-shadow: #fff 0 0 28px;
+        }
+
+        transition: text-shadow 0.25s ease;
+    }
 }

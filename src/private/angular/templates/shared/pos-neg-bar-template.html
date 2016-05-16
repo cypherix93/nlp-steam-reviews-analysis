@@ -1,0 +1,22 @@
+<div class="clearfix" style="padding-bottom: 5px">
+    <div class="pull-left">
+        <small>
+            <span class="fa fa-thumbs-up"></span>
+            Positive: {{pos || "N/A"}}{{neg ? "%" : ""}}
+        </small>
+    </div>
+    <div class="pull-right">
+        <small>
+            <span class="fa fa-thumbs-down"></span>
+            Negative: {{neg || "N/A"}}{{neg ? "%" : ""}}
+        </small>
+    </div>
+</div>
+<uib-progress ng-hide="empty">
+    <uib-bar value="pos" type="success"></uib-bar>
+    <uib-bar value="neg" type="danger"></uib-bar>
+</uib-progress>
+<uib-progress ng-show="empty">
+    <uib-bar value="50"></uib-bar>
+    <uib-bar value="50"></uib-bar>
+</uib-progress>

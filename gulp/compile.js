@@ -3,13 +3,13 @@
 module.exports = function (gulp, plugins, paths)
 {
     // Compile everything
-    gulp.task("compile", ["compile-app", "compile-ui"]);
+    gulp.task("compile", ["compile-server", "compile-client"]);
 
     // Server
-    require("./compile/app/compile-app")(gulp, plugins, paths);
+    require("./compile/server/compile-server")(gulp, plugins, paths);
     
     // Client
-    require("./compile/ui/compile-ui")(gulp, plugins, paths);
-    require("./compile/ui/bundle-ng-files")(gulp, plugins, paths);
-    require("./compile/ui/preprocess-sass")(gulp, plugins, paths);
+    require("./compile/client/compile-client")(gulp, plugins, paths);
+    require("./compile/client/bundle-ng-files")(gulp, plugins, paths);
+    require("./compile/client/preprocess-sass")(gulp, plugins, paths);
 };

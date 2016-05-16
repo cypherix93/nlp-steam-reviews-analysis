@@ -1,0 +1,9 @@
+<h2>Steam Reviews Analysis</h2>
+
+<hr>
+
+<div class="game-cards-container row" ng-controller="HomeController as home">
+    <div class="game-card col-md-6" ng-repeat="game in home.games | orderBy: 'title'">
+        <game-info-widget game="game"></game-info-widget>
+    </div>
+</div>

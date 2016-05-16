@@ -9,7 +9,6 @@ var plugins = require("gulp-load-plugins")();
 
 // NPM Tools
 var runSequence = require("run-sequence");
-var merge = require("merge-stream");
 var streamqueue = require("streamqueue");
 
 // Directories
@@ -20,8 +19,8 @@ paths.deploy = "./deploy/";
 paths.project = "./src/";
 
 paths.private = paths.project + "private/";
-paths.ui = paths.project + "ui/";
-paths.app = paths.project + "app/";
+paths.client = paths.project + "client/";
+paths.app = paths.project + "server/";
 
 paths.angular = paths.private + "angular/";
 paths.sass = paths.private + "sass/";

@@ -37,17 +37,13 @@ h1, h2, h3, h4, h5, h6
 --------------------------------------------------- */
 #content-container
 {
-    background: white;
     padding: 65px 30px 30px;
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 90px;
 
     overflow: hidden;
 
-    @include box-shadow($gray-light 0 0 3px);
+    background: lighten($body-bg, 2%);
+
+    @include box-shadow($gray-base 0 0 5px);
 }
 div[ng-view]
 {
@@ -57,11 +53,6 @@ div[ng-view]
 }
 #footer-container
 {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-
     padding: 15px;
 }
 /*
@@ -92,9 +83,23 @@ textarea
 /*
     Bootstrap Elements
 --------------------------------------------------- */
+.btn
+{
+    border-radius: 5px;
+    @include box-shadow($gray-base 0 0 8px);
+}
 .well, .jumbotron
 {
     background: transparentize($gray-base, 0.5);
+}
+.progress
+{
+    height: 8px;
+}
+.panel
+{
+    @include box-shadow($gray-base 0 0 5px);
+    border-radius: 5px;
 }
 /*
     Custom Classes

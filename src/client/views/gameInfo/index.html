@@ -1,0 +1,76 @@
+<div class="game-info-container" ng-controller="GameInfoController as gameInfo">
+    <div class="panel-body row">
+        <div class="col-xs-3">
+            <img ng-src="/images/games/{{gameInfo.game.appId}}.jpg" alt="Some Image" class="img-thumbnail img-responsive">
+            <hr>
+            <div class="text-center">
+                <h5 class="text-muted">Accuracy</h5>
+                <h1>
+                    {{gameInfo.game.accuracy || "N/A"}}{{gameInfo.game.accuracy ? "%" : ""}}
+                </h1>
+            </div>
+        </div>
+        <div class="col-xs-9">
+            <h3>
+                {{gameInfo.game.title}}
+            </h3>
+            <hr>
+            <div>
+                <h5 class="text-center text-muted" style="margin-bottom: -15px">
+                    Train
+                </h5>
+                <pos-neg-bar pos="gameInfo.game.reviewsPercentages.train.positive" neg="gameInfo.game.reviewsPercentages.train.negative"></pos-neg-bar>
+            </div>
+            <hr>
+            <div>
+                <h5 class="text-center text-muted" style="margin-bottom: -15px">
+                    Test
+                </h5>
+                <pos-neg-bar pos="gameInfo.game.reviewsPercentages.test.positive" neg="gameInfo.game.reviewsPercentages.test.negative"></pos-neg-bar>
+            </div>
+            <hr>
+
+            <div class="pull-left">
+                App ID: {{gameInfo.game.appId}}
+            </div>
+            <div class="pull-right">
+                {{gameInfo.game.reviewsCount | number:0}} reviews
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="polarity-stats row">
+        <div class="col-md-5 col-md-offset-1 text-success">
+            <h4 class="polarity-header text-center">Top 10 Good Things</h4>
+            <hr>
+            <h5 class="polarity-table-header pull-left">Phrase</h5>
+            <h5 class="polarity-table-header pull-right">Polarity</h5>
+            <hr>
+            <ol class="polarity-list list-unstyled">
+                <li ng-repeat="phrase in gameInfo.game.topPhrases.positive track by $index">
+                    <span phrase="phrase"></span>
+                    <small class="pull-right">{{phrase.polarity | number:8 }}</small>
+                </li>
+            </ol>
+        </div>
+        <div class="col-md-5 text-danger">
+            <h4 class="polarity-header text-center">Top 10 Bad Things</h4>
+            <hr>
+            <h5 class="polarity-table-header pull-left">Phrase</h5>
+            <h5 class="polarity-table-header pull-right">Polarity</h5>
+            <hr>
+            <ol class="polarity-list list-unstyled">
+                <li ng-repeat="phrase in gameInfo.game.topPhrases.negative track by $index">
+                    <span phrase="phrase"></span>
+                    <small class="pull-right">{{phrase.polarity | number:8 }}</small>
+                </li>
+            </ol>
+        </div>
+    </div>
+    <hr>
+    <div class="col-md-offset-4 col-md-4">
+        <a class="btn btn btn-info btn-block" ui-sref="reviews({appId: gameInfo.game.appId})">
+            View all {{gameInfo.game.reviewsCount | number:0}} reviews
+        </a>
+    </div>
+</div>

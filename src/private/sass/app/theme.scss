@@ -1,14 +1,16 @@
 /* Theme variables */
 
-//$gray-base:             #000 !default;
-//$gray-darker:           lighten($gray-base, 13.5%) !default; // #222
-//$gray-dark:             lighten($gray-base, 20%) !default;   // #333
-//$gray:                  lighten($gray-base, 33.5%) !default; // #555
-//$gray-light:            lighten($gray-base, 70%) !default;   // #999
-//$gray-lighter:          lighten($gray-base, 93.5%) !default; // #eee
-//
-//$brand-primary:         #563ba0 !default;
-//$brand-success:         #3FAD46 !default;
-//$brand-info:            #5bc0de !default;
-//$brand-warning:         #f0ad4e !default;
-//$brand-danger:          #d9534f !default;
+$gray-base:              #000 !default;
+$gray-darker:            lighten($gray-base, 13.5%) !default; // #222
+$gray-dark:              lighten($gray-base, 20%) !default;   // #333
+$gray:                   lighten($gray-base, 33.5%) !default; // #555
+$gray-light:             hsl(210, 32%, 20%) !default;   // #999
+$gray-lighter:           #EBEBEB !default; // #eee
+
+$brand-primary:         darken($gray-light, 7%) !default;
+$brand-success:         #5cb85c !default;
+$brand-info:            darken(#5bc0de, 28%) !default;
+$brand-warning:         #f0ad4e !default;
+$brand-danger:          #d9534f !default;
+
+$body-bg: darken($gray-light, 12%);
