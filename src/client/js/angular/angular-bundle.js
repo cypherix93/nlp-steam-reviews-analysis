@@ -33,8 +33,15 @@ angular.module("AngularApp")
         $stateProvider
             .state("gameInfo",
                 {
-                    url: "/gameInfo/:appId",
-                    templateUrl: "views/gameInfo/gameInfo.html"
+                    url: "/game/:appId",
+                    templateUrl: "views/gameInfo/index.html"
+                });
+        
+        $stateProvider
+            .state("reviews",
+                {
+                    url: "/reviews/:appId/:page",
+                    templateUrl: "views/reviews/index.html"
                 });
     }]);
 angular.module("AngularApp")
@@ -191,6 +198,20 @@ angular.module("AngularApp")
             .success(function(response)
             {
                 self.games = response;
+            });
+    }]);
+angular.module("AngularApp")
+    .controller("ReviewsController", ["$stateParams", "APIService", function ReviewsController($stateParams, APIService)
+    {
+        var self = this;
+
+        var appId = $stateParams.appId;
+        var page = $stateParams.page || 1;
+
+        APIService.get("/reviews/get/" + $stateParams.appId + "/" + page)
+            .success(function(response)
+            {
+                self.reviews = response;
             });
     }]);
 angular.module("AngularApp")

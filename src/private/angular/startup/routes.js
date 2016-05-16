@@ -23,7 +23,14 @@ angular.module("AngularApp")
         $stateProvider
             .state("gameInfo",
                 {
-                    url: "/gameInfo/:appId",
-                    templateUrl: "views/gameInfo/gameInfo.html"
+                    url: "/game/:appId",
+                    templateUrl: "views/gameInfo/index.html"
+                });
+        
+        $stateProvider
+            .state("reviews",
+                {
+                    url: "/reviews/:appId/:page",
+                    templateUrl: "views/reviews/index.html"
                 });
     });
