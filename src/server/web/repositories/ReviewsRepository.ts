@@ -9,12 +9,15 @@ export class ReviewsRepository
         var pageLength = 10;
         var skip = (page - 1) * pageLength;
 
-        var reviews = await DbContext.reviews
-            .find(query)
+        var reviewsQuery = DbContext.reviews.find(query);
+
+        var reviewsCount = await reviewsQuery.count();
+
+        var reviews = await reviewsQuery
             .skip(skip)
             .limit(pageLength)
             .toArray() as Review[];
 
-        return reviews;
+        return {reviews, reviewsCount};
     }
 }

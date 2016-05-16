@@ -201,18 +201,28 @@ angular.module("AngularApp")
             });
     }]);
 angular.module("AngularApp")
-    .controller("ReviewsController", ["$stateParams", "APIService", function ReviewsController($stateParams, APIService)
+    .controller("ReviewsController", ["$stateParams", "$state", "APIService", function ReviewsController($stateParams, $state, APIService)
     {
         var self = this;
 
-        var appId = $stateParams.appId;
-        var page = $stateParams.page || 1;
+        self.appId = $stateParams.appId;
+        self.page = $stateParams.page || 1;
 
-        APIService.get("/reviews/get/" + $stateParams.appId + "/" + page)
-            .success(function(response)
+        APIService.get("/reviews/get/" + self.appId + "/" + self.page)
+            .success(function (response)
             {
-                self.reviews = response;
+                self.game = response.game;
+                self.reviews = response.reviews;
+                self.counts = response.counts;
             });
+
+        self.changePage = function ()
+        {
+            $state.go("reviews", {
+                appId: self.appId,
+                page: self.page
+            });
+        }
     }]);
 angular.module("AngularApp")
     .controller("TestController", ["APIService", function (APIService)

@@ -1,8 +1,33 @@
 <div class="reviews-container" ng-controller="ReviewsController as reviews">
 
-    <div class="review" ng-repeat="review in reviews.reviews track by $index">
-        {{review.reviewBody}}
+    <div class="pull-right text-muted">
+        Page: {{reviews.page}} of {{(reviews.counts.total / 10) | number}}
+    </div>
+    <h2>
+        Reviews for {{reviews.game.title}} ({{reviews.game.appId}})
+    </h2>
+    <hr>
+
+    <div class="review panel panel-default" ng-repeat="review in reviews.reviews track by $index">
+        <div class="panel-heading clearfix">
+            <div class="pull-left">
+                <b>
+                    {{review.reviewer}}
+                    <small class="text-muted">({{review.reviewerHoursPlayed}} hours on record)</small>
+                </b>
+            </div>
+            <div class="pull-right">
+                <small>Posted: {{review.datePosted | date}}</small>
+            </div>
+        </div>
+        <div class="panel-body">
+            {{review.reviewBody}}
+        </div>
         <hr>
     </div>
-
+    <div class="text-center">
+        <uib-pagination total-items="reviews.counts.total" ng-model="reviews.page" ng-change="reviews.changePage()"
+                        max-size="10" force-ellipsis="true" boundary-links="true" boundary-link-numbers="true"
+                        previous-text="&lt;" next-text="&gt;" first-text="&lt;&lt;" last-text="&gt;&gt;"></uib-pagination>
+    </div>
 </div>
