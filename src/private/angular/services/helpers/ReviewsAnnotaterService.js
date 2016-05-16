@@ -42,7 +42,7 @@ angular.module("AngularApp")
                 else
                     colorClass = "text-danger";
 
-                var replaceText = "<span class='" + colorClass + "' title='" + phrase.polarity + "' data-toggle='tooltip' data-placement='top'>" +
+                var replaceText = "<span class='" + colorClass + "' title='Polarity: " + phrase.polarity + "' data-toggle='tooltip' data-placement='top'>" +
                     searchText + "</span>";
 
                 annotated = annotated.replace(new RegExp("(" + searchText + ")", "gi"), replaceText);

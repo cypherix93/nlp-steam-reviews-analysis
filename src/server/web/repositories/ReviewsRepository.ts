@@ -23,6 +23,8 @@ export class ReviewsRepository
 
         for (let review of reviews)
         {
+            review.reviewBody = review.reviewBody.replace(/\n/g, "<br>");
+
             review.recommendations = {
                 train: await trainingRecommendations.findOne({reviewId: review._id}),
                 test: await testingRecommendations.findOne({reviewId: review._id})
