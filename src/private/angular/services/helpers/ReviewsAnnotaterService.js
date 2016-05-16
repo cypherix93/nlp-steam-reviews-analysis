@@ -45,7 +45,7 @@ angular.module("AngularApp")
                 var replaceText = "<span class='" + colorClass + "' title='Polarity: " + phrase.polarity + "' data-toggle='tooltip' data-placement='top'>" +
                     searchText + "</span>";
 
-                annotated = annotated.replace(new RegExp("(" + searchText + ")", "gi"), replaceText);
+                annotated = annotated.replace(new RegExp("(" + searchText.replace(/\W/g, "\\$&") + ")", "g"), replaceText);
             }
 
             review.reviewBody = $sce.trustAsHtml(annotated);
