@@ -102,8 +102,8 @@ export class StatsHelper
         total = training.filter(x => x.recommended !== null).length;
 
         percentages.train = {
-            positive: ((pos / total) * 100) | 0,
-            negative: ((neg / total) * 100) | 0
+            positive: Math.round((pos / total) * 100),
+            negative: Math.round((neg / total) * 100)
         };
 
         pos = testing.filter(x => x.recommended === true).length;
@@ -111,8 +111,8 @@ export class StatsHelper
         total = testing.filter(x => x.recommended !== null).length;
 
         percentages.test = {
-            positive: ((pos / total) * 100) | 0,
-            negative: ((neg / total) * 100) | 0
+            positive: Math.round((pos / total) * 100),
+            negative: Math.round((neg / total) * 100)
         };
 
         // Update the game
