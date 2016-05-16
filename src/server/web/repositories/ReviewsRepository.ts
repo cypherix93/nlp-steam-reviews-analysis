@@ -16,7 +16,18 @@ export class ReviewsRepository
         var reviews = await reviewsQuery
             .skip(skip)
             .limit(pageLength)
-            .toArray() as Review[];
+            .toArray() as any[];
+
+        var trainingRecommendations = DbContext.trainingRecommendations;
+        var testingRecommendations = DbContext.testingRecommendations;
+
+        for (let review of reviews)
+        {
+            review.recommendations = {
+                train: await trainingRecommendations.findOne({reviewId: review._id}),
+                test: await testingRecommendations.findOne({reviewId: review._id})
+            }
+        }
 
         return {reviews, reviewsCount};
     }

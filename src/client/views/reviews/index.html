@@ -21,7 +21,34 @@
             </div>
         </div>
         <div class="panel-body">
-            {{review.reviewBody}}
+            <div class="col-md-2 text-center">
+                <h5 class="text-muted">Reviewer</h5>
+                <div class="text-success" ng-show="review.recommendations.train.recommended === true">
+                    <span class="fa fa-2x fa-thumbs-up"></span> <br>
+                    <small>Recommended</small>
+                </div>
+                <div class="text-danger" ng-show="review.recommendations.train.recommended === false">
+                    <span class="fa fa-2x fa-thumbs-down"></span> <br>
+                    <small>Not Recommended</small>
+                </div>
+                <hr>
+                <h5 class="text-muted">System</h5>
+                <div class="text-success" ng-show="review.recommendations.test.recommended === true">
+                    <span class="fa fa-2x fa-thumbs-up"></span> <br>
+                    <small>Recommended</small>
+                </div>
+                <div class="text-danger" ng-show="review.recommendations.test.recommended === false">
+                    <span class="fa fa-2x fa-thumbs-down"></span> <br>
+                    <small>Not Recommended</small>
+                </div>
+                <div class="text-muted" ng-show="review.recommendations.test.recommended == null">
+                    <span class="fa fa-2x fa-minus"></span> <br>
+                    <small>N/A</small>
+                </div>
+            </div>
+            <div class="col-md-10">
+                {{review.reviewBody}}
+            </div>
         </div>
         <hr>
     </div>
