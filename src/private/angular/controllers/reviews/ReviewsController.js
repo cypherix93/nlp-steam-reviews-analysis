@@ -1,5 +1,5 @@
 angular.module("AngularApp")
-    .controller("ReviewsController", function ReviewsController($stateParams, $state, APIService)
+    .controller("ReviewsController", function ReviewsController($stateParams, $state, APIService, ReviewsAnnotaterService)
     {
         var self = this;
 
@@ -10,7 +10,7 @@ angular.module("AngularApp")
             .success(function (response)
             {
                 self.game = response.game;
-                self.reviews = response.reviews;
+                self.reviews = ReviewsAnnotaterService.annotateReviews(response.reviews);
                 self.counts = response.counts;
             });
 
