@@ -1,7 +1,7 @@
 <div class="reviews-container" ng-controller="ReviewsController as reviews">
 
     <div class="pull-right text-muted">
-        Page: {{reviews.page}} of {{(reviews.counts.total / 10) | number}}
+        Page: {{reviews.page}} of {{(reviews.counts.total / 10) | number:0}}
     </div>
     <h2>
         Reviews for {{reviews.game.title}} ({{reviews.game.appId}})
